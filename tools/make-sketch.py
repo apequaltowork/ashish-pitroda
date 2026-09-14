@@ -20,7 +20,7 @@ from PIL import Image, ImageFilter, ImageOps
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-SRC = os.path.normpath(os.path.join(ROOT, "..", "cinematic-scroll", "assets", "portrait-source.png"))
+SRC = "D:/claude/animation/cinematic-scroll/assets/portrait-source.png"   # the original photograph
 OUT = os.path.join(ROOT, "assets", "sketch.webp")
 
 CROP = (420, 0, 1360, 940)     # a square on the face, the hand and the glasses
