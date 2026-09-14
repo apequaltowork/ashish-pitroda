@@ -1,0 +1,8 @@
+# local snapshots — git history and tags are the versions now
+versions/
+
+# tooling leftovers
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

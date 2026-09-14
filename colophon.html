@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colophon — how this notebook is made</title>
+<meta name="description" content="How this field journal is built: no framework, no animation library, a hand-drawn wagtail on one canvas, and plain HTML pages.">
+<!-- @chrome head -->
+<script>document.documentElement.className += " js";
+/* Theme, before anything paints: light is Sepia archive, dark is Night journal.
+   The visitor's own choice (theme.js) wins, then their system setting. The other
+   palettes are kept but hidden: ?palette=name previews one, ?palettes shows the bar. */
+(function (h) { var p = "sepia"; try { var q = new URLSearchParams(location.search), t = localStorage.getItem("fj-theme"); if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; p = t === "dark" ? "night" : "sepia"; if (/^(field|indigo|botanical|seaside|sepia|night)$/.test(q.get("palette") || "")) p = q.get("palette"); if (q.has("palettes")) h.setAttribute("data-palettes", ""); } catch (e) {} if (p !== "field") h.setAttribute("data-palette", p); })(document.documentElement);</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..500&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="journal.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1EADB'/%3E%3Cg fill='%2326221E' transform='translate(0 8)'%3E%3Cellipse cx='30' cy='26' rx='13' ry='7.5'/%3E%3Ccircle cx='43' cy='17' r='6'/%3E%3Cpath d='M42 15.5 L52 17 L42 18.6Z'/%3E%3Cpath d='M19 24 L2 21 L2 26 L19 29Z'/%3E%3C/g%3E%3C/svg%3E">
+<!-- @end head -->
+</head>
+<body>
+
+<!-- @chrome top -->
+<!-- The wagtail lives on this canvas. It never takes the pointer: it lands on
+     lines marked [data-perch] and watches the cursor from there. bird.js. -->
+<canvas class="bird" data-bird aria-hidden="true"></canvas>
+
+<!-- version-02: the wagtail's cage. Stacked above the bird's canvas so the
+     bars sit in front of it. bird.js reads points on it in these viewBox
+     units (110 × 180): the ring at 55,0, the perch rod at y 128, the door
+     centred at 46,121. Change the drawing and those numbers together. -->
+<button class="cage" type="button" data-cage aria-label="Call the wagtail back to its cage">
+  <svg viewBox="0 0 110 180" aria-hidden="true">
+    <path class="cage__wire" d="M55 0 V13"/>
+    <circle class="cage__wire" cx="55" cy="19" r="5.5"/>
+    <path class="cage__wire" d="M16 75 C16 47 34 31 55 31 C76 31 94 47 94 75"/>
+    <path class="cage__wire" d="M30 75 C31 53 42 37 55 31 M43 75 C44 55 49 41 55 31 M55 75 V31 M67 75 C66 55 61 41 55 31 M80 75 C79 53 68 37 55 31"/>
+    <path class="cage__band" d="M12 75 H98"/>
+    <path class="cage__wire" d="M16 75 V152 M26 75 V152 M36 75 V98 M36 144 V152 M46 75 V98 M46 144 V152 M56 75 V98 M56 144 V152 M66 75 V152 M76 75 V152 M86 75 V152 M94 75 V152"/>
+    <path class="cage__band" d="M12 152 H98"/>
+    <path class="cage__rod" d="M24 128 H86"/>
+    <path class="cage__cup" d="M70 142 H86 L84 151 H72 Z"/>
+    <rect class="cage__base" x="8" y="152" width="94" height="12" rx="3"/>
+    <path class="cage__wire" d="M20 164 L16 176 M90 164 L94 176"/>
+    <g class="cage__door">
+      <rect class="cage__wire" x="31" y="98" width="30" height="46" rx="2"/>
+      <path class="cage__wire" d="M38.5 98 V144 M46 98 V144 M53.5 98 V144"/>
+      <circle class="cage__wire" cx="58.5" cy="121" r="1.8"/>
+    </g>
+  </svg>
+  <span class="cage__tip" data-cage-tip>call it home</span>
+</button>
+
+<!-- A packet of seeds taped under the cage. Clicking it throws four to six
+     seeds onto a line near the bird, and it goes and eats them. bird.js. -->
+<button class="feed" type="button" data-feed aria-label="Scatter seeds for the wagtail">
+  <svg viewBox="0 0 64 84" aria-hidden="true">
+    <path class="feed__paper" d="M9 16 H55 L53 80 Q32 83 11 80 Z"/>
+    <path class="feed__crimp" d="M8 18 V9 L12 6 L16 9 L20 6 L24 9 L28 6 L32 9 L36 6 L40 9 L44 6 L48 9 L52 6 L56 9 V18 Z"/>
+    <path class="feed__rule" d="M16 30 H48 M16 58 H48"/>
+    <text class="feed__word" x="32" y="50" text-anchor="middle">seeds</text>
+    <ellipse class="feed__seed" cx="23" cy="69" rx="3.4" ry="2.1" transform="rotate(-20 23 69)"/>
+    <ellipse class="feed__seed" cx="32" cy="72" rx="3.4" ry="2.1" transform="rotate(10 32 72)"/>
+    <ellipse class="feed__seed" cx="41" cy="68" rx="3.4" ry="2.1" transform="rotate(35 41 68)"/>
+    <rect class="feed__tape" x="20" y="-3" width="24" height="10" transform="rotate(-5 32 2)"/>
+  </svg>
+  <span class="feed__tip" data-feed-tip>scatter seeds</span>
+</button>
+
+<!-- Whether its song is heard out loud. Sound only ever starts after a click;
+     "off" is remembered on this device. bird.js. -->
+<button class="song" type="button" data-song aria-pressed="true" aria-label="The wagtail's song, out loud">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 12.5V3.2l7-1.7v9.6"/><circle cx="4.2" cy="12.6" r="1.9"/><circle cx="11.2" cy="11.1" r="1.9"/></svg>
+  <span data-song-label>song on</span>
+</button>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Palette preview, HIDDEN. The site uses Sepia archive (light) and Night
+     journal (dark) through the theme switch in the header; the other palettes
+     are kept. Add ?palettes to an address to show this bar again. palette.js. -->
+<div class="pbar" data-pbar hidden>
+  <span class="pbar__k">Palette <em>preview · temporary</em></span>
+  <div class="pbar__opts" role="radiogroup" aria-label="Colour palette">
+    <button type="button" role="radio" aria-checked="true" data-palette-choice="field"><i style="--a:#F1EADB;--b:#A2432B"></i>Field notebook</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="indigo"><i style="--a:#F2F1EC;--b:#2B55A0"></i>Indigo ink</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="botanical"><i style="--a:#ECEEE3;--b:#3E6B35"></i>Botanical</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="seaside"><i style="--a:#F2EEE6;--b:#1F6F6B"></i>Seaside</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="sepia"><i style="--a:#E8DAC0;--b:#7A2A28"></i>Sepia archive</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="night"><i style="--a:#1C1F22;--b:#E3A23B"></i>Night journal</button>
+  </div>
+</div>
+<script src="palette.js" defer></script>
+<script src="theme.js" defer></script>
+
+<header class="top" data-top>
+  <div class="top__in">
+    <a class="mark" href="index.html" aria-label="Ashish Pitroda — home">
+      <svg viewBox="0 0 64 40" aria-hidden="true"><ellipse cx="30" cy="23" rx="12.5" ry="7"/><circle cx="42.5" cy="15.5" r="5.6"/><path d="M42 14.2 L51 15.6 L42 17 Z"/><path d="M19 21.5 L3 19.5 L3 23.5 L19 26 Z"/><path d="M27 29 L26 36 M33 29 L33.5 36" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <b>Ashish Pitroda</b><i>field notes</i>
+    </a>
+    <nav aria-label="Pages">
+      <ul class="nav">
+        <li><a href="services/index.html">Field guide</a></li>
+        <li><a href="work/index.html">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav__keep"><a class="nav__cta" href="contact.html">Write to me</a></li>
+      </ul>
+    </nav>
+    <!-- light (Sepia archive) / dark (Night journal). theme.js -->
+    <button class="theme" type="button" data-theme-toggle aria-pressed="false" aria-label="Dark theme">
+      <svg class="theme__moon" viewBox="0 0 20 20" aria-hidden="true"><path d="M15.6 12.7A6.6 6.6 0 0 1 7.3 4.4a6.6 6.6 0 1 0 8.3 8.3z"/></svg>
+      <svg class="theme__sun" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.4"/><path d="M10 1.8v2.3M10 15.9v2.3M1.8 10h2.3M15.9 10h2.3M4.2 4.2l1.6 1.6M14.2 14.2l1.6 1.6M4.2 15.8l1.6-1.6M14.2 5.8l1.6-1.6"/></svg>
+    </button>
+  </div>
+</header>
+<!-- @end top -->
+
+<main class="page">
+
+  <section class="phead" id="top">
+    <a class="back" href="index.html"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>Back to the journal</a>
+    <p class="hero__kicker" data-reveal>Colophon <span aria-hidden="true">·</span> how this is made</p>
+    <h1 class="phead__h" data-reveal style="--d:.08s">How this notebook is made</h1>
+    <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
+    <p class="hero__lede" data-reveal style="--d:.3s">
+      No framework, no animation library, nothing to install. The paper, the ink
+      and the bird are written by hand, in a handful of files you could read in
+      an afternoon. What follows is how — and what it costs.
+    </p>
+
+    <!-- measured by build.js on every run, not typed in -->
+    <div class="figures-wrap" data-reveal data-perch style="--d:.4s">
+      <!-- @chrome stats -->
+      <dl class="figures">
+        <div><dt>Dependencies</dt><dd>0</dd><p>No framework, no animation library, nothing to install.</p></div>
+        <div><dt>The bird</dt><dd>53.7 KB</dd><p>One canvas, drawn from ellipses and a few lines.</p></div>
+        <div><dt>All scripts</dt><dd>95.5 KB</dd><p>7 hand-written files, unminified.</p></div>
+        <div><dt>Stylesheet</dt><dd>66.2 KB</dd><p>One file. The paper, the ink, every layout.</p></div>
+        <div><dt>Pages</dt><dd>12</dd><p>Plain HTML. Every one opens straight from disk.</p></div>
+      </dl>
+      <!-- @end stats -->
+    </div>
+  </section>
+
+  <section class="sec" id="bird">
+    <header class="sec__head" data-reveal>
+      <p class="sec__no">I</p>
+      <h2 class="sec__h">The bird, observed</h2>
+      <p class="sec__note hand">live — it changes as you watch</p>
+      <svg class="rule ink" data-perch="mid" viewBox="0 0 600 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 7 C 80 3, 170 10, 300 6 S 500 4, 598 7"/></svg>
+    </header>
+
+    <div class="birdlog">
+      <div class="prose" data-reveal>
+        <p>A pied wagtail, drawn on a single canvas from a handful of ellipses and
+          lines. It only ever stands on real lines on the page — section rules, the
+          edges of cards, the underline beneath a heading — and it re-reads where
+          those lines are as the page moves.</p>
+        <p>From there it does what the bird does. It pumps its tail in bursts. It
+          watches your cursor, and hops along its line towards it — but stops
+          short. Lunge at it and it flies. Scroll and it follows you, landing on
+          whatever line is nearest. Leave it alone and it potters about, pecks and
+          turns round. Click right beside it and it calls.</p>
+        <p>It has a home, too: the cage hanging in the top corner of the page. When
+          there is nowhere left to stand it flies in there rather than off the
+          screen, and lets itself out when a line comes back into view. Click the
+          cage to call it home; click again to let it out.</p>
+        <p>Under the cage is a packet of seeds. Click it and four to six seeds land
+          on a line near the bird. It goes straight to them and eats them one by
+          one, bowing down to peck, and is too busy to mind your cursor until
+          they are gone.</p>
+        <p>Then it sings. Its head goes up, its beak opens on every note and
+          notes drift off into the margin — out loud too, if the song switch under
+          the packet is on. The song is different every time and is made in the
+          browser as it plays; there is no sound file.</p>
+        <p>The card beside this is reading the bird as it goes. Move your cursor
+          towards it and watch the numbers change.</p>
+      </div>
+
+      <div class="birdlog__card" data-birdlog data-reveal data-perch style="--d:.15s">
+        <span class="tape tape--sm" aria-hidden="true"></span>
+        <p class="label__k">Field log <span aria-hidden="true">·</span> this visit</p>
+        <dl class="label__dl">
+          <div><dt>Doing</dt><dd data-k="mode">—</dd></div>
+          <div><dt>Standing on</dt><dd data-k="perch">—</dd></div>
+          <div><dt>Flights</dt><dd data-k="flights">0</dd></div>
+          <div><dt>Hops</dt><dd data-k="hops">0</dd></div>
+          <div><dt>Tail wags</dt><dd data-k="wags">0</dd></div>
+          <div><dt>Seeds eaten</dt><dd data-k="seeds">0</dd></div>
+          <div><dt>Songs</dt><dd data-k="songs">0</dd></div>
+        </dl>
+        <p class="hand birdlog__live">it may well land on this card</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="rules">
+    <header class="sec__head" data-reveal>
+      <p class="sec__no">II</p>
+      <h2 class="sec__h">The rules it keeps</h2>
+      <p class="sec__note hand">so it charms rather than annoys</p>
+      <svg class="rule ink" data-perch="mid" viewBox="0 0 600 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 6 C 90 9, 200 3, 310 7 S 510 9, 598 5"/></svg>
+    </header>
+    <div class="cols3">
+      <div data-reveal>
+        <p class="k">Only real lines</p>
+        <p>Anything marked <code>data-perch</code> offers its edge as somewhere to stand. It never lands on a card that has not appeared yet.</p>
+      </div>
+      <div data-reveal style="--d:.08s">
+        <p class="k">Never in the way</p>
+        <p>The canvas ignores the pointer completely, so the bird can stand on the edge of a button and the button still works. Nothing on the page waits for it.</p>
+      </div>
+      <div data-reveal style="--d:.16s">
+        <p class="k">Still, when asked</p>
+        <p>With reduced motion switched on, it stands quietly on a line near the middle of the screen and reappears there as you scroll. No flight, no hopping, no tail.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="set">
+    <header class="sec__head" data-reveal>
+      <p class="sec__no">III</p>
+      <h2 class="sec__h">Set in</h2>
+      <p class="sec__note hand">four faces, by day and by night</p>
+      <svg class="rule ink" data-perch="mid" viewBox="0 0 600 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 7 C 110 4, 190 9, 320 6 S 480 3, 598 7"/></svg>
+    </header>
+    <dl class="figures figures--set" data-reveal data-perch>
+      <div><dt>Titles</dt><dd style="font-family:var(--title)">Young Serif</dd><p>Upright and friendly, for every big heading.</p></div>
+      <div><dt>Card headings</dt><dd style="font-family:var(--display);font-style:italic">Fraunces</dd><p>Soft, old-style italics for the smaller headings.</p></div>
+      <div><dt>Text</dt><dd style="font-family:var(--text)">Source Serif 4</dd><p>A reading face. This is a document first.</p></div>
+      <div><dt>Notes</dt><dd style="font-family:var(--hand);color:var(--red)">Caveat</dd><p>The red-pencil annotations in the margins.</p></div>
+      <div><dt>Paper</dt><dd><i class="swatch" style="--c:#E8DAC0"></i>#E8DAC0 <i class="swatch" style="--c:#1C1F22"></i>#1C1F22</dd><p>Sepia archive by day, Night journal by night. Never pure white, never pure black.</p></div>
+      <div><dt>Ink</dt><dd><i class="swatch" style="--c:#2B1F16"></i>#2B1F16 <i class="swatch" style="--c:#ECE6D8"></i>#ECE6D8</dd><p>Brown-black on the paper; warm chalk on the dark.</p></div>
+      <div><dt>Red pencil</dt><dd><i class="swatch" style="--c:#7A2A28"></i>#7A2A28 <i class="swatch" style="--c:#E3A23B"></i>#E3A23B</dd><p>Annotations and the margin line — oxblood by day, amber by night.</p></div>
+    </dl>
+  </section>
+
+  <section class="sec">
+    <div class="cta" data-reveal data-perch>
+      <div>
+        <p class="cta__h">Send a note</p>
+        <p class="cta__p">If you read a colophon to the end, we will probably get on. Tell me what you are working on.</p>
+      </div>
+      <div>
+        <a class="btn" href="contact.html"><span>Write to me</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="cta__alt" href="index.html">or go back to the journal</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- @chrome foot -->
+  <footer class="foot">
+    <span><b>&copy; 2026 Ashish Pitroda</b></span>
+    <nav class="foot__links" aria-label="All pages"><a href="index.html">Home</a><a href="services/index.html">Field guide</a><a href="work/index.html">Projects</a><a href="about.html">About</a><a href="contact.html">Write to me</a></nav>
+    <span class="foot__wags">Tail wags this visit: <span data-wags>0</span></span>
+  </footer>
+  <!-- @end foot -->
+
+</main>
+
+<script src="journal.js"></script>
+<script src="bird.js"></script>
+</body>
+</html>
