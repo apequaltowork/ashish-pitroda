@@ -9,3 +9,7 @@ Thumbs.db
 
 # unpublished: held pages, sample projects and internal notes, kept locally
 drafts/
+
+# local notes and editor settings for working on the site
+CLAUDE.md
+.claude/
