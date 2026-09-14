@@ -64,6 +64,25 @@ window.PROJECTS = [
     credit:  "9 modules, 35 data models, 69 routes and 342 automated tests. All data shown is fictional and the client is not named. Live demo coming soon."
   },
 
+  {
+    title:   "Dr. Parchi — Clinic Software That Works Offline",
+    kind:    "Full-stack",
+    summary: "A clinic management system for Indian clinics that keeps working without internet. Reception, the doctor, the waiting-room display and the owner's phone each keep the day on the device and sync automatically, and medical records never reach the reception computer.",
+    stack:   ["TypeScript", "React", "PowerSync", "PostgreSQL", "Fastify", "Electron", "Vitest"],
+    year:    2026,
+    images:  [
+      "assets/projects/drparchi/cover.webp",
+      "assets/projects/drparchi/01-front-desk.webp",
+      "assets/projects/drparchi/02-consultation.webp",
+      "assets/projects/drparchi/03-waiting-room.webp",
+      "assets/projects/drparchi/04-billing.webp",
+      "assets/projects/drparchi/05-safe-commands.webp",
+      "assets/projects/drparchi/06-offline.webp"
+    ],
+    video:   "https://www.youtube.com/watch?v=wYXOb7Z9mng",
+    credit:  "A working prototype, demonstrated end to end with sample data and not yet used with real patients. 21 database tables and 401 automated tests. Every patient and the clinic shown are fictional."
+  },
+
 ];
 
 

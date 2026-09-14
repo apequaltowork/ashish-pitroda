@@ -52,6 +52,9 @@ palette.js          the hidden palette preview bar (?palettes)
 letter.js           the contact letter: validation, signature, mailto
 build.js            writes the shared chrome into every page
 partials/           that chrome: head links, bird canvas + header, footer
+tools/import-project.py  converts a prepared portfolio folder's thumbnail and
+                    gallery-NN images to WebP in assets/projects/<slug>/ and
+                    prints the images list for projects.js (videos: YouTube links)
 tools/make-portrait.py  crops and sizes a photo for the About page (4:5, 900 × 1125)
 assets/portrait.webp  its output — the print border, tilt, tape and tone are CSS (.photo)
 tools/make-sketch.py  the earlier ink-sketch treatment of the photograph (not used now)
