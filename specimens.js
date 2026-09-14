@@ -133,8 +133,12 @@ window.SPECIMENS = (function () {
     if (demo) {
       var a = el("a", "btn btn--sm");
       a.href = demo;
-      a.setAttribute("aria-label", "View demo: " + p.title);
-      a.innerHTML = "<span>View demo</span>" + ICON.arrow;      // static markup only
+      var label = p.demoLabel ? String(p.demoLabel) : "View demo";
+      a.setAttribute("aria-label", label + ": " + p.title);
+      var t = document.createElement("span");
+      t.textContent = label;                                     // the label is text, never markup
+      a.appendChild(t);
+      a.insertAdjacentHTML("beforeend", ICON.arrow);             // static markup only
       external(a);
       row.appendChild(a);
     }
@@ -154,6 +158,7 @@ window.SPECIMENS = (function () {
     if (page) {
       var r = el("a", "cta__alt", p.pageLabel ? String(p.pageLabel) : "read the write-up");
       r.href = page;
+      if (/^https?:/i.test(page)) external(r);                  // another site: a new tab
       row.appendChild(r);
     }
     return row.childNodes.length ? row : null;

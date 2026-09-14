@@ -37,6 +37,7 @@ window.PROJECTS = [
   //   images:  ["assets/projects/name-1.webp", "assets/projects/name-2.webp"],
   //   video:   "https://www.youtube.com/watch?v=…",   // or "assets/projects/name.mp4"
   //   demo:    "https://example.com",   // live demo link — optional
+  //   demoLabel: "View demo",            // the words on that button — optional
   //   source:  "https://github.com/…",  // source code link — optional
   //   page:    "",                      // a longer write-up page or PDF — optional
   //   pageLabel: "read the write-up",    // the words on that link — optional
@@ -81,6 +82,28 @@ window.PROJECTS = [
     ],
     video:   "https://www.youtube.com/watch?v=wYXOb7Z9mng",
     credit:  "A working prototype, demonstrated end to end with sample data and not yet used with real patients. 21 database tables and 401 automated tests. Every patient and the clinic shown are fictional."
+  },
+
+  {
+    title:   "Cairn — Tab Manager & Workspace Saver for Chrome",
+    kind:    "Chrome Extension",
+    summary: "A Chrome extension that saves everything you have open as a named workspace, so you can close 30 tabs and get them all back in one click. Search, cleanup, notes and crash recovery all run on your own device, with no account and no server.",
+    stack:   ["TypeScript", "React", "Chrome Manifest V3", "Vite", "Bootstrap 5", "Vitest"],
+    year:    2026,
+    images:  [
+      "assets/projects/cairn/cover.webp",
+      "assets/projects/cairn/01-overview.webp",
+      "assets/projects/cairn/02-workspaces.webp",
+      "assets/projects/cairn/03-notes.webp",
+      "assets/projects/cairn/04-cleanup.webp",
+      "assets/projects/cairn/05-search.webp"
+    ],
+    video:   "https://www.youtube.com/watch?v=fvWrDqO2-_A",
+    demo:    "https://chromewebstore.google.com/detail/nhjinpljinhggphpohdjlgkbjkabhkhh",
+    demoLabel: "Get it on the Chrome Web Store",
+    page:    "https://apequaltowork.github.io/cairn/",
+    pageLabel: "visit the Cairn website",
+    credit:  "Live on the Chrome Web Store. The images show version 1.4.0, with crash recovery and the redesign, which is in review (September 2026); until it is approved the store version looks different. About 7,000 lines of TypeScript and 112 unit tests. All workspaces and sites shown are fictional."
   },
 
 ];
