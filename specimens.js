@@ -24,7 +24,9 @@ window.SPECIMENS = (function () {
 
   /* ── the list ─────────────────────────────────────────────── */
 
-  var EXAMPLE = /(^|&)example(=|&|$)/.test(location.search.slice(1));
+  // ?example shows only the sample projects — and does nothing when there are none
+  var EXAMPLE = /(^|&)example(=|&|$)/.test(location.search.slice(1)) &&
+    Array.isArray(window.SAMPLE_PROJECTS) && window.SAMPLE_PROJECTS.length > 0;
 
   var samples = (Array.isArray(window.SAMPLE_PROJECTS) ? window.SAMPLE_PROJECTS : [])
     .map(function (p) { return Object.assign({}, p, { sample: true }); });

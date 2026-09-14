@@ -22,8 +22,8 @@ const exists = (f) => fs.existsSync(path.join(here, f));
 
 /* ── the site, as data ─────────────────────────────────────────
    `section` decides which header link is marked as the current one.
-   `held` pages are built and kept in sync but linked from nowhere: they
-   are waiting on content only Ashish can supply. */
+   Pages waiting on real content (reviews, a case study, writing) are kept
+   out of the published site, in drafts/. */
 
 const PAGES = [
   { file: "index.html",                       section: "home" },
@@ -38,11 +38,7 @@ const PAGES = [
   { file: "contact.html",                     section: "write" },
   { file: "colophon.html",                    section: "colophon" },
   { file: "404.html",                         section: null },
-  { file: "work/index.html",                  section: "specimens" },
-  { file: "work/01-example.html",             section: "specimens", held: true },
-  { file: "proof.html",                       section: null, held: true },
-  { file: "writing/index.html",               section: null, held: true },
-  { file: "writing/_template.html",           section: null, held: true }
+  { file: "work/index.html",                  section: "specimens" }
 ];
 
 const NAV = [

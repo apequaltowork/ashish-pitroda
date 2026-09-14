@@ -20,13 +20,6 @@
    ============================================================ */
 
 
-// SAMPLE PROJECTS. While this is true, the six samples at the bottom of
-// this file show after your own projects, each stamped "Sample" so no one
-// mistakes them for client work. Off now that real projects are in; the
-// samples can still be seen on their own at work/index.html?example.
-window.SHOW_SAMPLES = false;
-
-
 window.PROJECTS = [
 
   // {
@@ -107,93 +100,4 @@ window.PROJECTS = [
     credit:  "Live on the Chrome Web Store. The images show version 1.4.0, with crash recovery and the redesign, which is in review (September 2026); until it is approved the store version looks different. About 7,000 lines of TypeScript and 112 unit tests. All workspaces and sites shown are fictional."
   },
 
-];
-
-
-// The samples: sketched screenshots and tour videos drawn by
-// tools/make-samples.py. Safe to delete this whole block once you
-// no longer need it.
-window.SAMPLE_PROJECTS = [
-  {
-    title: "Newsroom on Wagtail",
-    kind: "Wagtail CMS",
-    year: 2026,
-    summary: "A publishing site with StreamField page models, an admin editors actually enjoy, and article pages built to load fast.",
-    stack: ["Wagtail", "Django", "PostgreSQL"],
-    images: [
-      "assets/samples/newsroom-home.webp",
-      "assets/samples/newsroom-article.webp",
-      "assets/samples/newsroom-admin.webp"
-    ],
-    video: "assets/samples/newsroom-tour.mp4",
-    demo: "https://example.com",
-    credit: "Sample project — the sketches and the tour video were drawn to show how this page works. Not client work."
-  },
-  {
-    title: "Metrics dashboard",
-    kind: "Frontend",
-    year: 2025,
-    summary: "A Vue dashboard with live figures, a sortable orders table, and a layout that still works on a phone.",
-    stack: ["Vue", "Chart.js", "Django REST Framework"],
-    images: [
-      "assets/samples/dashboard-overview.webp",
-      "assets/samples/dashboard-table.webp",
-      "assets/samples/dashboard-mobile.webp"
-    ],
-    video: "assets/samples/dashboard-tour.mp4",
-    credit: "Sample project — the sketches and the tour video were drawn to show how this page works. Not client work."
-  },
-  {
-    title: "Checkout sandbox",
-    kind: "Integrations",
-    year: 2025,
-    summary: "A payment flow from card form to receipt, with a webhook log that retries failures instead of losing them.",
-    stack: ["Django", "Payment gateway API", "Webhooks"],
-    images: [
-      "assets/samples/checkout-form.webp",
-      "assets/samples/checkout-receipt.webp",
-      "assets/samples/checkout-webhooks.webp"
-    ],
-    credit: "Sample project — the sketches were drawn to show how this page works. Not client work."
-  },
-  {
-    title: "Bookings API",
-    kind: "Django",
-    year: 2024,
-    summary: "A REST API for room bookings: documented endpoints, predictable JSON, and an admin for the people behind the desk.",
-    stack: ["Django REST Framework", "PostgreSQL"],
-    images: [
-      "assets/samples/bookings-docs.webp",
-      "assets/samples/bookings-json.webp",
-      "assets/samples/bookings-admin.webp"
-    ],
-    demo: "https://example.com",
-    credit: "Sample project — the sketches were drawn to show how this page works. Not client work."
-  },
-  {
-    title: "Static delivery on AWS",
-    kind: "AWS",
-    year: 2024,
-    summary: "Files on S3 behind CloudFront, a one-command deploy, and page load measured before and after.",
-    stack: ["S3", "CloudFront", "EC2", "Nginx"],
-    images: [
-      "assets/samples/delivery-diagram.webp",
-      "assets/samples/delivery-speed.webp",
-      "assets/samples/delivery-deploy.webp"
-    ],
-    credit: "Sample project — the sketches and figures were drawn to show how this page works. Not client work."
-  },
-  {
-    title: "Codebase takeover audit",
-    kind: "Takeover",
-    year: 2023,
-    summary: "What is running, what is out of date, and a checklist of what to fix first — written before touching anything.",
-    stack: ["Python", "Django", "Wagtail"],
-    images: [
-      "assets/samples/audit-report.webp",
-      "assets/samples/audit-graph.webp",
-      "assets/samples/audit-checklist.webp"
-    ],
-    credit: "Sample project — the sketches were drawn to show how this page works. Not client work."
-  }
 ];
