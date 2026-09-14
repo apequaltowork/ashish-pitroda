@@ -912,6 +912,71 @@ a.plate:hover .plate__more { text-decoration: underline; text-decoration-thickne
   color: var(--red);
 }
 
+/* the portrait: a photographic print taped into the journal, a little askew.
+   The print stays light on both themes, the way a real photo would. */
+.photo {
+  --print: #FBF8F1;
+  position: relative;
+  margin: 0;
+  padding: 14px 14px 0;
+  background: var(--print);
+  rotate: -2.2deg;
+  box-shadow:
+    0 1px 2px rgba(var(--shadow-rgb), .2),
+    0 28px 48px -30px rgba(var(--shadow-rgb), .75);
+  transition: rotate .7s var(--ease);
+}
+.photo:hover { rotate: -.8deg; }
+.photo__print { position: relative; overflow: hidden; background: #D9CFBD; }
+.photo__print img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  filter: sepia(.16) saturate(.92) contrast(1.03);
+}
+/* a faint vignette and sheen: a print, not a screen */
+.photo__print::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg, rgba(255, 255, 255, .1), transparent 38%);
+  box-shadow: inset 0 0 70px rgba(45, 28, 12, .24);
+  pointer-events: none;
+}
+.photo figcaption {
+  padding: 10px 4px 14px;
+  font-family: var(--hand);
+  font-size: 1.4rem;
+  line-height: 1.1;
+  text-align: center;
+  color: #7A2A28;
+}
+.photo__tape {
+  position: absolute;
+  z-index: 1;
+  top: 2px;
+  width: 92px;
+  height: 26px;
+  background: rgba(214, 196, 150, .62);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+}
+.photo__tape--l { left: -26px; rotate: -38deg; }
+.photo__tape--r { right: -26px; rotate: 38deg; }
+/* on a phone the photo is nearly full width: keep the tape on the page */
+@media (max-width: 720px) {
+  .photo__tape { width: 64px; height: 22px; top: 4px; }
+  .photo__tape--l { left: -6px; }
+  .photo__tape--r { right: -6px; }
+}
+[data-palette="night"] .photo { --print: #E7E1D4; }
+[data-palette="night"] .photo__print img { filter: sepia(.12) saturate(.9) contrast(1.03) brightness(.92); }
+[data-palette="night"] .photo__tape { background: rgba(196, 176, 128, .5); }
+@media (prefers-reduced-motion: reduce) {
+  .photo { transition: none; }
+}
+
 .obs {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1245,6 +1310,7 @@ textarea.fld__v.is-bad { box-shadow: inset 3px 0 0 var(--red); }
   .entry:nth-child(even) .fig-slot { order: 0; }
   .sightings { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .portrait { max-width: 420px; }
+  .photo { max-width: 380px; margin-inline: auto; }
 }
 @media (max-width: 720px) {
   .lf, .obs, .sightings, .cta { grid-template-columns: minmax(0, 1fr); }

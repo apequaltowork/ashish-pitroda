@@ -27,7 +27,7 @@ works — every path is relative and nothing is fetched.
 ```
 index.html                  the cover: approach, field guide, specimen drawer,
                             method, habitat, correspondence
-about.html                  who keeps the journal, with an ink-sketch portrait
+about.html                  who keeps the journal, with a taped-in photograph
 contact.html                write to me — a letter that composes an email
 colophon.html               how it is made, with a live log of the bird
 404.html                    no sighting recorded
@@ -52,7 +52,9 @@ palette.js          the hidden palette preview bar (?palettes)
 letter.js           the contact letter: validation, signature, mailto
 build.js            writes the shared chrome into every page
 partials/           that chrome: head links, bird canvas + header, footer
-tools/make-sketch.py  turns the photograph into the About page's ink sketch
+tools/make-portrait.py  crops and sizes a photo for the About page (4:5, 900 × 1125)
+assets/portrait.webp  its output — the print border, tilt, tape and tone are CSS (.photo)
+tools/make-sketch.py  the earlier ink-sketch treatment of the photograph (not used now)
 assets/sketch.webp  its output
 ```
 
