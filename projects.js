@@ -22,8 +22,9 @@
 
 // SAMPLE PROJECTS. While this is true, the six samples at the bottom of
 // this file show after your own projects, each stamped "Sample" so no one
-// mistakes them for client work. Set it to false once your projects are in.
-window.SHOW_SAMPLES = true;
+// mistakes them for client work. Off now that real projects are in; the
+// samples can still be seen on their own at work/index.html?example.
+window.SHOW_SAMPLES = false;
 
 
 window.PROJECTS = [
