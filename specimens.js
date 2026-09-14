@@ -152,7 +152,7 @@ window.SPECIMENS = (function () {
       row.appendChild(s);
     }
     if (page) {
-      var r = el("a", "cta__alt", "read the write-up");
+      var r = el("a", "cta__alt", p.pageLabel ? String(p.pageLabel) : "read the write-up");
       r.href = page;
       row.appendChild(r);
     }

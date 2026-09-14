@@ -38,8 +38,31 @@ window.PROJECTS = [
   //   video:   "https://www.youtube.com/watch?v=…",   // or "assets/projects/name.mp4"
   //   demo:    "https://example.com",   // live demo link — optional
   //   source:  "https://github.com/…",  // source code link — optional
-  //   page:    ""                       // a longer write-up page — optional
+  //   page:    "",                      // a longer write-up page or PDF — optional
+  //   pageLabel: "read the write-up",    // the words on that link — optional
+  //   credit:  ""                       // a small note under it in the gallery — optional
   // },
+
+  {
+    title:   "ProjectIMS — QA & Document Control",
+    kind:    "Django",
+    summary: "A custom web application that runs engineering projects through quality assurance, from templated checklists and PIN-verified phase sign-off to controlled drawing issue and client share links. Built in Django, it replaces a legacy PHP system with one audited source of truth.",
+    stack:   ["Python", "Django", "PostgreSQL", "HTMX", "Alpine.js", "Playwright"],
+    year:    2026,
+    images:  [
+      "assets/projects/projectims/cover.webp",
+      "assets/projects/projectims/01-dashboard.webp",
+      "assets/projects/projectims/02-checklist.webp",
+      "assets/projects/projectims/03-signoff.webp",
+      "assets/projects/projectims/04-transmittal.webp",
+      "assets/projects/projectims/05-reports.webp",
+      "assets/projects/projectims/06-client.webp"
+    ],
+    video:   "https://www.youtube.com/watch?v=GLcMxrO0tkk",
+    page:    "assets/projects/projectims/ProjectIMS-System-Documentation.pdf",
+    pageLabel: "read the system documentation (PDF)",
+    credit:  "9 modules, 35 data models, 69 routes and 342 automated tests. All data shown is fictional and the client is not named. Live demo coming soon."
+  },
 
 ];
 
