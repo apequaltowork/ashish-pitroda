@@ -131,6 +131,69 @@ function stats() {
     "</dl>"].join("\n");
 }
 
+/* ── search engines and link previews ─────────────────────── */
+
+const SITE = "https://apequaltowork.github.io/ashish-pitroda/";
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+// the public address of a page: folders end in "/", not "index.html"
+const urlOf = (file) => SITE + file.replace(/(^|\/)index\.html$/, "$1");
+
+// canonical link and share tags, from the page's own <title> and description
+function seoFor(page, html) {
+  const title = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
+  const desc = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
+  const url = urlOf(page.file), img = SITE + "assets/share-card.png";
+  return [
+    '<link rel="canonical" href="' + url + '">',
+    '<meta property="og:type" content="' + (page.file === "index.html" ? "profile" : "website") + '">',
+    '<meta property="og:site_name" content="Ashish Pitroda">',
+    '<meta property="og:title" content="' + title + '">',
+    '<meta property="og:description" content="' + desc + '">',
+    '<meta property="og:url" content="' + url + '">',
+    '<meta property="og:image" content="' + img + '">',
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    '<meta name="twitter:card" content="summary_large_image">'
+  ].concat(page.file === "work/index.html" ? [projectsHtml().ld] : []).join("\n");
+}
+
+// the projects as plain HTML, for crawlers and visitors without JavaScript
+function projectsHtml() {
+  const sandbox = { window: {} };
+  require("vm").runInNewContext(read("projects.js"), sandbox);
+  const list = (sandbox.window.PROJECTS || []).filter((p) => p && p.title);
+  const abs = (u) => /^https?:/.test(u) ? u : SITE + u;
+  const items = list.map((p) => {
+    const links = [[p.demo, p.demoLabel || "View demo"], [p.video, "watch the video"],
+      [p.page, p.pageLabel || "read more"], [p.source, "source code"]]
+      .filter(([u]) => u).map(([u, l]) => '<a href="' + esc(abs(u)) + '">' + esc(l) + "</a>").join(" · ");
+    return "  <li><h3>" + esc(p.title) + "</h3>" +
+      (p.summary ? "<p>" + esc(p.summary) + "</p>" : "") +
+      (p.stack && p.stack.length ? "<p>" + esc(p.stack.join(", ")) + "</p>" : "") +
+      (links ? "<p>" + links + "</p>" : "") + "</li>";
+  });
+  const ld = {
+    "@context": "https://schema.org", "@type": "ItemList",
+    itemListElement: list.map((p, i) => ({
+      "@type": "ListItem", position: i + 1,
+      item: Object.assign({ "@type": "CreativeWork", name: p.title, description: p.summary,
+        author: { "@type": "Person", name: "Ashish Pitroda" } },
+        p.year ? { dateCreated: String(p.year) } : {},
+        p.images && p.images[0] ? { image: abs(p.images[0]) } : {},
+        p.demo ? { url: p.demo } : {})
+    }))
+  };
+  const html = list.length ? ["<ol>", items.join("\n"), "</ol>"].join("\n") : '<p class="empty__k">Nothing pinned in yet</p>';
+  return { html, ld: '<script type="application/ld+json">' + JSON.stringify(ld).replace(/</g, "\\u003c") + "</script>" };
+}
+
+function sitemap() {
+  const pages = PAGES.filter((p) => p.file !== "404.html" && exists(p.file));
+  return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    pages.map((p) => "  <url><loc>" + urlOf(p.file) + "</loc></url>").join("\n") + "\n</urlset>\n";
+}
+
 /* ── run ──────────────────────────────────────────────────── */
 
 const CHECK = process.argv.includes("--check");
@@ -145,9 +208,17 @@ for (const page of PAGES) {
   html = setRegion(html, "top", reroot(read("partials/top.html").replace("@nav", () => navFor(page)), page));
   html = setRegion(html, "foot", reroot(footFor(page), page));
   html = setRegion(html, "stats", stats());
+  html = setRegion(html, "seo", seoFor(page, html));
+  html = setRegion(html, "projects", projectsHtml().html);
   if (html === before) continue;
   stale.push(page.file);
   if (!CHECK) fs.writeFileSync(path.join(here, page.file), html, "utf8");
+}
+
+const map = sitemap();
+if (!exists("sitemap.xml") || read("sitemap.xml") !== map) {
+  stale.push("sitemap.xml");
+  if (!CHECK) fs.writeFileSync(path.join(here, "sitemap.xml"), map, "utf8");
 }
 
 console.log("pages".padEnd(10), (PAGES.length - missing) + " on disk" +
