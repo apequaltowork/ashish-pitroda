@@ -188,11 +188,16 @@ function projectsHtml() {
   return { html, ld: '<script type="application/ld+json">' + JSON.stringify(ld).replace(/</g, "\\u003c") + "</script>" };
 }
 
+const publicPages = () => PAGES.filter((p) => p.file !== "404.html" && exists(p.file));
+
 function sitemap() {
-  const pages = PAGES.filter((p) => p.file !== "404.html" && exists(p.file));
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    pages.map((p) => "  <url><loc>" + urlOf(p.file) + "</loc></url>").join("\n") + "\n</urlset>\n";
+    publicPages().map((p) => "  <url><loc>" + urlOf(p.file) + "</loc></url>").join("\n") + "\n</urlset>\n";
 }
+
+// the same list as plain text, one address a line: a second thing Search
+// Console can be pointed at when it will not fetch the XML one
+const sitemapTxt = () => publicPages().map((p) => urlOf(p.file)).join("\n") + "\n";
 
 /* ── run ──────────────────────────────────────────────────── */
 
@@ -215,10 +220,10 @@ for (const page of PAGES) {
   if (!CHECK) fs.writeFileSync(path.join(here, page.file), html, "utf8");
 }
 
-const map = sitemap();
-if (!exists("sitemap.xml") || read("sitemap.xml") !== map) {
-  stale.push("sitemap.xml");
-  if (!CHECK) fs.writeFileSync(path.join(here, "sitemap.xml"), map, "utf8");
+for (const [file, body] of [["sitemap.xml", sitemap()], ["sitemap.txt", sitemapTxt()]]) {
+  if (exists(file) && read(file) === body) continue;
+  stale.push(file);
+  if (!CHECK) fs.writeFileSync(path.join(here, file), body, "utf8");
 }
 
 console.log("pages".padEnd(10), (PAGES.length - missing) + " on disk" +
