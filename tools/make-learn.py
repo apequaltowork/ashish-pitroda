@@ -168,6 +168,45 @@ EPISODES = [
         "tag": "ep02-end",
         "commands": "youtube/ep02/commands.md",
     },
+    {
+        "slug": "03-the-page-model-and-the-tree",
+        "no": "03",
+        "video": "1Oxev2holT4",
+        "uploaded": "2026-09-19T11:46:25-07:00",   # from the YouTube watch page
+        "runtime": "5:08",
+        "iso": "PT5M8S",
+        "title": "The page model and the tree",
+        "search_title": "Wagtail Page Model Explained: Custom Page Types",
+        "lede": "We finally change code: two fields on the homepage, a second page type, and the one "
+                "migration line that explains how every Wagtail page is stored.",
+        "covers": [
+            "Last episode predicted that a page one level under Home would get the tree path "
+            "<code>000100010001</code>. This episode we build that page and check it in the database.",
+            "Along the way: adding fields to a Wagtail page, and why they do not appear in the admin "
+            "without <code>content_panels</code>; creating a second page type, "
+            "<code>StandardPage</code>, and why it needs its own template; and multi-table "
+            "inheritance, where every page lives in two tables joined by <code>page_ptr</code>.",
+            "Also covered: reading the page tree from the shell, why <code>url_path</code> says "
+            "<code>/home/about/</code> while the page is served at <code>/about/</code>, and the "
+            "<code>.specific</code> gotcha, where <code>Page.objects</code> hands you a page with "
+            "your fields missing.",
+        ],
+        "prereq": False,
+        "chapters": [
+            ("0:00", "Last episode's prediction"), ("0:19", "Where we left HomePage"),
+            ("0:38", "Adding intro and body fields"),
+            ("0:56", "A field is not a form field: content_panels"),
+            ("1:17", "A second page type: StandardPage"), ("1:31", "Every page type needs a template"),
+            ("1:54", "makemigrations and migrate"), ("2:02", "The page_ptr line"),
+            ("2:15", "Every page lives in two tables"), ("2:45", "Editing the homepage in the admin"),
+            ("2:56", "Adding a child page"), ("3:08", "Printing the tree"),
+            ("3:14", "The prediction checks out"), ("3:31", "url_path is not the URL"),
+            ("3:59", "Why is my field missing? .specific"), ("4:20", "What's still wrong"),
+            ("4:38", "Commit and tag"), ("4:46", "Next episode"),
+        ],
+        "tag": "ep03-end",
+        "commands": "youtube/ep03/commands.md",
+    },
 ]
 
 VERSIONS = "Wagtail 7.4.3 · Django 6.1.1 · Python 3.12"

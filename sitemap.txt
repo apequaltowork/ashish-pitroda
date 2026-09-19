@@ -15,3 +15,4 @@ https://apequaltowork.github.io/ashish-pitroda/learn/00a-what-this-series-is.htm
 https://apequaltowork.github.io/ashish-pitroda/learn/00b-setting-up-your-machine.html
 https://apequaltowork.github.io/ashish-pitroda/learn/01-what-wagtail-actually-is.html
 https://apequaltowork.github.io/ashish-pitroda/learn/02-every-file-explained.html
+https://apequaltowork.github.io/ashish-pitroda/learn/03-the-page-model-and-the-tree.html

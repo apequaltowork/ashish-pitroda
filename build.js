@@ -43,7 +43,8 @@ const PAGES = [
   { file: "learn/00a-what-this-series-is.html",        section: "learn" },
   { file: "learn/00b-setting-up-your-machine.html",    section: "learn" },
   { file: "learn/01-what-wagtail-actually-is.html",    section: "learn" },
-  { file: "learn/02-every-file-explained.html",        section: "learn" }
+  { file: "learn/02-every-file-explained.html",        section: "learn" },
+  { file: "learn/03-the-page-model-and-the-tree.html", section: "learn" }
 ];
 
 const NAV = [
