@@ -10,3 +10,8 @@ https://apequaltowork.github.io/ashish-pitroda/about.html
 https://apequaltowork.github.io/ashish-pitroda/contact.html
 https://apequaltowork.github.io/ashish-pitroda/colophon.html
 https://apequaltowork.github.io/ashish-pitroda/work/
+https://apequaltowork.github.io/ashish-pitroda/learn/
+https://apequaltowork.github.io/ashish-pitroda/learn/00a-what-this-series-is.html
+https://apequaltowork.github.io/ashish-pitroda/learn/00b-setting-up-your-machine.html
+https://apequaltowork.github.io/ashish-pitroda/learn/01-what-wagtail-actually-is.html
+https://apequaltowork.github.io/ashish-pitroda/learn/02-every-file-explained.html

@@ -3,20 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Field guide — Wagtail, Django and full-stack services by Ashish Pitroda</title>
-<meta name="description" content="What I am hired for: Wagtail CMS, Django and Python, Vue and Next.js frontends, API and payment integrations, AWS and performance, and takeovers.">
+<title>Wagtail Project Structure Explained: Every File — Wagtail Unboxed 02</title>
+<meta name="description" content="The wagtail start command generates 29 files. Most tutorials explain three of them. We read all of them, because the ones you are told to ignore decide how">
 <!-- @chrome seo -->
-<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/services/">
+<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/02-every-file-explained.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ashish Pitroda">
-<meta property="og:title" content="Field guide — Wagtail, Django and full-stack services by Ashish Pitroda">
-<meta property="og:description" content="What I am hired for: Wagtail CMS, Django and Python, Vue and Next.js frontends, API and payment integrations, AWS and performance, and takeovers.">
-<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/services/">
-<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/share-card.png">
+<meta property="og:title" content="Wagtail Project Structure Explained: Every File — Wagtail Unboxed 02">
+<meta property="og:description" content="The wagtail start command generates 29 files. Most tutorials explain three of them. We read all of them, because the ones you are told to ignore decide how">
+<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/02-every-file-explained.html">
+<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/02-every-file-explained.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <!-- @end seo -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Wagtail Project Structure Explained: Every File", "description": "The wagtail start command generates 29 files. Most tutorials explain three of them. We read all of them, because the ones you are told to ignore decide how your site behaves.", "thumbnailUrl": "https://i.ytimg.com/vi/FoElBiKp_fI/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/FoElBiKp_fI", "contentUrl": "https://www.youtube.com/watch?v=FoElBiKp_fI", "duration": "PT7M51S", "uploadDate": "2026-09-17T09:59:52-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, {"@type": "ListItem", "position": 3, "name": "Opening the box: every file explained", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/02-every-file-explained.html"}]}</script>
 <!-- @chrome head -->
 <script>document.documentElement.className += " js";
 /* Theme, before anything paints: light is Sepia archive, dark is Night journal.
@@ -30,7 +32,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1EADB'/%3E%3Cg fill='%2326221E' transform='translate(0 8)'%3E%3Cellipse cx='30' cy='26' rx='13' ry='7.5'/%3E%3Ccircle cx='43' cy='17' r='6'/%3E%3Cpath d='M42 15.5 L52 17 L42 18.6Z'/%3E%3Cpath d='M19 24 L2 21 L2 26 L19 29Z'/%3E%3C/g%3E%3C/svg%3E">
 <!-- @end head -->
 </head>
-<body>
+<body class="learn">
 
 <!-- @chrome top -->
 <!-- The wagtail lives on this canvas. It never takes the pointer: it lands on
@@ -112,9 +114,9 @@
     </a>
     <nav aria-label="Pages">
       <ul class="nav">
-        <li><a class="is-active" href="../services/index.html" aria-current="page">Field guide</a></li>
+        <li><a href="../services/index.html">Field guide</a></li>
         <li><a href="../work/index.html">Projects</a></li>
-        <li><a href="../learn/index.html">Learn</a></li>
+        <li><a class="is-active" href="../learn/index.html" aria-current="page">Learn</a></li>
         <li><a href="../about.html">About</a></li>
         <li class="nav__keep"><a class="nav__cta" href="../contact.html">Write to me</a></li>
       </ul>
@@ -130,111 +132,82 @@
 
 <main class="page">
 
-  <section class="phead" id="top">
-    <a class="back" href="../index.html"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>Back to the journal</a>
-    <p class="hero__kicker" data-reveal>Field guide <span aria-hidden="true">·</span> Six plates</p>
-    <h1 class="phead__h" data-reveal style="--d:.08s">What I am hired for</h1>
-    <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
-    <p class="hero__lede" data-reveal style="--d:.3s">Six kinds of work, though most projects are two or three of them at once — which is rather the point of hiring one person rather than assembling three. Each plate is the honest version: who it suits, what the work involves, and what decides the price.</p>
-  </section>
-
-  <section class="sec" id="plates">
-    <div class="guide">
-      <a class="plate" href="wagtail-cms.html" data-reveal data-perch>
-        <span class="tape tape--sm" aria-hidden="true"></span>
-        <p class="plate__pl">Plate 01</p>
-        <h2 class="plate__h">Wagtail CMS</h2>
-        <p class="plate__marks">Specialism · 8+ years</p>
-        <p class="plate__body">Builds, upgrades and rescues. The framework I know best and am usually hired for.</p>
-        <span class="plate__more">Read the plate &rarr;</span>
-      </a>
-      <a class="plate" href="django.html" data-reveal data-perch style="--d:.08s">
-        <span class="tape tape--sm" aria-hidden="true"></span>
-        <p class="plate__pl">Plate 02</p>
-        <h2 class="plate__h">Django &amp; Python</h2>
-        <p class="plate__marks">Backend · core</p>
-        <p class="plate__body">Applications, data models, REST APIs, and the query work that keeps them fast.</p>
-        <span class="plate__more">Read the plate &rarr;</span>
-      </a>
-      <a class="plate" href="frontend-vue-next.html" data-reveal data-perch style="--d:.16s">
-        <span class="tape tape--sm" aria-hidden="true"></span>
-        <p class="plate__pl">Plate 03</p>
-        <h2 class="plate__h">Frontend</h2>
-        <p class="plate__marks">Vue · Next.js</p>
-        <p class="plate__body">Vue and Next.js, wired to the backend by the person who wrote the backend.</p>
-        <span class="plate__more">Read the plate &rarr;</span>
-      </a>
-      <a class="plate" href="api-integrations.html" data-reveal data-perch>
-        <span class="tape tape--sm" aria-hidden="true"></span>
-        <p class="plate__pl">Plate 04</p>
-        <h2 class="plate__h">Integrations</h2>
-        <p class="plate__marks">REST · payments</p>
-        <p class="plate__body">Payments, auth, webhooks, and sync between systems never designed to talk.</p>
-        <span class="plate__more">Read the plate &rarr;</span>
-      </a>
-      <a class="plate" href="aws-performance.html" data-reveal data-perch style="--d:.08s">
-        <span class="tape tape--sm" aria-hidden="true"></span>
-        <p class="plate__pl">Plate 05</p>
-        <h2 class="plate__h">AWS &amp; speed</h2>
-        <p class="plate__marks">EC2 · S3 · Nginx</p>
-        <p class="plate__body">Deployment that is boring on purpose, and performance measured before and after.</p>
-        <span class="plate__more">Read the plate &rarr;</span>
-      </a>
-      <a class="plate" href="project-takeover.html" data-reveal data-perch style="--d:.16s">
-        <span class="tape tape--sm" aria-hidden="true"></span>
-        <p class="plate__pl">Plate 06</p>
-        <h2 class="plate__h">Takeover</h2>
-        <p class="plate__marks">Legacy · ownership</p>
-        <p class="plate__body">The developer left, the handover was a repository link. Audit first, then continue.</p>
-        <span class="plate__more">Read the plate &rarr;</span>
-      </a>
-    </div>
-  </section>
-
-  <section class="sec" id="start">
-    <header class="sec__head" data-reveal>
-      <p class="sec__no">I</p>
-      <h2 class="sec__h">How any of them start</h2>
-      <p class="sec__note hand">the same four steps</p>
-      <svg class="rule ink" data-perch="mid" viewBox="0 0 600 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 7 C 80 3, 170 10, 300 6 S 500 4, 598 7"/></svg>
+  <article>
+    <header class="phead" id="top">
+      <a class="back" href="index.html"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>All episodes</a>
+      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 02 <span aria-hidden="true">·</span> 7:51</p>
+      <h1 class="phead__h" data-reveal style="--d:.08s">Opening the box: every file explained</h1>
+      <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
+      <p class="hero__lede" data-reveal style="--d:.3s">The wagtail start command generates 29 files. Most tutorials explain three of them. We read all of them, because the ones you are told to ignore decide how your site behaves.</p>
     </header>
-    <ol class="log">
-      <li class="log__row" data-reveal>
-        <span class="log__box" aria-hidden="true"><svg viewBox="0 0 44 44"><path class="sq" d="M7 9 L36 7.5 L37.5 36 L8.5 37.5 Z"/><path class="tick" pathLength="1" d="M12 23 L19 31 L34 12"/></svg></span>
-        <div><h3 class="log__h"><span>01</span>You send a note</h3><p class="log__body">What you have, what is wrong, what it should do. A paragraph is enough to start.</p></div>
-      </li>
-      <li class="log__row" data-reveal>
-        <span class="log__box" aria-hidden="true"><svg viewBox="0 0 44 44"><path class="sq" d="M8 8 L37 9 L36 37 L7.5 36 Z"/><path class="tick" pathLength="1" d="M12 23 L19 31 L34 12"/></svg></span>
-        <div><h3 class="log__h"><span>02</span>I answer honestly</h3><p class="log__body">Including when I am not the right fit, which is a real answer and not a soft no.</p></div>
-      </li>
-      <li class="log__row" data-reveal>
-        <span class="log__box" aria-hidden="true"><svg viewBox="0 0 44 44"><path class="sq" d="M7.5 7.5 L36.5 8.5 L37 37 L8 36 Z"/><path class="tick" pathLength="1" d="M12 23 L19 31 L34 12"/></svg></span>
-        <div><h3 class="log__h"><span>03</span>A written plan</h3><p class="log__body">Scope and order in writing, so what you are buying is legible before you buy it.</p></div>
-      </li>
-      <li class="log__row" data-reveal>
-        <span class="log__box" aria-hidden="true"><svg viewBox="0 0 44 44"><path class="sq" d="M8 9 L36 7 L37 36.5 L7 37 Z"/><path class="tick" pathLength="1" d="M12 23 L19 31 L34 12"/></svg></span>
-        <div><h3 class="log__h"><span>04</span>Work, in the open</h3><p class="log__body">Something to look at every few days, and documentation left behind at the end.</p></div>
-      </li>
-    </ol>
-  </section>
+
+    <figure class="tube" data-reveal data-perch>
+      <div><iframe src="https://www.youtube-nocookie.com/embed/FoElBiKp_fI" title="Wagtail Project Structure Explained: Every File" loading="lazy" allowfullscreen
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+    </figure>
+
+    <div class="prose" data-reveal>
+      <h2>What this episode covers</h2>
+      <p>The highlight is the data migration that quietly created your homepage. Nobody opens <code>0002_create_homepage.py</code>, and it explains the page tree, content types and Wagtail's multi-site model all at once, including why your homepage's database row has a path of <code>00010001</code>.</p>
+      <p>Also covered: Wagtail is about eleven Django apps in <code>INSTALLED_APPS</code>, and that is the whole mental model; why the <code>wagtail_urls</code> catch-all must be the last URL pattern; <code>PROJECT_DIR</code> against <code>BASE_DIR</code>, and <code>STATIC_ROOT</code> against <code>STATICFILES_DIRS</code> against <code>MEDIA_ROOT</code>; the settings split into dev.py, production.py and the local.py escape hatch; two settings that ship as broken placeholders; and a real inconsistency, where the generated requirements.txt caps Django below 6.1 but pip installs 6.1.1.</p>
+      <p>No code is written this episode. Read the box before you rebuild it.</p>
+
+      <h2>Chapters</h2>
+      <ol class="chapters">
+        <li><b>0:00</b> 29 files, and why we're reading all of them</li>
+        <li><b>0:20</b> No code today</li>
+        <li><b>0:32</b> manage.py and the settings split</li>
+        <li><b>0:51</b> PROJECT_DIR vs BASE_DIR</li>
+        <li><b>1:07</b> INSTALLED_APPS</li>
+        <li><b>1:13</b> Wagtail is just Django apps</li>
+        <li><b>1:31</b> The one middleware addition</li>
+        <li><b>1:46</b> Static vs media</li>
+        <li><b>2:09</b> The Wagtail settings block</li>
+        <li><b>2:36</b> dev.py, production.py, and local.py</li>
+        <li><b>3:01</b> urls.py</li>
+        <li><b>3:06</b> Why the catch-all must be last</li>
+        <li><b>3:30</b> HomePage(Page) — six lines</li>
+        <li><b>3:51</b> How templates find themselves</li>
+        <li><b>4:10</b> The migration nobody opens</li>
+        <li><b>4:30</b> Inside the migration</li>
+        <li><b>4:48</b> Treebeard: what “00010001” means</li>
+        <li><b>5:22</b> Two pages, not one</li>
+        <li><b>5:38</b> The Site row</li>
+        <li><b>5:54</b> The search app</li>
+        <li><b>6:13</b> base.html and the Wagtail userbar</li>
+        <li><b>6:30</b> The requirements.txt discrepancy</li>
+        <li><b>7:02</b> Five things to remember</li>
+        <li><b>7:31</b> Next episode</li>
+      </ol>
+
+      <h2>Versions on screen</h2>
+      <p>Wagtail 7.4.3 · Django 6.1.1 · Python 3.12. Recorded on Windows; macOS and Linux commands are in the repository for every episode.</p>
+    </div>
+  </article>
 
   <section class="sec">
     <div class="cta" data-reveal data-perch>
       <div>
-        <p class="cta__h">Send a note</p>
-        <p class="cta__p">Tell me what you have, what is wrong, and what it should do instead. I will tell you honestly whether I am the right fit.</p>
+        <p class="cta__h">More episodes are coming</p>
+        <p class="cta__p">New episodes are added to the series as they are published.</p>
       </div>
       <div>
-        <a class="btn" href="../contact.html"><span>Write to me</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
-        <a class="cta__alt" href="../index.html#specimens">or open the specimen drawer</a>
+        <a class="btn" href="https://www.youtube.com/@apequaltowork"><span>The channel</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="cta__alt" href="index.html">or see all episodes</a>
       </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="prose" data-reveal>
+      <p><a class="btn" href="https://www.youtube.com/watch?v=FoElBiKp_fI"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep02-end">the code at the end of this episode (<code>ep02-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep02/commands.md">every command, for Windows, macOS and Linux</a></p>
     </div>
   </section>
 
   <!-- @chrome foot -->
   <footer class="foot">
     <span><b>&copy; 2026 Ashish Pitroda</b></span>
-    <nav class="foot__links" aria-label="All pages"><a href="../index.html">Home</a><a href="../work/index.html">Projects</a><a href="../learn/index.html">Learn</a><a href="../about.html">About</a><a href="../contact.html">Write to me</a><a href="../colophon.html">Colophon</a></nav>
+    <nav class="foot__links" aria-label="All pages"><a href="../index.html">Home</a><a href="../services/index.html">Field guide</a><a href="../work/index.html">Projects</a><a href="../learn/index.html">Learn</a><a href="../about.html">About</a><a href="../contact.html">Write to me</a><a href="../colophon.html">Colophon</a></nav>
     <span class="foot__wags">Tail wags this visit: <span data-wags>0</span></span>
   </footer>
   <!-- @end foot -->

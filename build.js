@@ -38,12 +38,18 @@ const PAGES = [
   { file: "contact.html",                     section: "write" },
   { file: "colophon.html",                    section: "colophon" },
   { file: "404.html",                         section: null },
-  { file: "work/index.html",                  section: "specimens" }
+  { file: "work/index.html",                  section: "specimens" },
+  { file: "learn/index.html",                          section: "learn" },
+  { file: "learn/00a-what-this-series-is.html",        section: "learn" },
+  { file: "learn/00b-setting-up-your-machine.html",    section: "learn" },
+  { file: "learn/01-what-wagtail-actually-is.html",    section: "learn" },
+  { file: "learn/02-every-file-explained.html",        section: "learn" }
 ];
 
 const NAV = [
   { key: "guide",     label: "Field guide", href: "services/index.html" },
   { key: "specimens", label: "Projects",    href: "work/index.html" },
+  { key: "learn",     label: "Learn",       href: "learn/index.html" },
   { key: "about",     label: "About",       href: "about.html" },
   { key: "write",     label: "Write to me", href: "contact.html", cta: true }
 ];
@@ -52,6 +58,7 @@ const FOOT = [
   ["Home", "index.html"],
   ["Field guide", "services/index.html"],
   ["Projects", "work/index.html"],
+  ["Learn", "learn/index.html"],
   ["About", "about.html"],
   ["Write to me", "contact.html"],
   ["Colophon", "colophon.html"]
@@ -143,7 +150,10 @@ const urlOf = (file) => SITE + file.replace(/(^|\/)index\.html$/, "$1");
 function seoFor(page, html) {
   const title = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
   const desc = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
-  const url = urlOf(page.file), img = SITE + "assets/share-card.png";
+  // an episode page previews with its own thumbnail; everything else with the share card
+  const own = page.file.startsWith("learn/") &&
+    "assets/learn/" + path.basename(page.file, ".html") + ".jpg";
+  const url = urlOf(page.file), img = SITE + (own && exists(own) ? own : "assets/share-card.png");
   return [
     '<link rel="canonical" href="' + url + '">',
     '<meta property="og:type" content="' + (page.file === "index.html" ? "profile" : "website") + '">',
@@ -188,7 +198,9 @@ function projectsHtml() {
   return { html, ld: '<script type="application/ld+json">' + JSON.stringify(ld).replace(/</g, "\\u003c") + "</script>" };
 }
 
-const publicPages = () => PAGES.filter((p) => p.file !== "404.html" && exists(p.file));
+// a page that asks not to be indexed stays out of both sitemaps
+const publicPages = () => PAGES.filter((p) =>
+  p.file !== "404.html" && exists(p.file) && !/<meta name="robots" content="noindex">/.test(read(p.file)));
 
 function sitemap() {
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
@@ -209,7 +221,11 @@ for (const page of PAGES) {
   if (!exists(page.file)) { missing++; continue; }
   const before = read(page.file);
   let html = before;
-  html = setRegion(html, "head", reroot(read("partials/head.html"), page));
+  // journal.css?v=<hash of its contents>: a changed stylesheet gets a new
+  // address, so no browser keeps showing the old one from its cache
+  const cssv = require("crypto").createHash("sha1").update(read("journal.css")).digest("hex").slice(0, 8);
+  html = setRegion(html, "head", reroot(read("partials/head.html"), page)
+    .replace(/journal\.css"/, 'journal.css?v=' + cssv + '"'));
   html = setRegion(html, "top", reroot(read("partials/top.html").replace("@nav", () => navFor(page)), page));
   html = setRegion(html, "foot", reroot(footFor(page), page));
   html = setRegion(html, "stats", stats());
