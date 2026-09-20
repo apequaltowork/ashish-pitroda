@@ -643,8 +643,10 @@ section[id] { scroll-margin-top: 76px; }
   .guide, .drawer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 720px) {
-  /* the pages move into a panel under the bar, opened by .burger */
-  .burger { display: inline-flex; }
+  /* the pages move into a panel under the bar, opened by .burger —
+     which sits last, at the right edge, after the theme switch */
+  .burger { display: inline-flex; order: 2; margin-left: 2px; }
+  .theme { margin-left: auto; }
   .top nav {
     position: absolute;
     top: 100%;
