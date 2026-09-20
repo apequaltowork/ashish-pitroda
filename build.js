@@ -182,7 +182,10 @@ function seoFor(page, html) {
     '<meta property="og:image" content="' + img + '">',
     '<meta property="og:image:width" content="1200">',
     '<meta property="og:image:height" content="630">',
-    '<meta name="twitter:card" content="summary_large_image">'
+    '<meta name="twitter:card" content="summary_large_image">',
+    '<meta name="twitter:title" content="' + title + '">',
+    '<meta name="twitter:description" content="' + desc + '">',
+    '<meta name="twitter:image" content="' + img + '">'
   ].concat(page.file === "work/index.html" ? [projectsHtml().ld] : []).join("\n");
 }
 
@@ -220,9 +223,34 @@ function projectsHtml() {
 const publicPages = () => PAGES.filter((p) =>
   p.file !== "404.html" && exists(p.file) && !/<meta name="robots" content="noindex">/.test(read(p.file)));
 
+// when a page last really changed, from git rather than from the file's
+// timestamp, which every rebuild would otherwise bump
+function lastChanged(file) {
+  try {
+    const out = require("child_process")
+      .execFileSync("git", ["log", "-1", "--format=%cs", "--", file], { cwd: here })
+      .toString().trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(out) ? out : "";
+  } catch (e) {
+    return "";
+  }
+}
+
 function sitemap() {
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    publicPages().map((p) => "  <url><loc>" + urlOf(p.file) + "</loc></url>").join("\n") + "\n</urlset>\n";
+    publicPages().map((p) => {
+      const when = lastChanged(p.file);
+      return "  <url><loc>" + urlOf(p.file) + "</loc>" +
+        (when ? "<lastmod>" + when + "</lastmod>" : "") + "</url>";
+    }).join("\n") + "\n</urlset>\n";
+}
+
+// robots.txt. On a project site this file answers at /ashish-pitroda/robots.txt,
+// and a crawler only reads the one at the domain root — which belongs to
+// github.io, not to us. It is written anyway: it is correct, it is what other
+// tools look for, and the sitemap is submitted in Search Console regardless.
+function robots() {
+  return ["User-agent: *", "Allow: /", "", "Sitemap: " + SITE + "sitemap.xml", ""].join("\n");
 }
 
 // the same list as plain text, one address a line: a second thing Search
@@ -254,7 +282,8 @@ for (const page of PAGES) {
   if (!CHECK) fs.writeFileSync(path.join(here, page.file), html, "utf8");
 }
 
-for (const [file, body] of [["sitemap.xml", sitemap()], ["sitemap.txt", sitemapTxt()]]) {
+for (const [file, body] of [["sitemap.xml", sitemap()], ["sitemap.txt", sitemapTxt()],
+                            ["robots.txt", robots()]]) {
   if (exists(file) && read(file) === body) continue;
   stale.push(file);
   if (!CHECK) fs.writeFileSync(path.join(here, file), body, "utf8");
