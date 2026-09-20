@@ -25,6 +25,10 @@ const exists = (f) => fs.existsSync(path.join(here, f));
    Pages waiting on real content (reviews, a case study, writing) are kept
    out of the published site, in drafts/. */
 
+// Fixes is listed only once there is a fix to read: an empty section in the
+// menu is worse than no section.
+const HAS_FIXES = fs.existsSync(path.join(here, "fixes", "index.html"));
+
 const PAGES = [
   { file: "index.html",                       section: "home" },
   { file: "services/index.html",              section: "guide" },
@@ -47,19 +51,29 @@ const PAGES = [
   { file: "learn/03-the-page-model-and-the-tree.html", section: "learn" }
 ];
 
+// Fix pages are found rather than listed: their names come from the fix
+// folders, and tools/make-fixes.py writes whatever is there.
+if (HAS_FIXES) {
+  for (const f of fs.readdirSync(path.join(here, "fixes")).sort()) {
+    if (f.endsWith(".html")) PAGES.push({ file: "fixes/" + f, section: "fixes" });
+  }
+}
+
 const NAV = [
   { key: "guide",     label: "Field guide", href: "services/index.html" },
   { key: "specimens", label: "Projects",    href: "work/index.html" },
   { key: "learn",     label: "Learn",       href: "learn/index.html" },
+  { key: "fixes",     label: "Fixes",       href: "fixes/index.html", held: !HAS_FIXES },
   { key: "about",     label: "About",       href: "about.html" },
   { key: "write",     label: "Write to me", href: "contact.html", cta: true }
-];
+].filter((n) => !n.held);
 
 const FOOT = [
   ["Home", "index.html"],
   ["Field guide", "services/index.html"],
   ["Projects", "work/index.html"],
   ["Learn", "learn/index.html"],
+  ...(HAS_FIXES ? [["Fixes", "fixes/index.html"]] : []),
   ["About", "about.html"],
   ["Write to me", "contact.html"],
   ["Colophon", "colophon.html"]
@@ -152,8 +166,9 @@ function seoFor(page, html) {
   const title = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
   const desc = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
   // an episode page previews with its own thumbnail; everything else with the share card
-  const own = page.file.startsWith("learn/") &&
-    "assets/learn/" + path.basename(page.file, ".html") + ".jpg";
+  const dir = page.file.split("/")[0];
+  const own = (dir === "learn" || dir === "fixes") &&
+    "assets/" + dir + "/" + path.basename(page.file, ".html") + ".jpg";
   const url = urlOf(page.file), img = SITE + (own && exists(own) ? own : "assets/share-card.png");
   return [
     '<link rel="canonical" href="' + url + '">',
