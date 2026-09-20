@@ -76,6 +76,28 @@ def thumbnail(src, out_dir, name, width=960):
     return True
 
 
+def youtube_thumb(video, out_dir, name):
+    """Save a video's own YouTube thumbnail into the site. Used when a fix has
+    a video but no thumb.png of its own — the image is stored here rather than
+    hotlinked, so the page does not depend on YouTube to draw its cards."""
+    import tempfile
+    import urllib.request
+    for kind in ("maxresdefault", "hqdefault"):                # maxres is not always there
+        url = "https://i.ytimg.com/vi/" + video + "/" + kind + ".jpg"
+        try:
+            data = urllib.request.urlopen(url, timeout=20).read()
+        except Exception:
+            continue
+        tmp = os.path.join(tempfile.gettempdir(), video + ".jpg")
+        io.open(tmp, "wb").write(data)
+        ok = thumbnail(tmp, out_dir, name)
+        os.remove(tmp)
+        if ok:
+            return True
+    print("could not fetch a thumbnail for " + video)
+    return False
+
+
 def write(rel, html):
     path = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)

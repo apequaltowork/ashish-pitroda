@@ -48,7 +48,8 @@ const PAGES = [
   { file: "learn/00b-setting-up-your-machine.html",    section: "learn" },
   { file: "learn/01-what-wagtail-actually-is.html",    section: "learn" },
   { file: "learn/02-every-file-explained.html",        section: "learn" },
-  { file: "learn/03-the-page-model-and-the-tree.html", section: "learn" }
+  { file: "learn/03-the-page-model-and-the-tree.html", section: "learn" },
+  { file: "learn/04-templates-and-static-files.html",  section: "learn" }
 ];
 
 // Fix pages are found rather than listed: their names come from the fix
@@ -137,7 +138,7 @@ function footFor(page) {
 // the colophon's numbers, measured on every build rather than typed in
 function stats() {
   const kb = (f) => (fs.statSync(path.join(here, f)).size / 1024).toFixed(1) + " KB";
-  const scripts = ["journal.js", "bird.js", "theme.js", "palette.js", "letter.js", "specimens.js", "projects.js"].filter(exists);
+  const scripts = ["journal.js", "bird.js", "theme.js", "palette.js", "letter.js", "specimens.js", "projects.js", "fixes.js"].filter(exists);
   const jsBytes = scripts.reduce((n, f) => n + fs.statSync(path.join(here, f)).size, 0);
   const pages = PAGES.filter((p) => !p.held && p.file !== "404.html" && exists(p.file)).length;
   const rows = [

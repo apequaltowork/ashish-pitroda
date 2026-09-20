@@ -207,6 +207,48 @@ EPISODES = [
         "tag": "ep03-end",
         "commands": "youtube/ep03/commands.md",
     },
+    {
+        "slug": "04-templates-and-static-files",
+        "no": "04",
+        "video": "e-FeE6O9AhM",
+        "uploaded": "2026-09-19T21:36:44-07:00",   # from the YouTube watch page
+        "runtime": "5:38",
+        "iso": "PT5M38S",
+        "title": "Templates and static files",
+        "search_title": "Wagtail Templates and Static Files Explained",
+        "lede": "The teal egg finally goes. We delete Wagtail's welcome page, write a real base "
+                "template, list child pages from the page tree, and style the site with plain CSS.",
+        "covers": [
+            "Where the welcome page lives and how to delete it properly; how Wagtail finds a "
+            "template from the model name, and the two places templates can live; and a real "
+            "<code>base.html</code> with a header, main and footer, keeping the generated bits that "
+            "are worth keeping.",
+            "Then the template work itself: <code>pageurl</code>, <code>slugurl</code> and the "
+            "<code>richtext</code> filter, why you should never build links from "
+            "<code>url_path</code>, and listing child pages with <code>get_children.live</code> "
+            "straight from the page tree.",
+            "Plus the ten-minute trap nobody warns you about: you write your CSS, reload, and the "
+            "page is still completely unstyled — with nothing wrong with your code. We cover why "
+            "<code>studio.css</code> ships at 0 bytes, how <code>{% static %}</code> resolves it, "
+            "and the browser-cache trap, with proof of what is actually happening.",
+            "No build step, no framework, no Node. Plain CSS, hand-written, for the whole series.",
+        ],
+        "prereq": False,
+        "chapters": [
+            ("0:00", "Four episodes in, still an egg"), ("0:16", "Where the welcome page lives"),
+            ("0:30", "How Wagtail finds a template"), ("0:46", "Two places templates live"),
+            ("1:06", "base.html — keep the head"), ("1:23", "Header, main, footer"),
+            ("1:35", "pageurl, slugurl, richtext"), ("1:58", "Never build links from url_path"),
+            ("2:14", "Listing child pages from the tree"),
+            ("2:32", "The stylesheet that ships empty"), ("2:56", "static and STATICFILES_DIRS"),
+            ("3:14", "You write the CSS. Nothing changes."), ("3:30", "What's actually happening"),
+            ("3:52", "Hard-reload"), ("4:09", "The result"), ("4:22", "The About page"),
+            ("4:36", "One media query"), ("4:50", "Why the 404 page hasn't changed"),
+            ("5:09", "Commit and tag"), ("5:12", "Next episode"),
+        ],
+        "tag": "ep04-end",
+        "commands": "youtube/ep04/commands.md",
+    },
 ]
 
 VERSIONS = "Wagtail 7.4.3 · Django 6.1.1 · Python 3.12"

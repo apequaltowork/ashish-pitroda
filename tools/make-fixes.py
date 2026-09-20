@@ -21,7 +21,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from journal_pages import (ARROW, BACK, FOOT, RULE, SITE, embed, esc, head, ld,  # noqa: E402
-                           thumbnail, upload_date, write)
+                           thumbnail, upload_date, write, youtube_thumb)
 
 # one line to change if the folder moves; FIXES_DIR overrides it for a dry run
 SOURCE = os.environ.get("FIXES_DIR") or "D:/portfolio/fixes"
@@ -135,24 +135,26 @@ def nice_date(iso):
     return d.strftime("%d %B %Y").lstrip("0")
 
 
-def card(i, fix, has_thumb):
+def row(fix, has_video):
+    """One line in the list: topic, date, the question, a little of the answer,
+    and the link through. data-fix is what the search box reads."""
     f = fix["fields"]
-    fig = ('        <span class="ep__fig">' +
-           ('<img src="../assets/fixes/' + fix["slug"] + '.webp" width="960" height="540" '
-            'loading="lazy" alt="Thumbnail for: ' + esc(f["title"]) + '">'
-            '<span class="ep__play" aria-hidden="true"></span>'
-            if has_thumb else
-            '<span class="ep__plain" aria-hidden="true">' + esc(f.get("topic", "")) + "</span>") +
-           "</span>\n")
-    return ('      <li><a class="ep" href="' + fix["slug"] + '.html" data-reveal '
-            'style="--d:.' + str(i + 2) + 's">\n' + fig +
-            '        <span class="ep__body">\n'
-            '          <span class="ep__no">' + esc(f.get("topic", "Fix")) +
-            ' <span aria-hidden="true">·</span> ' + nice_date(f["date"]) + "</span>\n"
-            '          <span class="ep__h">' + esc(f["title"]) + "</span>\n" +
-            ('          <span class="ep__p">' + esc(f["summary"]) + "</span>\n"
+    hay = " ".join([f["title"], f.get("summary", ""), f.get("topic", ""),
+                    nice_date(f["date"])])
+    return ('      <li class="qrow" data-fix="' + esc(hay.lower()) + '">\n'
+            '        <p class="qrow__meta"><span class="qrow__tag">' +
+            esc(f.get("topic", "Fix")) + "</span>"
+            '<time datetime="' + esc(f["date"]) + '">' + nice_date(f["date"]) + "</time>" +
+            ('<span class="qrow__film" title="This one has a video">with video</span>'
+             if has_video else "") + "</p>\n"
+            '        <h2 class="qrow__h"><a href="' + fix["slug"] + '.html">' +
+            esc(f["title"]) + "</a></h2>\n" +
+            ('        <p class="qrow__p">' + esc(f["summary"]) + "</p>\n"
              if f.get("summary") else "") +
-            "        </span>\n      </a></li>")
+            '        <p class="qrow__more"><a href="' + fix["slug"] + '.html">read the fix'
+            '<svg viewBox="0 0 18 12" aria-hidden="true">'
+            '<path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a></p>\n'
+            "      </li>")
 
 
 def fix_page(fix, has_thumb):
@@ -240,23 +242,36 @@ def fix_page(fix, has_thumb):
 
 
 def index_page(fixes, thumbs):
-    cards = "\n".join(card(i, fx, fx["slug"] in thumbs) for i, fx in enumerate(fixes))
+    rows = "\n".join(row(fx, bool(fx["video"])) for fx in fixes)
     body = ('\n<main class="page">\n\n  <section class="phead" id="top">\n'
             '    <a class="back" href="../index.html">' + BACK + "Back to the journal</a>\n"
             '    <p class="hero__kicker" data-reveal>Solved problems, written down</p>\n'
             '    <h1 class="phead__h" data-reveal style="--d:.08s">' + SECTION["title"] + "</h1>\n"
             "    " + RULE + "\n"
             '    <p class="hero__lede" data-reveal style="--d:.3s">' + SECTION["blurb"] + "</p>\n"
-            '    <p class="hand" data-reveal style="--d:.55s">— ' + str(len(fixes)) +
-            (" fix" if len(fixes) == 1 else " fixes") + " so far</p>\n  </section>\n\n"
-            '  <section class="sec sec--eps">\n    <ol class="eps">\n' + cards +
-            "\n    </ol>\n  </section>\n\n"
+            "  </section>\n\n"
+            # the whole list is in the page; fixes.js filters and pages it
+            '  <section class="sec sec--eps" id="list">\n'
+            '    <form class="qfind" role="search" data-reveal>\n'
+            '      <label for="q">Search the fixes</label>\n'
+            '      <input id="q" type="search" name="q" data-fix-search autocomplete="off"\n'
+            '        placeholder="an error, a word from it, or a topic">\n'
+            '      <span class="qfind__n" data-fix-count>' + str(len(fixes)) +
+            (" fix" if len(fixes) == 1 else " fixes") + "</span>\n    </form>\n\n"
+            '    <ul class="qlist" data-fixes data-per="10" data-reveal>\n' + rows +
+            "\n    </ul>\n\n"
+            '    <p class="qfind__none" data-fix-empty hidden>Nothing here matches that. '
+            'Try fewer words, or the error text itself.</p>\n'
+            '    <nav class="qpager" data-fix-pager aria-label="More fixes" hidden></nav>\n'
+            "  </section>\n\n"
             '  <section class="sec">\n    <div class="cta" data-reveal data-perch>\n      <div>\n'
             '        <p class="cta__h">Stuck on something?</p>\n'
             '        <p class="cta__p">If you are staring at an error that nobody seems to have '
             'written up, tell me about it.</p>\n      </div>\n      <div>\n'
             '        <a class="btn" href="../contact.html"><span>Write to me</span>' + ARROW +
-            "</a>\n      </div>\n    </div>\n  </section>\n\n  " + FOOT)
+            "</a>\n      </div>\n    </div>\n  </section>\n\n  " +
+            FOOT.replace('<script src="../journal.js">',
+                         '<script src="../fixes.js"></script>\n<script src="../journal.js">'))
 
     schema = ld({
         "@context": "https://schema.org", "@type": "CollectionPage",
@@ -281,7 +296,11 @@ def main():
         raise SystemExit("no fixes yet — nothing written. Start from " + SOURCE + "/_template.md")
     thumbs = set()
     for fx in fixes:
-        if thumbnail(fx["thumb"], "assets/fixes", fx["slug"]):
+        # thumb.png if you made one, otherwise the video's own thumbnail
+        got = thumbnail(fx["thumb"], "assets/fixes", fx["slug"])
+        if not got and fx["video"]:
+            got = youtube_thumb(fx["video"], "assets/fixes", fx["slug"])
+        if got:
             thumbs.add(fx["slug"])
         if fx["video"]:
             fx["uploaded"] = upload_date(fx["video"])

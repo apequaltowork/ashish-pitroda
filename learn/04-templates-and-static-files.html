@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wagtail Page Model Explained: Custom Page Types — Wagtail Unboxed 03</title>
-<meta name="description" content="We finally change code: two fields on the homepage, a second page type, and the one migration line that explains how every Wagtail page is stored.">
+<title>Wagtail Templates and Static Files Explained — Wagtail Unboxed 04</title>
+<meta name="description" content="The teal egg finally goes. We delete Wagtail's welcome page, write a real base template, list child pages from the page tree, and style the site with plain">
 <!-- @chrome seo -->
-<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/03-the-page-model-and-the-tree.html">
+<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-files.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ashish Pitroda">
-<meta property="og:title" content="Wagtail Page Model Explained: Custom Page Types — Wagtail Unboxed 03">
-<meta property="og:description" content="We finally change code: two fields on the homepage, a second page type, and the one migration line that explains how every Wagtail page is stored.">
-<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/03-the-page-model-and-the-tree.html">
-<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/03-the-page-model-and-the-tree.jpg">
+<meta property="og:title" content="Wagtail Templates and Static Files Explained — Wagtail Unboxed 04">
+<meta property="og:description" content="The teal egg finally goes. We delete Wagtail's welcome page, write a real base template, list child pages from the page tree, and style the site with plain">
+<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-files.html">
+<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/04-templates-and-static-files.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <!-- @end seo -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Wagtail Page Model Explained: Custom Page Types", "description": "We finally change code: two fields on the homepage, a second page type, and the one migration line that explains how every Wagtail page is stored.", "thumbnailUrl": "https://i.ytimg.com/vi/1Oxev2holT4/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/1Oxev2holT4", "contentUrl": "https://www.youtube.com/watch?v=1Oxev2holT4", "duration": "PT5M8S", "uploadDate": "2026-09-19T11:46:25-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, {"@type": "ListItem", "position": 3, "name": "The page model and the tree", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/03-the-page-model-and-the-tree.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Wagtail Templates and Static Files Explained", "description": "The teal egg finally goes. We delete Wagtail's welcome page, write a real base template, list child pages from the page tree, and style the site with plain CSS.", "thumbnailUrl": "https://i.ytimg.com/vi/e-FeE6O9AhM/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/e-FeE6O9AhM", "contentUrl": "https://www.youtube.com/watch?v=e-FeE6O9AhM", "duration": "PT5M38S", "uploadDate": "2026-09-19T21:36:44-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, {"@type": "ListItem", "position": 3, "name": "Templates and static files", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-files.html"}]}</script>
 <!-- @chrome head -->
 <script>document.documentElement.className += " js";
 /* Theme, before anything paints: light is Sepia archive, dark is Night journal.
@@ -139,43 +139,46 @@
   <article>
     <header class="phead" id="top">
       <a class="back" href="index.html"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>All episodes</a>
-      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 03 <span aria-hidden="true">·</span> 5:08</p>
-      <h1 class="phead__h" data-reveal style="--d:.08s">The page model and the tree</h1>
+      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 04 <span aria-hidden="true">·</span> 5:38</p>
+      <h1 class="phead__h" data-reveal style="--d:.08s">Templates and static files</h1>
       <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
-      <p class="hero__lede" data-reveal style="--d:.3s">We finally change code: two fields on the homepage, a second page type, and the one migration line that explains how every Wagtail page is stored.</p>
+      <p class="hero__lede" data-reveal style="--d:.3s">The teal egg finally goes. We delete Wagtail's welcome page, write a real base template, list child pages from the page tree, and style the site with plain CSS.</p>
     </header>
 
     <figure class="tube" data-reveal data-perch>
-      <div><iframe src="https://www.youtube-nocookie.com/embed/1Oxev2holT4" title="Wagtail Page Model Explained: Custom Page Types" loading="lazy" allowfullscreen
+      <div><iframe src="https://www.youtube-nocookie.com/embed/e-FeE6O9AhM" title="Wagtail Templates and Static Files Explained" loading="lazy" allowfullscreen
         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
     </figure>
 
     <div class="prose" data-reveal>
       <h2>What this episode covers</h2>
-      <p>Last episode predicted that a page one level under Home would get the tree path <code>000100010001</code>. This episode we build that page and check it in the database.</p>
-      <p>Along the way: adding fields to a Wagtail page, and why they do not appear in the admin without <code>content_panels</code>; creating a second page type, <code>StandardPage</code>, and why it needs its own template; and multi-table inheritance, where every page lives in two tables joined by <code>page_ptr</code>.</p>
-      <p>Also covered: reading the page tree from the shell, why <code>url_path</code> says <code>/home/about/</code> while the page is served at <code>/about/</code>, and the <code>.specific</code> gotcha, where <code>Page.objects</code> hands you a page with your fields missing.</p>
+      <p>Where the welcome page lives and how to delete it properly; how Wagtail finds a template from the model name, and the two places templates can live; and a real <code>base.html</code> with a header, main and footer, keeping the generated bits that are worth keeping.</p>
+      <p>Then the template work itself: <code>pageurl</code>, <code>slugurl</code> and the <code>richtext</code> filter, why you should never build links from <code>url_path</code>, and listing child pages with <code>get_children.live</code> straight from the page tree.</p>
+      <p>Plus the ten-minute trap nobody warns you about: you write your CSS, reload, and the page is still completely unstyled — with nothing wrong with your code. We cover why <code>studio.css</code> ships at 0 bytes, how <code>{% static %}</code> resolves it, and the browser-cache trap, with proof of what is actually happening.</p>
+      <p>No build step, no framework, no Node. Plain CSS, hand-written, for the whole series.</p>
 
       <h2>Chapters</h2>
       <ol class="chapters">
-        <li><b>0:00</b> Last episode's prediction</li>
-        <li><b>0:19</b> Where we left HomePage</li>
-        <li><b>0:38</b> Adding intro and body fields</li>
-        <li><b>0:56</b> A field is not a form field: content_panels</li>
-        <li><b>1:17</b> A second page type: StandardPage</li>
-        <li><b>1:31</b> Every page type needs a template</li>
-        <li><b>1:54</b> makemigrations and migrate</li>
-        <li><b>2:02</b> The page_ptr line</li>
-        <li><b>2:15</b> Every page lives in two tables</li>
-        <li><b>2:45</b> Editing the homepage in the admin</li>
-        <li><b>2:56</b> Adding a child page</li>
-        <li><b>3:08</b> Printing the tree</li>
-        <li><b>3:14</b> The prediction checks out</li>
-        <li><b>3:31</b> url_path is not the URL</li>
-        <li><b>3:59</b> Why is my field missing? .specific</li>
-        <li><b>4:20</b> What's still wrong</li>
-        <li><b>4:38</b> Commit and tag</li>
-        <li><b>4:46</b> Next episode</li>
+        <li><b>0:00</b> Four episodes in, still an egg</li>
+        <li><b>0:16</b> Where the welcome page lives</li>
+        <li><b>0:30</b> How Wagtail finds a template</li>
+        <li><b>0:46</b> Two places templates live</li>
+        <li><b>1:06</b> base.html — keep the head</li>
+        <li><b>1:23</b> Header, main, footer</li>
+        <li><b>1:35</b> pageurl, slugurl, richtext</li>
+        <li><b>1:58</b> Never build links from url_path</li>
+        <li><b>2:14</b> Listing child pages from the tree</li>
+        <li><b>2:32</b> The stylesheet that ships empty</li>
+        <li><b>2:56</b> static and STATICFILES_DIRS</li>
+        <li><b>3:14</b> You write the CSS. Nothing changes.</li>
+        <li><b>3:30</b> What's actually happening</li>
+        <li><b>3:52</b> Hard-reload</li>
+        <li><b>4:09</b> The result</li>
+        <li><b>4:22</b> The About page</li>
+        <li><b>4:36</b> One media query</li>
+        <li><b>4:50</b> Why the 404 page hasn't changed</li>
+        <li><b>5:09</b> Commit and tag</li>
+        <li><b>5:12</b> Next episode</li>
       </ol>
 
       <h2>Versions on screen</h2>
@@ -186,11 +189,11 @@
   <section class="sec">
     <div class="cta" data-reveal data-perch>
       <div>
-        <p class="cta__h">Next: episode 04, Templates and static files</p>
-        <p class="cta__p">Carry on from here.</p>
+        <p class="cta__h">More episodes are coming</p>
+        <p class="cta__p">New episodes are added to the series as they are published.</p>
       </div>
       <div>
-        <a class="btn" href="04-templates-and-static-files.html"><span>Episode 04</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="btn" href="https://www.youtube.com/@apequaltowork"><span>The channel</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
         <a class="cta__alt" href="index.html">or see all episodes</a>
       </div>
     </div>
@@ -198,7 +201,7 @@
 
   <section class="sec">
     <div class="prose" data-reveal>
-      <p><a class="btn" href="https://www.youtube.com/watch?v=1Oxev2holT4"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep03-end">the code at the end of this episode (<code>ep03-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep03/commands.md">every command, for Windows, macOS and Linux</a></p>
+      <p><a class="btn" href="https://www.youtube.com/watch?v=e-FeE6O9AhM"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep04-end">the code at the end of this episode (<code>ep04-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep04/commands.md">every command, for Windows, macOS and Linux</a></p>
     </div>
   </section>
 

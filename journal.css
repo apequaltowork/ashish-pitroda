@@ -2300,3 +2300,92 @@ html.is-viewing { overflow: hidden; }
 @media (max-width: 640px) { .prose .chapters { columns: 1; } }
 .prose ul + p, .prose ol + p { margin-top: 1.1rem; }
 @media (max-width: 720px) { .eps { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── the fixes list ────────────────────────────────────────────
+   A reference list, not a gallery: one ruled row per fix, with a
+   search box and a pager. Both are progressive — with no JS the
+   whole list is here, which is also what a crawler reads. */
+.qfind {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: clamp(18px, 3vh, 28px);
+}
+.qfind label {
+  font-variant-caps: all-small-caps;
+  letter-spacing: .1em;
+  font-size: .95rem;
+  color: var(--ink-3);
+}
+.qfind input {
+  flex: 1 1 260px;
+  min-width: 0;
+  padding: 10px 14px;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--paper-3);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+.qfind input:focus { outline: 2px solid var(--red); outline-offset: 1px; }
+.qfind__n { font-size: .92rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.qfind__none { margin-top: 18px; font-style: italic; color: var(--ink-3); }
+
+.qlist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.qrow { padding: clamp(18px, 2.4vh, 26px) 0; border-bottom: 1px solid var(--rule); }
+.qrow[hidden] { display: none; }
+.qrow__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-variant-caps: all-small-caps;
+  letter-spacing: .1em;
+  font-size: .92rem;
+  color: var(--ink-3);
+}
+.qrow__tag { color: var(--red); }
+.qrow__film { color: var(--ink-3); }
+.qrow__h {
+  margin: 6px 0 0;
+  font-family: var(--display);
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.25;
+}
+.qrow__h a {
+  color: var(--ink);
+  text-decoration: none;
+  background: linear-gradient(var(--red), var(--red)) 0 100% / 0 1px no-repeat;
+  transition: background-size .4s var(--ease);
+}
+.qrow:hover .qrow__h a { background-size: 100% 1px; }
+.qrow__p { margin: 8px 0 0; max-width: 72ch; font-size: 1rem; line-height: 1.65; color: var(--ink-2); }
+.qrow__more { margin: 10px 0 0; font-size: .95rem; }
+.qrow__more a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--red);
+  text-decoration: none;
+}
+.qrow__more svg { width: 16px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.qrow__more a:hover svg { translate: 3px 0; }
+.qrow__more svg { transition: translate .3s var(--ease); }
+
+.qpager { display: flex; flex-wrap: wrap; gap: 8px; margin-top: clamp(20px, 3vh, 30px); }
+.qpager[hidden] { display: none; }
+.qpager button {
+  min-width: 38px;
+  padding: 7px 10px;
+  font: inherit;
+  font-size: .95rem;
+  color: var(--ink-2);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  cursor: pointer;
+}
+.qpager button:hover { border-color: var(--ink-3); color: var(--ink); }
+.qpager .is-on { color: var(--paper-3); background: var(--ink); border-color: var(--ink); }
