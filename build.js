@@ -44,6 +44,7 @@ const PAGES = [
   { file: "404.html",                         section: null },
   { file: "work/index.html",                  section: "specimens" },
   { file: "learn/index.html",                          section: "learn" },
+  { file: "learn/wagtail-unboxed/index.html",          section: "learn" },
   { file: "learn/00a-what-this-series-is.html",        section: "learn" },
   { file: "learn/00b-setting-up-your-machine.html",    section: "learn" },
   { file: "learn/01-what-wagtail-actually-is.html",    section: "learn" },
@@ -64,7 +65,10 @@ if (HAS_FIXES) {
 const NAV = [
   { key: "guide",     label: "Field guide", href: "services/index.html" },
   { key: "specimens", label: "Projects",    href: "work/index.html" },
-  { key: "learn",     label: "Learn",       href: "learn/index.html" },
+  { key: "learn",     label: "Learn",       href: "learn/index.html",
+    // the series under Learn. Clicking Learn still goes to the hub: the list
+    // is an addition, never the only way in.
+    children: [["Wagtail Unboxed", "learn/wagtail-unboxed/index.html"]] },
   { key: "fixes",     label: "Fixes",       href: "fixes/index.html", held: !HAS_FIXES },
   { key: "about",     label: "About",       href: "about.html" },
   { key: "write",     label: "Write to me", href: "contact.html", cta: true }
@@ -123,9 +127,18 @@ function navFor(page) {
   return NAV.map((n) => {
     const on = page.section === n.key;
     const cls = [n.cta ? "nav__cta" : "", on ? "is-active" : ""].filter(Boolean).join(" ");
-    return "<li" + (n.cta ? ' class="nav__keep"' : "") + "><a" +
-      (cls ? ' class="' + cls + '"' : "") + ' href="' + n.href + '"' +
-      (on ? ' aria-current="page"' : "") + ">" + n.label + "</a></li>";
+    const li = [n.cta ? "nav__keep" : "", n.children ? "nav__has" : ""].filter(Boolean).join(" ");
+    const link = "<a" + (cls ? ' class="' + cls + '"' : "") + ' href="' + n.href + '"' +
+      (on ? ' aria-current="page"' : "") + ">" + n.label + "</a>";
+    // the series sit in a plain nested list: real links, so a crawler and a
+    // visitor without JavaScript both follow them
+    const sub = n.children
+      ? '\n          <ul class="nav__sub">' +
+        n.children.map(([label, href]) =>
+          '<li><a href="' + href + '">' + label + "</a></li>").join("") +
+        "</ul>\n        "
+      : "";
+    return "<li" + (li ? ' class="' + li + '"' : "") + ">" + link + sub + "</li>";
   }).join("\n        ");   // the partial already indents the first item
 }
 

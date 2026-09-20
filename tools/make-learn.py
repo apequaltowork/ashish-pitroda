@@ -18,6 +18,7 @@ CHANNEL = "https://www.youtube.com/@apequaltowork"
 SITE = "https://apequaltowork.github.io/ashish-pitroda/"
 
 SERIES = {
+    "slug": "wagtail-unboxed",          # the series page is learn/<slug>/
     "title": "Wagtail Unboxed",
     "blurb": "Build a real Wagtail site from an empty folder — and understand every file in it.",
 }
@@ -382,7 +383,7 @@ def episode_page(i, ep):
                      '">every command, for Windows, macOS and Linux</a>')
 
     body = ('\n<main class="page">\n\n  <article>\n    <header class="phead" id="top">\n'
-            '      <a class="back" href="index.html">' + BACK + "All episodes</a>\n"
+            '      <a class="back" href="' + SERIES["slug"] + '/">' + BACK + "All episodes</a>\n"
             '      <p class="hero__kicker" data-reveal>' + SERIES["title"] +
             ' <span aria-hidden="true">·</span> episode ' + ep["no"] +
             ' <span aria-hidden="true">·</span> ' + ep["runtime"] + "</p>\n"
@@ -426,7 +427,8 @@ def episode_page(i, ep):
         "@context": "https://schema.org", "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE},
-            {"@type": "ListItem", "position": 2, "name": SERIES["title"], "item": SITE + "learn/"},
+            {"@type": "ListItem", "position": 2, "name": SERIES["title"],
+             "item": SITE + "learn/" + SERIES["slug"] + "/"},
             {"@type": "ListItem", "position": 3, "name": ep["title"],
              "item": SITE + "learn/" + ep["slug"] + ".html"},
         ],
@@ -437,12 +439,12 @@ def episode_page(i, ep):
 
 def card(i, ep, has_thumb):
     fig = ('        <span class="ep__fig">' +
-           ('<img src="../assets/learn/' + ep["slug"] + '.webp" width="960" height="540" '
+           ('<img src="../../assets/learn/' + ep["slug"] + '.webp" width="960" height="540" '
             'loading="lazy" alt="Thumbnail for episode ' + ep["no"] + ': ' + ep["title"] + '">'
             if has_thumb else "") +
            '<span class="ep__play" aria-hidden="true"></span>'
            '<span class="ep__time">' + ep["runtime"] + "</span></span>\n")
-    return ('      <li><a class="ep" href="' + ep["slug"] + '.html" data-reveal '
+    return ('      <li><a class="ep" href="../' + ep["slug"] + '.html" data-reveal '
             'style="--d:.' + str(i + 2) + 's">\n' + fig +
             '        <span class="ep__body">\n'
             '          <span class="ep__no">Episode ' + ep["no"] + "</span>\n"
@@ -487,14 +489,16 @@ def index_page(have=frozenset()):
             "Plain CSS written by hand, so the episodes stay about Wagtail.</p>\n"
             "      <h2>The code</h2>\n      <p>Every episode ends on a git tag, so you can start "
             'anywhere: <a href="' + REPO + '">the repository is on GitHub</a>. Versions on screen are '
-            + VERSIONS + ".</p>\n    </div>\n  </section>\n\n  " + FOOT)
+            + VERSIONS + ".</p>\n    </div>\n  </section>\n\n  " +
+            # this page sits two levels down, so its scripts do too
+            FOOT.replace('src="../', 'src="../../'))
 
     schema = ld({
         "@context": "https://schema.org", "@type": "CreativeWorkSeries",
         "name": SERIES["title"], "description": SERIES["blurb"],
         "author": {"@type": "Person", "name": "Ashish Pitroda"},
         "numberOfEpisodes": len(EPISODES),
-        "url": SITE + "learn/",
+        "url": SITE + "learn/" + SERIES["slug"] + "/",
         "hasPart": [{"@type": "VideoObject", "name": ep["search_title"], "description": ep["lede"],
                      "thumbnailUrl": "https://i.ytimg.com/vi/" + ep["video"] + "/maxresdefault.jpg",
                      "uploadDate": ep["uploaded"], "duration": ep["iso"],
@@ -506,10 +510,64 @@ def index_page(have=frozenset()):
                 "generates, then build and deploy a real site.", schema) + body
 
 
+def hub_page(have=frozenset()):
+    """learn/ — the shelf the series sit on. One card per series, so a second
+    one is a second entry here and nothing existing moves."""
+    newest = EPISODES[-1]
+    cover = ('<img src="../assets/learn/' + newest["slug"] + '.webp" width="960" height="540" '
+             'loading="lazy" alt="Wagtail Unboxed">' if newest["slug"] in have else "")
+    card_html = ('      <li><a class="ep" href="' + SERIES["slug"] + '/" data-reveal '
+                 'style="--d:.2s">\n'
+                 '        <span class="ep__fig">' + cover +
+                 '<span class="ep__play" aria-hidden="true"></span>'
+                 '<span class="ep__time">' + str(len(EPISODES)) + " episodes</span></span>\n"
+                 '        <span class="ep__body">\n'
+                 '          <span class="ep__no">Wagtail and Django</span>\n'
+                 '          <span class="ep__h">' + SERIES["title"] + "</span>\n"
+                 '          <span class="ep__p">' + SERIES["blurb"] + "</span>\n"
+                 "        </span>\n      </a></li>")
+
+    body = ('\n<main class="page">\n\n  <section class="phead" id="top">\n'
+            '    <a class="back" href="../index.html">' + BACK + "Back to the journal</a>\n"
+            '    <p class="hero__kicker" data-reveal>Video series, free to watch</p>\n'
+            '    <h1 class="phead__h" data-reveal style="--d:.08s">Learn</h1>\n'
+            "    " + RULE + "\n"
+            '    <p class="hero__lede" data-reveal style="--d:.3s">Series where something real gets '
+            "built from an empty folder, with every file explained on the way. Each episode has a "
+            "page here with what it covers and its chapters, and the video itself.</p>\n"
+            "  </section>\n\n"
+            '  <section class="sec sec--eps">\n    <ol class="eps">\n' + card_html +
+            "\n    </ol>\n  </section>\n\n"
+            '  <section class="sec">\n    <div class="cta" data-reveal data-perch>\n      <div>\n'
+            '        <p class="cta__h">Want a series on something else?</p>\n'
+            '        <p class="cta__p">If there is a part of Wagtail or Django you keep having to '
+            "explain to people, tell me and it may become one.</p>\n      </div>\n      <div>\n"
+            '        <a class="btn" href="../contact.html"><span>Write to me</span>' + ARROW +
+            "</a>\n      </div>\n    </div>\n  </section>\n\n  " + FOOT)
+
+    schema = ld({
+        "@context": "https://schema.org", "@type": "CollectionPage",
+        "name": "Learn", "url": SITE + "learn/",
+        "description": "Video series on Wagtail and Django, with a page per episode.",
+        "author": {"@type": "Person", "name": "Ashish Pitroda", "url": SITE},
+        "mainEntity": {"@type": "ItemList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": SERIES["title"],
+             "url": SITE + "learn/" + SERIES["slug"] + "/"}]},
+    })
+    return head("Learn — Wagtail and Django video series by Ashish Pitroda",
+                "Free video series on Wagtail and Django, each episode with a page of its own: "
+                "what it covers, its chapters, and the video.", schema) + body
+
+
 def main():
     out = os.path.join(ROOT, "learn")
-    os.makedirs(out, exist_ok=True)
-    files = [("index.html", index_page(thumbs()))]
+    os.makedirs(os.path.join(out, SERIES["slug"]), exist_ok=True)
+    have = thumbs()
+    # learn/ is the hub, learn/<slug>/ is this series, and the episodes stay
+    # where they have always been — learn/<episode>.html — so no indexed
+    # address changes when a second series arrives.
+    files = [("index.html", hub_page(have)),
+             (SERIES["slug"] + "/index.html", index_page(have))]
     files += [(ep["slug"] + ".html", episode_page(i, ep)) for i, ep in enumerate(EPISODES)]
     for name, html in files:
         io.open(os.path.join(out, name), "w", encoding="utf-8", newline="").write(html)
