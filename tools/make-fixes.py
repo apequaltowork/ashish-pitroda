@@ -241,6 +241,40 @@ def fix_page(fix, has_thumb):
     return head(title + " — " + SECTION["title"], desc, schema, "learn") + body
 
 
+def waiting_page():
+    """The section before the first fix is written: it says plainly that
+    nothing is here yet, and what will be. No invented fixes, and noindex
+    until there is something to read, so Google never sees an empty page."""
+    body = ('\n<main class="page">\n\n  <section class="phead" id="top">\n'
+            '    <a class="back" href="../index.html">' + BACK + "Back to the journal</a>\n"
+            '    <p class="hero__kicker" data-reveal>Solved problems, written down</p>\n'
+            '    <h1 class="phead__h" data-reveal style="--d:.08s">' + SECTION["title"] + "</h1>\n"
+            "    " + RULE + "\n"
+            '    <p class="hero__lede" data-reveal style="--d:.3s">' + SECTION["blurb"] + "</p>\n"
+            '    <p class="hand" data-reveal style="--d:.55s">— the first one is being written</p>\n'
+            "  </section>\n\n"
+            '  <section class="sec">\n    <div class="prose" data-reveal>\n'
+            "      <h2>What will be here</h2>\n"
+            "      <p>Errors that people are genuinely stuck on, taken apart properly: what you "
+            "see, why it actually happens, and the fix — with the commands and the code. Some "
+            "will come with a video walking through it.</p>\n"
+            "      <p>Nothing is posted here until it is real and it works, so the page is empty "
+            "rather than padded.</p>\n"
+            '      <p>In the meantime, <a href="../learn/index.html">Wagtail Unboxed</a> is a '
+            "video series that builds a Wagtail site from an empty folder and explains every "
+            "file on the way.</p>\n    </div>\n  </section>\n\n"
+            '  <section class="sec">\n    <div class="cta" data-reveal data-perch>\n      <div>\n'
+            '        <p class="cta__h">Stuck on something?</p>\n'
+            '        <p class="cta__p">If you are staring at an error nobody seems to have '
+            "written up, tell me about it. It may well end up here.</p>\n      </div>\n"
+            '      <div>\n        <a class="btn" href="../contact.html"><span>Write to me</span>' +
+            ARROW + "</a>\n      </div>\n    </div>\n  </section>\n\n  " + FOOT)
+    return head(SECTION["title"] + " — errors solved and written up, by Ashish Pitroda",
+                "Solved problems, written up: the symptom, the actual cause, and the fix. "
+                "The first one is being written.",
+                '<meta name="robots" content="noindex">\n', "learn") + body
+
+
 def index_page(fixes, thumbs):
     rows = "\n".join(row(fx, bool(fx["video"])) for fx in fixes)
     body = ('\n<main class="page">\n\n  <section class="phead" id="top">\n'
@@ -291,9 +325,13 @@ def index_page(fixes, thumbs):
 
 
 def main():
-    fixes = load()
+    fixes = load() if os.path.isdir(SOURCE) else []
     if not fixes:
-        raise SystemExit("no fixes yet — nothing written. Start from " + SOURCE + "/_template.md")
+        write(OUT + "/index.html", waiting_page())
+        print("\nno fixes written yet, so the section says so. Start from "
+              + SOURCE + "/_template.md")
+        print("now run: node build.js")
+        return
     thumbs = set()
     for fx in fixes:
         # thumb.png if you made one, otherwise the video's own thumbnail
