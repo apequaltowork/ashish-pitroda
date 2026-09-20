@@ -112,6 +112,7 @@ section[id] { scroll-margin-top: 76px; }
   transition: border-color .4s var(--ease);
 }
 .top.is-scrolled { border-color: var(--rule); }
+.top__in { position: relative; }
 .top__in {
   max-width: var(--col);
   margin: 0 auto;
@@ -156,6 +157,20 @@ section[id] { scroll-margin-top: 76px; }
   transition: background-color .35s var(--ease), color .35s var(--ease);
 }
 .nav .nav__cta:hover { background-color: var(--ink); color: var(--paper-3); }
+
+/* the menu button: three ruled lines, only on narrow screens */
+.burger {
+  display: none;
+  margin-left: auto;
+  padding: 8px;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.burger svg { width: 22px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+.burger:hover { color: var(--ink); }
+.top.is-open .burger { color: var(--red); }
 
 /* ── the page, with its margin line ────────────────────────── */
 
@@ -628,7 +643,34 @@ section[id] { scroll-margin-top: 76px; }
   .guide, .drawer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 720px) {
-  .nav li:not(.nav__keep) { display: none; }
+  /* the pages move into a panel under the bar, opened by .burger */
+  .burger { display: inline-flex; }
+  .top nav {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    display: none;
+    padding: 6px clamp(20px, 5vw, 56px) 18px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+  .top.is-open nav { display: block; }
+  .top.is-open { border-color: var(--rule); }
+  .nav { flex-direction: column; align-items: stretch; gap: 0; }
+  .nav li { border-top: 1px solid var(--rule); }
+  .nav a {
+    display: block;
+    padding: 13px 2px;
+    font-size: 1.05rem;
+    background-image: none;
+  }
+  .nav .nav__cta {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 9px 20px;
+  }
+  .nav__keep { border-top: 0; }
   .mark i { display: none; }
   .page { padding-left: 34px; }
   .page::before { left: 16px; }

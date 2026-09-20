@@ -118,5 +118,32 @@ window.JOURNAL = (function () {
     });
   });
 
+  /* ── the menu, on narrow screens ────────────────────────────
+     The pages are a panel under the bar; this opens and closes it.
+     Nothing is hidden without JS: the panel only exists as a panel
+     inside the same media query that shows the button. */
+  (function () {
+    var btn = document.querySelector("[data-menu]");
+    var bar = document.querySelector("[data-top]");
+    if (!btn || !bar) return;
+
+    function set(open) {
+      bar.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    btn.addEventListener("click", function () {
+      set(bar.className.indexOf("is-open") === -1);
+    });
+    // a tap outside, Escape, or following a link closes it again
+    document.addEventListener("click", function (e) {
+      if (!bar.contains(e.target)) set(false);
+      else if (e.target.closest && e.target.closest("#pages a")) set(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") set(false);
+    });
+    addEventListener("resize", function () { set(false); });
+  })();
+
   return { revealAll: revealAll, paintLog: function () { paintLog(); } };
 })();

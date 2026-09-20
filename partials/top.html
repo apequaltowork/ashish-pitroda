@@ -75,7 +75,11 @@
       <svg viewBox="0 0 64 40" aria-hidden="true"><ellipse cx="30" cy="23" rx="12.5" ry="7"/><circle cx="42.5" cy="15.5" r="5.6"/><path d="M42 14.2 L51 15.6 L42 17 Z"/><path d="M19 21.5 L3 19.5 L3 23.5 L19 26 Z"/><path d="M27 29 L26 36 M33 29 L33.5 36" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
       <b>Ashish Pitroda</b><i>field notes</i>
     </a>
-    <nav aria-label="Pages">
+    <!-- On narrow screens the list becomes a panel and this opens it. journal.js -->
+    <button class="burger" type="button" data-menu aria-expanded="false" aria-controls="pages" aria-label="Menu">
+      <svg viewBox="0 0 22 16" aria-hidden="true"><path d="M1 2.2 H21 M1 8 H21 M1 13.8 H21"/></svg>
+    </button>
+    <nav id="pages" aria-label="Pages">
       <ul class="nav">
         @nav
       </ul>
