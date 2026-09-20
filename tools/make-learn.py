@@ -298,6 +298,51 @@ EPISODES = [
         "tag": "ep05-end",
         "commands": "youtube/ep05/commands.md",
     },
+    {
+        "slug": "06-images-and-documents",
+        "no": "06",
+        "video": "YYxtwAx4a0w",
+        "uploaded": "2026-09-20T10:08:02-07:00",   # from the YouTube watch page
+        "runtime": "7:49",
+        "iso": "PT7M49S",
+        "title": "Images and documents",
+        "search_title": "Wagtail Images and Documents: Renditions and Focal Points",
+        "lede": "Six episodes into a design studio's website and there is not one picture on it. We "
+                "fix that — and hit the image bug that only shows up after you deploy.",
+        "covers": [
+            "Renditions are database rows, not files. Wipe your media folder, restore a backup onto "
+            "a new server, and Wagtail will keep serving URLs for files that are gone: eleven rows, "
+            "eleven 404s. There is a one-line fix and it ships with Wagtail.",
+            "The groundwork: images and documents are already installed, nothing to add; why "
+            "<code>media/</code> is gitignored and what that means for your deploys; and the image "
+            "ForeignKey, with <code>on_delete=SET_NULL</code> rather than <code>CASCADE</code>.",
+            "Then the template side: what the <code>image</code> tag actually does, filter specs "
+            "(width, height, fill, max, min, format), <code>srcset_image</code> for responsive "
+            "images in one tag, and focal points with a real before and after at the same fill spec.",
+            "Also: <code>ImageBlock</code> instead of <code>ImageChooserBlock</code>, and why alt "
+            "text is content rather than a filing label; documents, and why they are served by a "
+            "view rather than as static files; and <code>WAGTAILIMAGES_IMAGE_MODEL</code>, a "
+            "day-one decision we name and deliberately do not take.",
+        ],
+        "prereq": False,
+        "chapters": [
+            ("0:00", "A studio site with no pictures"), ("0:19", "Nothing to install"),
+            ("0:43", "Why media/ is gitignored"), ("1:03", "The image ForeignKey"),
+            ("1:15", "SET_NULL, never CASCADE"), ("1:37", "What the image tag actually does"),
+            ("2:01", "Filter specs"), ("2:19", "Responsive images in one tag"),
+            ("2:44", "Focal points, before and after"), ("3:07", "Two things to know about them"),
+            ("3:28", "Renditions are rows, not files"), ("3:45", "Eleven rows, eleven 404s"),
+            ("4:15", "The fix that ships with Wagtail"),
+            ("4:32", "The default alt text is a filing label"),
+            ("4:54", "ImageBlock, not ImageChooserBlock"), ("5:17", "Alt text is content"),
+            ("5:37", "Documents"), ("5:50", "Why documents go through a view"),
+            ("6:10", "A day-one decision, named not done"), ("6:37", "The finished hero"),
+            ("6:49", "Further down the page"), ("7:09", "The About page"),
+            ("7:22", "Commit and tag"), ("7:29", "Next episode"),
+        ],
+        "tag": "ep06-end",
+        "commands": "youtube/ep06/commands.md",
+    },
 ]
 
 VERSIONS = "Wagtail 7.4.3 · Django 6.1.1 · Python 3.12"

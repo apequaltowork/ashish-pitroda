@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wagtail StreamField Tutorial: Blocks and StructBlock — Wagtail Unboxed 05</title>
-<meta name="description" content="We replace the rich-text blob with real content blocks — and hit the migration error that stops most people on their first try.">
+<title>Wagtail Images and Documents: Renditions and Focal Points — Wagtail Unboxed 06</title>
+<meta name="description" content="Six episodes into a design studio's website and there is not one picture on it. We fix that — and hit the image bug that only shows up after you deploy.">
 <!-- @chrome seo -->
-<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/05-streamfield-properly.html">
+<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/06-images-and-documents.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ashish Pitroda">
-<meta property="og:title" content="Wagtail StreamField Tutorial: Blocks and StructBlock — Wagtail Unboxed 05">
-<meta property="og:description" content="We replace the rich-text blob with real content blocks — and hit the migration error that stops most people on their first try.">
-<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/05-streamfield-properly.html">
-<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/05-streamfield-properly.jpg">
+<meta property="og:title" content="Wagtail Images and Documents: Renditions and Focal Points — Wagtail Unboxed 06">
+<meta property="og:description" content="Six episodes into a design studio's website and there is not one picture on it. We fix that — and hit the image bug that only shows up after you deploy.">
+<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/06-images-and-documents.html">
+<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/06-images-and-documents.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Wagtail StreamField Tutorial: Blocks and StructBlock — Wagtail Unboxed 05">
-<meta name="twitter:description" content="We replace the rich-text blob with real content blocks — and hit the migration error that stops most people on their first try.">
-<meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/05-streamfield-properly.jpg">
+<meta name="twitter:title" content="Wagtail Images and Documents: Renditions and Focal Points — Wagtail Unboxed 06">
+<meta name="twitter:description" content="Six episodes into a design studio's website and there is not one picture on it. We fix that — and hit the image bug that only shows up after you deploy.">
+<meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/06-images-and-documents.jpg">
 <!-- @end seo -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Wagtail StreamField Tutorial: Blocks and StructBlock", "description": "We replace the rich-text blob with real content blocks \u2014 and hit the migration error that stops most people on their first try.", "thumbnailUrl": "https://i.ytimg.com/vi/8_wrJLU57Qw/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/8_wrJLU57Qw", "contentUrl": "https://www.youtube.com/watch?v=8_wrJLU57Qw", "duration": "PT7M56S", "uploadDate": "2026-09-19T22:15:37-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/"}, {"@type": "ListItem", "position": 3, "name": "StreamField, properly", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/05-streamfield-properly.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Wagtail Images and Documents: Renditions and Focal Points", "description": "Six episodes into a design studio's website and there is not one picture on it. We fix that \u2014 and hit the image bug that only shows up after you deploy.", "thumbnailUrl": "https://i.ytimg.com/vi/YYxtwAx4a0w/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/YYxtwAx4a0w", "contentUrl": "https://www.youtube.com/watch?v=YYxtwAx4a0w", "duration": "PT7M49S", "uploadDate": "2026-09-20T10:08:02-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/"}, {"@type": "ListItem", "position": 3, "name": "Images and documents", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/06-images-and-documents.html"}]}</script>
 <!-- @chrome head -->
 <script>document.documentElement.className += " js";
 /* Theme, before anything paints: light is Sepia archive, dark is Night journal.
@@ -145,53 +145,50 @@
   <article>
     <header class="phead" id="top">
       <a class="back" href="wagtail-unboxed/"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>All episodes</a>
-      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 05 <span aria-hidden="true">·</span> 7:56</p>
-      <h1 class="phead__h" data-reveal style="--d:.08s">StreamField, properly</h1>
+      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 06 <span aria-hidden="true">·</span> 7:49</p>
+      <h1 class="phead__h" data-reveal style="--d:.08s">Images and documents</h1>
       <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
-      <p class="hero__lede" data-reveal style="--d:.3s">We replace the rich-text blob with real content blocks — and hit the migration error that stops most people on their first try.</p>
+      <p class="hero__lede" data-reveal style="--d:.3s">Six episodes into a design studio's website and there is not one picture on it. We fix that — and hit the image bug that only shows up after you deploy.</p>
     </header>
 
     <figure class="tube" data-reveal data-perch>
-      <div><iframe src="https://www.youtube-nocookie.com/embed/8_wrJLU57Qw" title="Wagtail StreamField Tutorial: Blocks and StructBlock" loading="lazy" allowfullscreen
+      <div><iframe src="https://www.youtube-nocookie.com/embed/YYxtwAx4a0w" title="Wagtail Images and Documents: Renditions and Focal Points" loading="lazy" allowfullscreen
         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
     </figure>
 
     <div class="prose" data-reveal>
       <h2>What this episode covers</h2>
-      <p>If you have ever seen <code>CHECK constraint failed: JSON_VALID</code> and had no idea why, that is in here, with the fix and the reason: why the migration fails on any page that already has content, and how to write a data migration that runs before the column changes type.</p>
-      <p>The blocks themselves: what StreamField actually is, a JSON column holding an ordered list of typed blocks; the four kinds of block and when to reach for each; <code>StructBlock</code> against <code>ListBlock</code>, which is record against repeat and the one people mix up; and <code>Meta</code> — icon, label and template, and what the editor sees.</p>
-      <p>Then the template side: the one-line change on the page template, how tiny a block template really is, and <code>block_counts</code> on a StreamBlock against <code>max_num</code> on a ListBlock.</p>
-      <p>Two gotchas, both hit while building the episode: the migration failure, and the reason a call to action rendered as a teal box inside a teal box. Also: stop passing <code>use_json_field=True</code> — Wagtail 7.4 accepts it and ignores it.</p>
+      <p>Renditions are database rows, not files. Wipe your media folder, restore a backup onto a new server, and Wagtail will keep serving URLs for files that are gone: eleven rows, eleven 404s. There is a one-line fix and it ships with Wagtail.</p>
+      <p>The groundwork: images and documents are already installed, nothing to add; why <code>media/</code> is gitignored and what that means for your deploys; and the image ForeignKey, with <code>on_delete=SET_NULL</code> rather than <code>CASCADE</code>.</p>
+      <p>Then the template side: what the <code>image</code> tag actually does, filter specs (width, height, fill, max, min, format), <code>srcset_image</code> for responsive images in one tag, and focal points with a real before and after at the same fill spec.</p>
+      <p>Also: <code>ImageBlock</code> instead of <code>ImageChooserBlock</code>, and why alt text is content rather than a filing label; documents, and why they are served by a view rather than as static files; and <code>WAGTAILIMAGES_IMAGE_MODEL</code>, a day-one decision we name and deliberately do not take.</p>
 
       <h2>Chapters</h2>
       <ol class="chapters">
-        <li><b>0:00</b> One field, one blob</li>
-        <li><b>0:20</b> What StreamField actually is</li>
-        <li><b>0:38</b> The four kinds of block</li>
-        <li><b>1:01</b> StructBlock vs ListBlock</li>
-        <li><b>1:21</b> Writing a StructBlock</li>
-        <li><b>1:40</b> A struct containing a list</li>
-        <li><b>1:57</b> The top-level StreamBlock</li>
-        <li><b>2:14</b> The model change</li>
-        <li><b>2:27</b> use_json_field is dead</li>
-        <li><b>2:48</b> The migration blows up</li>
-        <li><b>3:01</b> What that error actually means</li>
-        <li><b>3:24</b> Nothing is broken</li>
-        <li><b>3:47</b> The fix: convert the data first</li>
-        <li><b>4:07</b> Writing the data migration</li>
-        <li><b>4:33</b> It applies</li>
-        <li><b>4:42</b> That unreadable block_lookup</li>
-        <li><b>5:04</b> One line in the page template</li>
-        <li><b>5:17</b> Inside a block template</li>
-        <li><b>5:33</b> A teal box inside a teal box</li>
-        <li><b>5:47</b> Wagtail already wrapped your block</li>
-        <li><b>6:06</b> Style the wrapper instead</li>
-        <li><b>6:19</b> What the client sees</li>
-        <li><b>6:41</b> Two ways to say “max”</li>
-        <li><b>7:01</b> The finished home page</li>
-        <li><b>7:17</b> The migrated About page</li>
-        <li><b>7:31</b> Commit and tag</li>
-        <li><b>7:34</b> Next episode</li>
+        <li><b>0:00</b> A studio site with no pictures</li>
+        <li><b>0:19</b> Nothing to install</li>
+        <li><b>0:43</b> Why media/ is gitignored</li>
+        <li><b>1:03</b> The image ForeignKey</li>
+        <li><b>1:15</b> SET_NULL, never CASCADE</li>
+        <li><b>1:37</b> What the image tag actually does</li>
+        <li><b>2:01</b> Filter specs</li>
+        <li><b>2:19</b> Responsive images in one tag</li>
+        <li><b>2:44</b> Focal points, before and after</li>
+        <li><b>3:07</b> Two things to know about them</li>
+        <li><b>3:28</b> Renditions are rows, not files</li>
+        <li><b>3:45</b> Eleven rows, eleven 404s</li>
+        <li><b>4:15</b> The fix that ships with Wagtail</li>
+        <li><b>4:32</b> The default alt text is a filing label</li>
+        <li><b>4:54</b> ImageBlock, not ImageChooserBlock</li>
+        <li><b>5:17</b> Alt text is content</li>
+        <li><b>5:37</b> Documents</li>
+        <li><b>5:50</b> Why documents go through a view</li>
+        <li><b>6:10</b> A day-one decision, named not done</li>
+        <li><b>6:37</b> The finished hero</li>
+        <li><b>6:49</b> Further down the page</li>
+        <li><b>7:09</b> The About page</li>
+        <li><b>7:22</b> Commit and tag</li>
+        <li><b>7:29</b> Next episode</li>
       </ol>
 
       <h2>Versions on screen</h2>
@@ -202,11 +199,11 @@
   <section class="sec">
     <div class="cta" data-reveal data-perch>
       <div>
-        <p class="cta__h">Next: episode 06, Images and documents</p>
-        <p class="cta__p">Carry on from here.</p>
+        <p class="cta__h">More episodes are coming</p>
+        <p class="cta__p">New episodes are added to the series as they are published.</p>
       </div>
       <div>
-        <a class="btn" href="06-images-and-documents.html"><span>Episode 06</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="btn" href="https://www.youtube.com/@apequaltowork"><span>The channel</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
         <a class="cta__alt" href="index.html">or see all episodes</a>
       </div>
     </div>
@@ -214,7 +211,7 @@
 
   <section class="sec">
     <div class="prose" data-reveal>
-      <p><a class="btn" href="https://www.youtube.com/watch?v=8_wrJLU57Qw"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep05-end">the code at the end of this episode (<code>ep05-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep05/commands.md">every command, for Windows, macOS and Linux</a></p>
+      <p><a class="btn" href="https://www.youtube.com/watch?v=YYxtwAx4a0w"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep06-end">the code at the end of this episode (<code>ep06-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep06/commands.md">every command, for Windows, macOS and Linux</a></p>
     </div>
   </section>
 
