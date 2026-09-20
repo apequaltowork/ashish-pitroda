@@ -2397,12 +2397,12 @@ html.is-viewing { overflow: hidden; }
 .nav__has { position: relative; }
 .nav__sub {
   position: absolute;
-  top: 100%;
-  left: -14px;
+  top: calc(100% - 5px);        /* tight under the bar, not floating below it */
+  left: -13px;
   z-index: 50;
-  min-width: 210px;
+  min-width: 178px;
   margin: 0;
-  padding: 8px 0;
+  padding: 3px 0;
   list-style: none;
   background: var(--paper-2);
   border: 1px solid var(--rule);
@@ -2416,8 +2416,9 @@ html.is-viewing { overflow: hidden; }
 .nav__has:focus-within .nav__sub { opacity: 1; visibility: visible; translate: 0 0; }
 .nav__sub a {
   display: block;
-  padding: 7px 16px;
-  font-size: .95rem;
+  padding: 5px 13px;
+  font-size: .875rem;           /* a menu, not body copy */
+  line-height: 1.25;
   background-image: none;
 }
 .nav__sub a:hover { color: var(--ink); background-color: var(--paper-3); }
