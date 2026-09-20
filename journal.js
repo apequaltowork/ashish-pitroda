@@ -142,6 +142,27 @@ window.JOURNAL = (function () {
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") set(false);
     });
+
+    /* The series panel hangs off the Learn item, but should start at the
+       bar's own bottom edge. That distance is the header's padding plus
+       however the row is centred in it, so it is measured rather than
+       guessed, and measured again when the window changes. */
+    var has = document.querySelector(".nav__has");
+    function alignPanel() {
+      if (!has) return;
+      var gap = Math.round(bar.getBoundingClientRect().bottom -
+                           has.getBoundingClientRect().bottom);
+      document.documentElement.style.setProperty("--bar-gap", Math.max(gap, 0) + "px");
+    }
+    alignPanel();
+    addEventListener("resize", alignPanel);
+    // and again the moment it is about to be seen, which is the only time it
+    // has to be right: by then the fonts have loaded and the bar has settled
+    if (has) {
+      has.addEventListener("mouseenter", alignPanel);
+      has.addEventListener("focusin", alignPanel);
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignPanel);
     addEventListener("resize", function () { set(false); });
   })();
 

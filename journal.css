@@ -2395,9 +2395,19 @@ html.is-viewing { overflow: hidden; }
    hover or keyboard focus; in the phone panel they are simply
    indented under Learn, always visible. */
 .nav__has { position: relative; }
+/* the header's own bottom padding sits between the link and the bar's edge:
+   bridge it so the pointer can cross without the panel closing */
+.nav__has::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: var(--bar-gap, 14px);
+}
 .nav__sub {
   position: absolute;
-  top: calc(100% - 5px);        /* tight under the bar, not floating below it */
+  top: calc(100% + var(--bar-gap, 14px));   /* flush with the bar's bottom edge */
   left: -13px;
   z-index: 50;
   min-width: 178px;
