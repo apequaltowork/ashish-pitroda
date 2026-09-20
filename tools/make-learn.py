@@ -249,6 +249,54 @@ EPISODES = [
         "tag": "ep04-end",
         "commands": "youtube/ep04/commands.md",
     },
+    {
+        "slug": "05-streamfield-properly",
+        "no": "05",
+        "video": "8_wrJLU57Qw",
+        "uploaded": "2026-09-19T22:15:37-07:00",   # from the YouTube watch page
+        "runtime": "7:56",
+        "iso": "PT7M56S",
+        "title": "StreamField, properly",
+        "search_title": "Wagtail StreamField Tutorial: Blocks and StructBlock",
+        "lede": "We replace the rich-text blob with real content blocks — and hit the migration "
+                "error that stops most people on their first try.",
+        "covers": [
+            "If you have ever seen <code>CHECK constraint failed: JSON_VALID</code> and had no idea "
+            "why, that is in here, with the fix and the reason: why the migration fails on any page "
+            "that already has content, and how to write a data migration that runs before the "
+            "column changes type.",
+            "The blocks themselves: what StreamField actually is, a JSON column holding an ordered "
+            "list of typed blocks; the four kinds of block and when to reach for each; "
+            "<code>StructBlock</code> against <code>ListBlock</code>, which is record against "
+            "repeat and the one people mix up; and <code>Meta</code> — icon, label and template, "
+            "and what the editor sees.",
+            "Then the template side: the one-line change on the page template, how tiny a block "
+            "template really is, and <code>block_counts</code> on a StreamBlock against "
+            "<code>max_num</code> on a ListBlock.",
+            "Two gotchas, both hit while building the episode: the migration failure, and the "
+            "reason a call to action rendered as a teal box inside a teal box. Also: stop passing "
+            "<code>use_json_field=True</code> — Wagtail 7.4 accepts it and ignores it.",
+        ],
+        "prereq": False,
+        "chapters": [
+            ("0:00", "One field, one blob"), ("0:20", "What StreamField actually is"),
+            ("0:38", "The four kinds of block"), ("1:01", "StructBlock vs ListBlock"),
+            ("1:21", "Writing a StructBlock"), ("1:40", "A struct containing a list"),
+            ("1:57", "The top-level StreamBlock"), ("2:14", "The model change"),
+            ("2:27", "use_json_field is dead"), ("2:48", "The migration blows up"),
+            ("3:01", "What that error actually means"), ("3:24", "Nothing is broken"),
+            ("3:47", "The fix: convert the data first"), ("4:07", "Writing the data migration"),
+            ("4:33", "It applies"), ("4:42", "That unreadable block_lookup"),
+            ("5:04", "One line in the page template"), ("5:17", "Inside a block template"),
+            ("5:33", "A teal box inside a teal box"), ("5:47", "Wagtail already wrapped your block"),
+            ("6:06", "Style the wrapper instead"), ("6:19", "What the client sees"),
+            ("6:41", "Two ways to say “max”"), ("7:01", "The finished home page"),
+            ("7:17", "The migrated About page"), ("7:31", "Commit and tag"),
+            ("7:34", "Next episode"),
+        ],
+        "tag": "ep05-end",
+        "commands": "youtube/ep05/commands.md",
+    },
 ]
 
 VERSIONS = "Wagtail 7.4.3 · Django 6.1.1 · Python 3.12"

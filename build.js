@@ -49,7 +49,8 @@ const PAGES = [
   { file: "learn/01-what-wagtail-actually-is.html",    section: "learn" },
   { file: "learn/02-every-file-explained.html",        section: "learn" },
   { file: "learn/03-the-page-model-and-the-tree.html", section: "learn" },
-  { file: "learn/04-templates-and-static-files.html",  section: "learn" }
+  { file: "learn/04-templates-and-static-files.html",  section: "learn" },
+  { file: "learn/05-streamfield-properly.html",        section: "learn" }
 ];
 
 // Fix pages are found rather than listed: their names come from the fix

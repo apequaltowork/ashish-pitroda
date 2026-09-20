@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wagtail Templates and Static Files Explained — Wagtail Unboxed 04</title>
-<meta name="description" content="The teal egg finally goes. We delete Wagtail's welcome page, write a real base template, list child pages from the page tree, and style the site with plain">
+<title>Wagtail StreamField Tutorial: Blocks and StructBlock — Wagtail Unboxed 05</title>
+<meta name="description" content="We replace the rich-text blob with real content blocks — and hit the migration error that stops most people on their first try.">
 <!-- @chrome seo -->
-<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-files.html">
+<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/05-streamfield-properly.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ashish Pitroda">
-<meta property="og:title" content="Wagtail Templates and Static Files Explained — Wagtail Unboxed 04">
-<meta property="og:description" content="The teal egg finally goes. We delete Wagtail's welcome page, write a real base template, list child pages from the page tree, and style the site with plain">
-<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-files.html">
-<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/04-templates-and-static-files.jpg">
+<meta property="og:title" content="Wagtail StreamField Tutorial: Blocks and StructBlock — Wagtail Unboxed 05">
+<meta property="og:description" content="We replace the rich-text blob with real content blocks — and hit the migration error that stops most people on their first try.">
+<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/05-streamfield-properly.html">
+<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/05-streamfield-properly.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <!-- @end seo -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Wagtail Templates and Static Files Explained", "description": "The teal egg finally goes. We delete Wagtail's welcome page, write a real base template, list child pages from the page tree, and style the site with plain CSS.", "thumbnailUrl": "https://i.ytimg.com/vi/e-FeE6O9AhM/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/e-FeE6O9AhM", "contentUrl": "https://www.youtube.com/watch?v=e-FeE6O9AhM", "duration": "PT5M38S", "uploadDate": "2026-09-19T21:36:44-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, {"@type": "ListItem", "position": 3, "name": "Templates and static files", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-files.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Wagtail StreamField Tutorial: Blocks and StructBlock", "description": "We replace the rich-text blob with real content blocks \u2014 and hit the migration error that stops most people on their first try.", "thumbnailUrl": "https://i.ytimg.com/vi/8_wrJLU57Qw/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/8_wrJLU57Qw", "contentUrl": "https://www.youtube.com/watch?v=8_wrJLU57Qw", "duration": "PT7M56S", "uploadDate": "2026-09-19T22:15:37-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, {"@type": "ListItem", "position": 3, "name": "StreamField, properly", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/05-streamfield-properly.html"}]}</script>
 <!-- @chrome head -->
 <script>document.documentElement.className += " js";
 /* Theme, before anything paints: light is Sepia archive, dark is Night journal.
@@ -140,46 +140,53 @@
   <article>
     <header class="phead" id="top">
       <a class="back" href="index.html"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>All episodes</a>
-      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 04 <span aria-hidden="true">·</span> 5:38</p>
-      <h1 class="phead__h" data-reveal style="--d:.08s">Templates and static files</h1>
+      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 05 <span aria-hidden="true">·</span> 7:56</p>
+      <h1 class="phead__h" data-reveal style="--d:.08s">StreamField, properly</h1>
       <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
-      <p class="hero__lede" data-reveal style="--d:.3s">The teal egg finally goes. We delete Wagtail's welcome page, write a real base template, list child pages from the page tree, and style the site with plain CSS.</p>
+      <p class="hero__lede" data-reveal style="--d:.3s">We replace the rich-text blob with real content blocks — and hit the migration error that stops most people on their first try.</p>
     </header>
 
     <figure class="tube" data-reveal data-perch>
-      <div><iframe src="https://www.youtube-nocookie.com/embed/e-FeE6O9AhM" title="Wagtail Templates and Static Files Explained" loading="lazy" allowfullscreen
+      <div><iframe src="https://www.youtube-nocookie.com/embed/8_wrJLU57Qw" title="Wagtail StreamField Tutorial: Blocks and StructBlock" loading="lazy" allowfullscreen
         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
     </figure>
 
     <div class="prose" data-reveal>
       <h2>What this episode covers</h2>
-      <p>Where the welcome page lives and how to delete it properly; how Wagtail finds a template from the model name, and the two places templates can live; and a real <code>base.html</code> with a header, main and footer, keeping the generated bits that are worth keeping.</p>
-      <p>Then the template work itself: <code>pageurl</code>, <code>slugurl</code> and the <code>richtext</code> filter, why you should never build links from <code>url_path</code>, and listing child pages with <code>get_children.live</code> straight from the page tree.</p>
-      <p>Plus the ten-minute trap nobody warns you about: you write your CSS, reload, and the page is still completely unstyled — with nothing wrong with your code. We cover why <code>studio.css</code> ships at 0 bytes, how <code>{% static %}</code> resolves it, and the browser-cache trap, with proof of what is actually happening.</p>
-      <p>No build step, no framework, no Node. Plain CSS, hand-written, for the whole series.</p>
+      <p>If you have ever seen <code>CHECK constraint failed: JSON_VALID</code> and had no idea why, that is in here, with the fix and the reason: why the migration fails on any page that already has content, and how to write a data migration that runs before the column changes type.</p>
+      <p>The blocks themselves: what StreamField actually is, a JSON column holding an ordered list of typed blocks; the four kinds of block and when to reach for each; <code>StructBlock</code> against <code>ListBlock</code>, which is record against repeat and the one people mix up; and <code>Meta</code> — icon, label and template, and what the editor sees.</p>
+      <p>Then the template side: the one-line change on the page template, how tiny a block template really is, and <code>block_counts</code> on a StreamBlock against <code>max_num</code> on a ListBlock.</p>
+      <p>Two gotchas, both hit while building the episode: the migration failure, and the reason a call to action rendered as a teal box inside a teal box. Also: stop passing <code>use_json_field=True</code> — Wagtail 7.4 accepts it and ignores it.</p>
 
       <h2>Chapters</h2>
       <ol class="chapters">
-        <li><b>0:00</b> Four episodes in, still an egg</li>
-        <li><b>0:16</b> Where the welcome page lives</li>
-        <li><b>0:30</b> How Wagtail finds a template</li>
-        <li><b>0:46</b> Two places templates live</li>
-        <li><b>1:06</b> base.html — keep the head</li>
-        <li><b>1:23</b> Header, main, footer</li>
-        <li><b>1:35</b> pageurl, slugurl, richtext</li>
-        <li><b>1:58</b> Never build links from url_path</li>
-        <li><b>2:14</b> Listing child pages from the tree</li>
-        <li><b>2:32</b> The stylesheet that ships empty</li>
-        <li><b>2:56</b> static and STATICFILES_DIRS</li>
-        <li><b>3:14</b> You write the CSS. Nothing changes.</li>
-        <li><b>3:30</b> What's actually happening</li>
-        <li><b>3:52</b> Hard-reload</li>
-        <li><b>4:09</b> The result</li>
-        <li><b>4:22</b> The About page</li>
-        <li><b>4:36</b> One media query</li>
-        <li><b>4:50</b> Why the 404 page hasn't changed</li>
-        <li><b>5:09</b> Commit and tag</li>
-        <li><b>5:12</b> Next episode</li>
+        <li><b>0:00</b> One field, one blob</li>
+        <li><b>0:20</b> What StreamField actually is</li>
+        <li><b>0:38</b> The four kinds of block</li>
+        <li><b>1:01</b> StructBlock vs ListBlock</li>
+        <li><b>1:21</b> Writing a StructBlock</li>
+        <li><b>1:40</b> A struct containing a list</li>
+        <li><b>1:57</b> The top-level StreamBlock</li>
+        <li><b>2:14</b> The model change</li>
+        <li><b>2:27</b> use_json_field is dead</li>
+        <li><b>2:48</b> The migration blows up</li>
+        <li><b>3:01</b> What that error actually means</li>
+        <li><b>3:24</b> Nothing is broken</li>
+        <li><b>3:47</b> The fix: convert the data first</li>
+        <li><b>4:07</b> Writing the data migration</li>
+        <li><b>4:33</b> It applies</li>
+        <li><b>4:42</b> That unreadable block_lookup</li>
+        <li><b>5:04</b> One line in the page template</li>
+        <li><b>5:17</b> Inside a block template</li>
+        <li><b>5:33</b> A teal box inside a teal box</li>
+        <li><b>5:47</b> Wagtail already wrapped your block</li>
+        <li><b>6:06</b> Style the wrapper instead</li>
+        <li><b>6:19</b> What the client sees</li>
+        <li><b>6:41</b> Two ways to say “max”</li>
+        <li><b>7:01</b> The finished home page</li>
+        <li><b>7:17</b> The migrated About page</li>
+        <li><b>7:31</b> Commit and tag</li>
+        <li><b>7:34</b> Next episode</li>
       </ol>
 
       <h2>Versions on screen</h2>
@@ -190,11 +197,11 @@
   <section class="sec">
     <div class="cta" data-reveal data-perch>
       <div>
-        <p class="cta__h">Next: episode 05, StreamField, properly</p>
-        <p class="cta__p">Carry on from here.</p>
+        <p class="cta__h">More episodes are coming</p>
+        <p class="cta__p">New episodes are added to the series as they are published.</p>
       </div>
       <div>
-        <a class="btn" href="05-streamfield-properly.html"><span>Episode 05</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="btn" href="https://www.youtube.com/@apequaltowork"><span>The channel</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
         <a class="cta__alt" href="index.html">or see all episodes</a>
       </div>
     </div>
@@ -202,7 +209,7 @@
 
   <section class="sec">
     <div class="prose" data-reveal>
-      <p><a class="btn" href="https://www.youtube.com/watch?v=e-FeE6O9AhM"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep04-end">the code at the end of this episode (<code>ep04-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep04/commands.md">every command, for Windows, macOS and Linux</a></p>
+      <p><a class="btn" href="https://www.youtube.com/watch?v=8_wrJLU57Qw"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep05-end">the code at the end of this episode (<code>ep05-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep05/commands.md">every command, for Windows, macOS and Linux</a></p>
     </div>
   </section>
 
