@@ -243,8 +243,9 @@ def fix_page(fix, has_thumb):
 
 def waiting_page():
     """The section before the first fix is written: it says plainly that
-    nothing is here yet, and what will be. No invented fixes, and noindex
-    until there is something to read, so Google never sees an empty page."""
+    nothing is here yet, and what will be. No invented fixes. It is indexable
+    so the address is known early; Google may well hold it back until there
+    is something to read, which is fine."""
     body = ('\n<main class="page">\n\n  <section class="phead" id="top">\n'
             '    <a class="back" href="../index.html">' + BACK + "Back to the journal</a>\n"
             '    <p class="hero__kicker" data-reveal>Solved problems, written down</p>\n'
@@ -271,8 +272,7 @@ def waiting_page():
             ARROW + "</a>\n      </div>\n    </div>\n  </section>\n\n  " + FOOT)
     return head(SECTION["title"] + " — errors solved and written up, by Ashish Pitroda",
                 "Solved problems, written up: the symptom, the actual cause, and the fix. "
-                "The first one is being written.",
-                '<meta name="robots" content="noindex">\n', "learn") + body
+                "The first one is being written.", "", "learn") + body
 
 
 def index_page(fixes, thumbs):

@@ -17,3 +17,4 @@ https://apequaltowork.github.io/ashish-pitroda/learn/01-what-wagtail-actually-is
 https://apequaltowork.github.io/ashish-pitroda/learn/02-every-file-explained.html
 https://apequaltowork.github.io/ashish-pitroda/learn/03-the-page-model-and-the-tree.html
 https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-files.html
+https://apequaltowork.github.io/ashish-pitroda/fixes/
