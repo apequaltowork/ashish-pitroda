@@ -3,24 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Learn — Wagtail and Django video series by Ashish Pitroda</title>
-<meta name="description" content="Free video series on Wagtail and Django, each episode with a page of its own: what it covers, its chapters, and the video.">
+<title>Build a Blog in Wagtail: Parent and Child Pages — Wagtail Unboxed 07</title>
+<meta name="description" content="The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.">
 <!-- @chrome seo -->
-<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/">
+<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ashish Pitroda">
-<meta property="og:title" content="Learn — Wagtail and Django video series by Ashish Pitroda">
-<meta property="og:description" content="Free video series on Wagtail and Django, each episode with a page of its own: what it covers, its chapters, and the video.">
-<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/">
-<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/share-card.png">
+<meta property="og:title" content="Build a Blog in Wagtail: Parent and Child Pages — Wagtail Unboxed 07">
+<meta property="og:description" content="The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.">
+<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html">
+<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/07-blog-parent-and-child-pages.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Learn — Wagtail and Django video series by Ashish Pitroda">
-<meta name="twitter:description" content="Free video series on Wagtail and Django, each episode with a page of its own: what it covers, its chapters, and the video.">
-<meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/share-card.png">
+<meta name="twitter:title" content="Build a Blog in Wagtail: Parent and Child Pages — Wagtail Unboxed 07">
+<meta name="twitter:description" content="The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.">
+<meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/07-blog-parent-and-child-pages.jpg">
 <!-- @end seo -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Learn", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/", "description": "Video series on Wagtail and Django, with a page per episode.", "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}, "mainEntity": {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/"}]}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Build a Blog in Wagtail: Parent and Child Pages", "description": "The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.", "thumbnailUrl": "https://i.ytimg.com/vi/lvWFyLOHSBo/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/lvWFyLOHSBo", "contentUrl": "https://www.youtube.com/watch?v=lvWFyLOHSBo", "duration": "PT5M25S", "uploadDate": "2026-09-21T01:11:47-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/"}, {"@type": "ListItem", "position": 3, "name": "A blog: parent and child pages", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html"}]}</script>
 <!-- @chrome head -->
 <script>document.documentElement.className += " js";
 /* Theme, before anything paints: light is Sepia archive, dark is Night journal.
@@ -141,43 +142,78 @@
 
 <main class="page">
 
-  <section class="phead" id="top">
-    <a class="back" href="../index.html"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>Back to the journal</a>
-    <p class="hero__kicker" data-reveal>Video series, free to watch</p>
-    <h1 class="phead__h" data-reveal style="--d:.08s">Learn</h1>
-    <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
-    <p class="hero__lede" data-reveal style="--d:.3s">Series where something real gets built from an empty folder, with every file explained on the way. Each episode has a page here with what it covers and its chapters, and the video itself.</p>
-  </section>
+  <article>
+    <header class="phead" id="top">
+      <a class="back" href="wagtail-unboxed/"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>All episodes</a>
+      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 07 <span aria-hidden="true">·</span> 5:25</p>
+      <h1 class="phead__h" data-reveal style="--d:.08s">A blog: parent and child pages</h1>
+      <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
+      <p class="hero__lede" data-reveal style="--d:.3s">The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.</p>
+    </header>
 
-  <section class="sec sec--eps">
-    <ol class="eps">
-      <li><a class="ep" href="wagtail-unboxed/" data-reveal style="--d:.2s">
-        <span class="ep__fig"><img src="../assets/learn/07-blog-parent-and-child-pages.webp" width="960" height="540" loading="lazy" alt="Wagtail Unboxed"><span class="ep__play" aria-hidden="true"></span><span class="ep__time">9 episodes</span></span>
-        <span class="ep__body">
-          <span class="ep__no">Wagtail and Django</span>
-          <span class="ep__h">Wagtail Unboxed</span>
-          <span class="ep__p">Build a real Wagtail site from an empty folder — and understand every file in it.</span>
-        </span>
-      </a></li>
-    </ol>
-  </section>
+    <figure class="tube" data-reveal data-perch>
+      <div><iframe src="https://www.youtube-nocookie.com/embed/lvWFyLOHSBo" title="Build a Blog in Wagtail: Parent and Child Pages" loading="lazy" allowfullscreen
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+    </figure>
+
+    <div class="prose" data-reveal>
+      <h2>What this episode covers</h2>
+      <p>Two things go wrong for nearly everyone. With no rules, Wagtail lets an editor put a second homepage inside your About page. And the obvious query for “newest posts first” throws a <code>FieldError</code>.</p>
+      <p>The build: adding a second app, and why a page app needs no <code>admin.py</code> or <code>views.py</code>; <code>BlogIndexPage</code> and <code>BlogPage</code>, and why the date is its own field; and the page-type rules — <code>parent_page_types</code>, <code>subpage_types</code>, <code>max_count</code> and <code>max_count_per_parent</code>.</p>
+      <p>The query: why <code>get_children()</code> returns <code>Page</code>, not <code>BlogPage</code>, and the <code>FieldError</code> that causes; <code>BlogPage.objects.child_of(self)</code> for querying the model you actually mean; <code>get_context</code> for handing extra data to a page's template; and pagination, with why <code>get_page()</code> beats <code>page()</code>.</p>
+      <p>Every rule and query in the video was checked against the running site.</p>
+
+      <h2>Chapters</h2>
+      <ol class="chapters">
+        <li><b>0:00</b> A studio that never says anything</li>
+        <li><b>0:20</b> A second app</li>
+        <li><b>0:38</b> Why a separate app</li>
+        <li><b>0:59</b> Two models</li>
+        <li><b>1:23</b> With no rules, anything goes anywhere</li>
+        <li><b>1:45</b> Two lists fix it</li>
+        <li><b>2:03</b> Checked, and no migration needed</li>
+        <li><b>2:25</b> The query everybody writes first</li>
+        <li><b>2:39</b> FieldError, and Page objects</li>
+        <li><b>2:52</b> Why get_children() lies to you</li>
+        <li><b>3:16</b> get_context</li>
+        <li><b>3:36</b> page() vs get_page()</li>
+        <li><b>3:54</b> The index template</li>
+        <li><b>4:09</b> The counter that jumped sideways</li>
+        <li><b>4:26</b> The journal</li>
+        <li><b>4:34</b> Page 3, and page 999</li>
+        <li><b>4:49</b> A post</li>
+        <li><b>5:00</b> Commit and tag</li>
+        <li><b>5:03</b> Next episode</li>
+      </ol>
+
+      <h2>Versions on screen</h2>
+      <p>Wagtail 7.4.3 · Django 6.1.1 · Python 3.12. Recorded on Windows; macOS and Linux commands are in the repository for every episode.</p>
+    </div>
+  </article>
 
   <section class="sec">
     <div class="cta" data-reveal data-perch>
       <div>
-        <p class="cta__h">Want a series on something else?</p>
-        <p class="cta__p">If there is a part of Wagtail or Django you keep having to explain to people, tell me and it may become one.</p>
+        <p class="cta__h">More episodes are coming</p>
+        <p class="cta__p">New episodes are added to the series as they are published.</p>
       </div>
       <div>
-        <a class="btn" href="../contact.html"><span>Write to me</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="btn" href="https://www.youtube.com/@apequaltowork"><span>The channel</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="cta__alt" href="index.html">or see all episodes</a>
       </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="prose" data-reveal>
+      <p><a class="btn" href="https://www.youtube.com/watch?v=lvWFyLOHSBo"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep07-end">the code at the end of this episode (<code>ep07-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep07/commands.md">every command, for Windows, macOS and Linux</a></p>
     </div>
   </section>
 
   <!-- @chrome foot -->
   <footer class="foot">
     <span><b>&copy; 2026 Ashish Pitroda</b></span>
-    <nav class="foot__links" aria-label="All pages"><a href="../index.html">Home</a><a href="../services/index.html">Field guide</a><a href="../work/index.html">Projects</a><a href="../fixes/index.html">Fixes</a><a href="../about.html">About</a><a href="../contact.html">Write to me</a><a href="../colophon.html">Colophon</a></nav>
+    <nav class="foot__links" aria-label="All pages"><a href="../index.html">Home</a><a href="../services/index.html">Field guide</a><a href="../work/index.html">Projects</a><a href="../learn/index.html">Learn</a><a href="../fixes/index.html">Fixes</a><a href="../about.html">About</a><a href="../contact.html">Write to me</a><a href="../colophon.html">Colophon</a></nav>
     <span class="foot__wags">Tail wags this visit: <span data-wags>0</span></span>
   </footer>
   <!-- @end foot -->

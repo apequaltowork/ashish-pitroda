@@ -20,4 +20,5 @@ https://apequaltowork.github.io/ashish-pitroda/learn/03-the-page-model-and-the-t
 https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-files.html
 https://apequaltowork.github.io/ashish-pitroda/learn/05-streamfield-properly.html
 https://apequaltowork.github.io/ashish-pitroda/learn/06-images-and-documents.html
+https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html
 https://apequaltowork.github.io/ashish-pitroda/fixes/

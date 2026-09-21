@@ -343,6 +343,49 @@ EPISODES = [
         "tag": "ep06-end",
         "commands": "youtube/ep06/commands.md",
     },
+    {
+        "slug": "07-blog-parent-and-child-pages",
+        "no": "07",
+        "video": "lvWFyLOHSBo",
+        "uploaded": "2026-09-21T01:11:47-07:00",   # from the YouTube watch page
+        "runtime": "5:25",
+        "iso": "PT5M25S",
+        "title": "A blog: parent and child pages",
+        "search_title": "Build a Blog in Wagtail: Parent and Child Pages",
+        "lede": "The studio site gets a journal: an index page, posts under it, newest first, three "
+                "at a time. Our first app of our own.",
+        "covers": [
+            "Two things go wrong for nearly everyone. With no rules, Wagtail lets an editor put a "
+            "second homepage inside your About page. And the obvious query for “newest posts first” "
+            "throws a <code>FieldError</code>.",
+            "The build: adding a second app, and why a page app needs no <code>admin.py</code> or "
+            "<code>views.py</code>; <code>BlogIndexPage</code> and <code>BlogPage</code>, and why "
+            "the date is its own field; and the page-type rules — <code>parent_page_types</code>, "
+            "<code>subpage_types</code>, <code>max_count</code> and "
+            "<code>max_count_per_parent</code>.",
+            "The query: why <code>get_children()</code> returns <code>Page</code>, not "
+            "<code>BlogPage</code>, and the <code>FieldError</code> that causes; "
+            "<code>BlogPage.objects.child_of(self)</code> for querying the model you actually mean; "
+            "<code>get_context</code> for handing extra data to a page's template; and pagination, "
+            "with why <code>get_page()</code> beats <code>page()</code>.",
+            "Every rule and query in the video was checked against the running site.",
+        ],
+        "prereq": False,
+        "chapters": [
+            ("0:00", "A studio that never says anything"), ("0:20", "A second app"),
+            ("0:38", "Why a separate app"), ("0:59", "Two models"),
+            ("1:23", "With no rules, anything goes anywhere"), ("1:45", "Two lists fix it"),
+            ("2:03", "Checked, and no migration needed"),
+            ("2:25", "The query everybody writes first"), ("2:39", "FieldError, and Page objects"),
+            ("2:52", "Why get_children() lies to you"), ("3:16", "get_context"),
+            ("3:36", "page() vs get_page()"), ("3:54", "The index template"),
+            ("4:09", "The counter that jumped sideways"), ("4:26", "The journal"),
+            ("4:34", "Page 3, and page 999"), ("4:49", "A post"),
+            ("5:00", "Commit and tag"), ("5:03", "Next episode"),
+        ],
+        "tag": "ep07-end",
+        "commands": "youtube/ep07/commands.md",
+    },
 ]
 
 VERSIONS = "Wagtail 7.4.3 · Django 6.1.1 · Python 3.12"
