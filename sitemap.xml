@@ -10,10 +10,10 @@
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/services/project-takeover.html</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/about.html</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/contact.html</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://apequaltowork.github.io/ashish-pitroda/colophon.html</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/colophon.html</loc><lastmod>2026-09-21</lastmod></url>
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/work/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/</loc><lastmod>2026-09-21</lastmod></url>
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/00a-what-this-series-is.html</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/00b-setting-up-your-machine.html</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/01-what-wagtail-actually-is.html</loc><lastmod>2026-09-20</lastmod></url>
@@ -21,7 +21,13 @@
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/03-the-page-model-and-the-tree.html</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-files.html</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/05-streamfield-properly.html</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/06-images-and-documents.html</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html</loc></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/06-images-and-documents.html</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/08-snippets-and-reusable-content.html</loc></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/09-navigation-and-site-settings.html</loc></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/10-forms-that-work.html</loc></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/11-search.html</loc></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/12-editor-experience-polish.html</loc></url>
+  <url><loc>https://apequaltowork.github.io/ashish-pitroda/learn/13-production-settings.html</loc></url>
   <url><loc>https://apequaltowork.github.io/ashish-pitroda/fixes/</loc><lastmod>2026-09-20</lastmod></url>
 </urlset>

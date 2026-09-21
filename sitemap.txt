@@ -21,4 +21,10 @@ https://apequaltowork.github.io/ashish-pitroda/learn/04-templates-and-static-fil
 https://apequaltowork.github.io/ashish-pitroda/learn/05-streamfield-properly.html
 https://apequaltowork.github.io/ashish-pitroda/learn/06-images-and-documents.html
 https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html
+https://apequaltowork.github.io/ashish-pitroda/learn/08-snippets-and-reusable-content.html
+https://apequaltowork.github.io/ashish-pitroda/learn/09-navigation-and-site-settings.html
+https://apequaltowork.github.io/ashish-pitroda/learn/10-forms-that-work.html
+https://apequaltowork.github.io/ashish-pitroda/learn/11-search.html
+https://apequaltowork.github.io/ashish-pitroda/learn/12-editor-experience-polish.html
+https://apequaltowork.github.io/ashish-pitroda/learn/13-production-settings.html
 https://apequaltowork.github.io/ashish-pitroda/fixes/

@@ -53,7 +53,13 @@ const PAGES = [
   { file: "learn/04-templates-and-static-files.html",  section: "learn" },
   { file: "learn/05-streamfield-properly.html",        section: "learn" },
   { file: "learn/06-images-and-documents.html",        section: "learn" },
-  { file: "learn/07-blog-parent-and-child-pages.html", section: "learn" }
+  { file: "learn/07-blog-parent-and-child-pages.html", section: "learn" },
+  { file: "learn/08-snippets-and-reusable-content.html",section: "learn" },
+  { file: "learn/09-navigation-and-site-settings.html",section: "learn" },
+  { file: "learn/10-forms-that-work.html",            section: "learn" },
+  { file: "learn/11-search.html",                     section: "learn" },
+  { file: "learn/12-editor-experience-polish.html",   section: "learn" },
+  { file: "learn/13-production-settings.html",        section: "learn" }
 ];
 
 // Fix pages are found rather than listed: their names come from the fix

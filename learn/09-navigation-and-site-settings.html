@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Build a Blog in Wagtail: Parent and Child Pages — Wagtail Unboxed 07</title>
-<meta name="description" content="The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.">
+<title>Wagtail Navigation Menus and Site Settings — Wagtail Unboxed 09</title>
+<meta name="description" content="The studio site gets a real menu and a footer the client can edit. No menu model, no hard-coded links: the menu is built from the page tree, and the contac">
 <!-- @chrome seo -->
-<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html">
+<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/09-navigation-and-site-settings.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ashish Pitroda">
-<meta property="og:title" content="Build a Blog in Wagtail: Parent and Child Pages — Wagtail Unboxed 07">
-<meta property="og:description" content="The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.">
-<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html">
-<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/07-blog-parent-and-child-pages.jpg">
+<meta property="og:title" content="Wagtail Navigation Menus and Site Settings — Wagtail Unboxed 09">
+<meta property="og:description" content="The studio site gets a real menu and a footer the client can edit. No menu model, no hard-coded links: the menu is built from the page tree, and the contac">
+<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/09-navigation-and-site-settings.html">
+<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/09-navigation-and-site-settings.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Build a Blog in Wagtail: Parent and Child Pages — Wagtail Unboxed 07">
-<meta name="twitter:description" content="The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.">
-<meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/07-blog-parent-and-child-pages.jpg">
+<meta name="twitter:title" content="Wagtail Navigation Menus and Site Settings — Wagtail Unboxed 09">
+<meta name="twitter:description" content="The studio site gets a real menu and a footer the client can edit. No menu model, no hard-coded links: the menu is built from the page tree, and the contac">
+<meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/09-navigation-and-site-settings.jpg">
 <!-- @end seo -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Build a Blog in Wagtail: Parent and Child Pages", "description": "The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.", "thumbnailUrl": "https://i.ytimg.com/vi/lvWFyLOHSBo/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/lvWFyLOHSBo", "contentUrl": "https://www.youtube.com/watch?v=lvWFyLOHSBo", "duration": "PT5M25S", "uploadDate": "2026-09-21T01:11:47-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/"}, {"@type": "ListItem", "position": 3, "name": "A blog: parent and child pages", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Wagtail Navigation Menus and Site Settings", "description": "The studio site gets a real menu and a footer the client can edit. No menu model, no hard-coded links: the menu is built from the page tree, and the contact details come from Wagtail's site settings.", "thumbnailUrl": "https://i.ytimg.com/vi/gmpS4mkHjBM/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/gmpS4mkHjBM", "contentUrl": "https://www.youtube.com/watch?v=gmpS4mkHjBM", "duration": "PT4M17S", "uploadDate": "2026-09-21T11:08:15-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/"}, {"@type": "ListItem", "position": 3, "name": "Navigation and site settings", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/09-navigation-and-site-settings.html"}]}</script>
 <!-- @chrome head -->
 <script>document.documentElement.className += " js";
 /* Theme, before anything paints: light is Sepia archive, dark is Night journal.
@@ -145,45 +145,53 @@
   <article>
     <header class="phead" id="top">
       <a class="back" href="wagtail-unboxed/"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>All episodes</a>
-      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 07 <span aria-hidden="true">·</span> 5:25</p>
-      <h1 class="phead__h" data-reveal style="--d:.08s">A blog: parent and child pages</h1>
+      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 09 <span aria-hidden="true">·</span> 4:17</p>
+      <h1 class="phead__h" data-reveal style="--d:.08s">Navigation and site settings</h1>
       <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
-      <p class="hero__lede" data-reveal style="--d:.3s">The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.</p>
+      <p class="hero__lede" data-reveal style="--d:.3s">The studio site gets a real menu and a footer the client can edit. No menu model, no hard-coded links: the menu is built from the page tree, and the contact details come from Wagtail's site settings.</p>
     </header>
 
     <figure class="tube" data-reveal data-perch>
-      <div><iframe src="https://www.youtube-nocookie.com/embed/lvWFyLOHSBo" title="Build a Blog in Wagtail: Parent and Child Pages" loading="lazy" allowfullscreen
+      <div><iframe src="https://www.youtube-nocookie.com/embed/gmpS4mkHjBM" title="Wagtail Navigation Menus and Site Settings" loading="lazy" allowfullscreen
         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
     </figure>
 
     <div class="prose" data-reveal>
       <h2>What this episode covers</h2>
-      <p>Two things go wrong for nearly everyone. With no rules, Wagtail lets an editor put a second homepage inside your About page. And the obvious query for “newest posts first” throws a <code>FieldError</code>.</p>
-      <p>The build: adding a second app, and why a page app needs no <code>admin.py</code> or <code>views.py</code>; <code>BlogIndexPage</code> and <code>BlogPage</code>, and why the date is its own field; and the page-type rules — <code>parent_page_types</code>, <code>subpage_types</code>, <code>max_count</code> and <code>max_count_per_parent</code>.</p>
-      <p>The query: why <code>get_children()</code> returns <code>Page</code>, not <code>BlogPage</code>, and the <code>FieldError</code> that causes; <code>BlogPage.objects.child_of(self)</code> for querying the model you actually mean; <code>get_context</code> for handing extra data to a page's template; and pagination, with why <code>get_page()</code> beats <code>page()</code>.</p>
-      <p>Every rule and query in the video was checked against the running site.</p>
+      <p>And two reasons your first menu will be empty, or won't render at all.</p>
+
+      <h2>What you'll learn</h2>
+      <ul>
+        <li>Building a menu from the page tree with <code>in_menu()</code></li>
+        <li>A custom inclusion tag, and why the dev server says it doesn't exist</li>
+        <li>Why the menu is empty: <code>show_in_menus</code>, and what <code>show_in_menus_default</code> really does</li>
+        <li>Keeping the right item highlighted on child pages</li>
+        <li>Measuring the menu's cost: one query</li>
+        <li><code>wagtail.contrib.settings</code> and its context processor</li>
+        <li><code>BaseSiteSetting</code> vs <code>BaseGenericSetting</code></li>
+        <li>The settings row that creates itself, and why defaults matter</li>
+        <li><code>settings.app_label.ModelName</code> in templates, mailto and tel links</li>
+      </ul>
 
       <h2>Chapters</h2>
       <ol class="chapters">
-        <li><b>0:00</b> A studio that never says anything</li>
-        <li><b>0:20</b> A second app</li>
-        <li><b>0:38</b> Why a separate app</li>
-        <li><b>0:59</b> Two models</li>
-        <li><b>1:23</b> With no rules, anything goes anywhere</li>
-        <li><b>1:45</b> Two lists fix it</li>
-        <li><b>2:03</b> Checked, and no migration needed</li>
-        <li><b>2:25</b> The query everybody writes first</li>
-        <li><b>2:39</b> FieldError, and Page objects</li>
-        <li><b>2:52</b> Why get_children() lies to you</li>
-        <li><b>3:16</b> get_context</li>
-        <li><b>3:36</b> page() vs get_page()</li>
-        <li><b>3:54</b> The index template</li>
-        <li><b>4:09</b> The counter that jumped sideways</li>
-        <li><b>4:26</b> The journal</li>
-        <li><b>4:34</b> Page 3, and page 999</li>
-        <li><b>4:49</b> A post</li>
-        <li><b>5:00</b> Commit and tag</li>
-        <li><b>5:03</b> Next episode</li>
+        <li><b>0:00</b> A site you can't get around</li>
+        <li><b>0:22</b> The menu comes from the tree</li>
+        <li><b>0:39</b> An inclusion tag</li>
+        <li><b>0:53</b> Not a registered tag library</li>
+        <li><b>1:04</b> Restart runserver</li>
+        <li><b>1:24</b> The menu is empty</li>
+        <li><b>1:43</b> show_in_menus_default</li>
+        <li><b>1:59</b> Which item is active</li>
+        <li><b>2:18</b> One query</li>
+        <li><b>2:34</b> Site settings</li>
+        <li><b>2:44</b> A settings model</li>
+        <li><b>3:00</b> The row that creates itself</li>
+        <li><b>3:21</b> Using settings in templates</li>
+        <li><b>3:36</b> The menu on a post</li>
+        <li><b>3:43</b> The footer</li>
+        <li><b>3:57</b> Commit and tag</li>
+        <li><b>4:01</b> Next episode</li>
       </ol>
 
       <h2>Versions on screen</h2>
@@ -194,11 +202,11 @@
   <section class="sec">
     <div class="cta" data-reveal data-perch>
       <div>
-        <p class="cta__h">Next: episode 08, Snippets and reusable content</p>
+        <p class="cta__h">Next: episode 10, Forms that work</p>
         <p class="cta__p">Carry on from here.</p>
       </div>
       <div>
-        <a class="btn" href="08-snippets-and-reusable-content.html"><span>Episode 08</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="btn" href="10-forms-that-work.html"><span>Episode 10</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
         <a class="cta__alt" href="index.html">or see all episodes</a>
       </div>
     </div>
@@ -206,7 +214,7 @@
 
   <section class="sec">
     <div class="prose" data-reveal>
-      <p><a class="btn" href="https://www.youtube.com/watch?v=lvWFyLOHSBo"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep07-end">the code at the end of this episode (<code>ep07-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep07/commands.md">every command, for Windows, macOS and Linux</a></p>
+      <p><a class="btn" href="https://www.youtube.com/watch?v=gmpS4mkHjBM"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep09-end">the code at the end of this episode (<code>ep09-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep09/commands.md">every command, for Windows, macOS and Linux</a></p>
     </div>
   </section>
 

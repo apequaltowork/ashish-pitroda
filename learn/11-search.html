@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Build a Blog in Wagtail: Parent and Child Pages — Wagtail Unboxed 07</title>
-<meta name="description" content="The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.">
+<title>Wagtail Search Tutorial: search_fields, update_index and Private Pages — Wagtail Unboxed 11</title>
+<meta name="description" content="The search app we unboxed in episode 2 finally does something. It works out of the box, and this episode finds four ways it doesn't work well, every one me">
 <!-- @chrome seo -->
-<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html">
+<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/learn/11-search.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ashish Pitroda">
-<meta property="og:title" content="Build a Blog in Wagtail: Parent and Child Pages — Wagtail Unboxed 07">
-<meta property="og:description" content="The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.">
-<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html">
-<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/07-blog-parent-and-child-pages.jpg">
+<meta property="og:title" content="Wagtail Search Tutorial: search_fields, update_index and Private Pages — Wagtail Unboxed 11">
+<meta property="og:description" content="The search app we unboxed in episode 2 finally does something. It works out of the box, and this episode finds four ways it doesn't work well, every one me">
+<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/learn/11-search.html">
+<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/11-search.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Build a Blog in Wagtail: Parent and Child Pages — Wagtail Unboxed 07">
-<meta name="twitter:description" content="The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.">
-<meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/07-blog-parent-and-child-pages.jpg">
+<meta name="twitter:title" content="Wagtail Search Tutorial: search_fields, update_index and Private Pages — Wagtail Unboxed 11">
+<meta name="twitter:description" content="The search app we unboxed in episode 2 finally does something. It works out of the box, and this episode finds four ways it doesn't work well, every one me">
+<meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/learn/11-search.jpg">
 <!-- @end seo -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Build a Blog in Wagtail: Parent and Child Pages", "description": "The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.", "thumbnailUrl": "https://i.ytimg.com/vi/lvWFyLOHSBo/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/lvWFyLOHSBo", "contentUrl": "https://www.youtube.com/watch?v=lvWFyLOHSBo", "duration": "PT5M25S", "uploadDate": "2026-09-21T01:11:47-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/"}, {"@type": "ListItem", "position": 3, "name": "A blog: parent and child pages", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/07-blog-parent-and-child-pages.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Wagtail Search Tutorial: search_fields, update_index and Private Pages", "description": "The search app we unboxed in episode 2 finally does something. It works out of the box, and this episode finds four ways it doesn't work well, every one measured.", "thumbnailUrl": "https://i.ytimg.com/vi/MQMYgCZIenI/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/MQMYgCZIenI", "contentUrl": "https://www.youtube.com/watch?v=MQMYgCZIenI", "duration": "PT3M50S", "uploadDate": "2026-09-21T11:15:13-07:00", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Wagtail Unboxed", "url": "https://apequaltowork.github.io/ashish-pitroda/learn/"}, "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Wagtail Unboxed", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/wagtail-unboxed/"}, {"@type": "ListItem", "position": 3, "name": "Search", "item": "https://apequaltowork.github.io/ashish-pitroda/learn/11-search.html"}]}</script>
 <!-- @chrome head -->
 <script>document.documentElement.className += " js";
 /* Theme, before anything paints: light is Sepia archive, dark is Night journal.
@@ -145,45 +145,50 @@
   <article>
     <header class="phead" id="top">
       <a class="back" href="wagtail-unboxed/"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>All episodes</a>
-      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 07 <span aria-hidden="true">·</span> 5:25</p>
-      <h1 class="phead__h" data-reveal style="--d:.08s">A blog: parent and child pages</h1>
+      <p class="hero__kicker" data-reveal>Wagtail Unboxed <span aria-hidden="true">·</span> episode 11 <span aria-hidden="true">·</span> 3:50</p>
+      <h1 class="phead__h" data-reveal style="--d:.08s">Search</h1>
       <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
-      <p class="hero__lede" data-reveal style="--d:.3s">The studio site gets a journal: an index page, posts under it, newest first, three at a time. Our first app of our own.</p>
+      <p class="hero__lede" data-reveal style="--d:.3s">The search app we unboxed in episode 2 finally does something. It works out of the box, and this episode finds four ways it doesn't work well, every one measured.</p>
     </header>
 
     <figure class="tube" data-reveal data-perch>
-      <div><iframe src="https://www.youtube-nocookie.com/embed/lvWFyLOHSBo" title="Build a Blog in Wagtail: Parent and Child Pages" loading="lazy" allowfullscreen
+      <div><iframe src="https://www.youtube-nocookie.com/embed/MQMYgCZIenI" title="Wagtail Search Tutorial: search_fields, update_index and Private Pages" loading="lazy" allowfullscreen
         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
     </figure>
 
     <div class="prose" data-reveal>
       <h2>What this episode covers</h2>
-      <p>Two things go wrong for nearly everyone. With no rules, Wagtail lets an editor put a second homepage inside your About page. And the obvious query for “newest posts first” throws a <code>FieldError</code>.</p>
-      <p>The build: adding a second app, and why a page app needs no <code>admin.py</code> or <code>views.py</code>; <code>BlogIndexPage</code> and <code>BlogPage</code>, and why the date is its own field; and the page-type rules — <code>parent_page_types</code>, <code>subpage_types</code>, <code>max_count</code> and <code>max_count_per_parent</code>.</p>
-      <p>The query: why <code>get_children()</code> returns <code>Page</code>, not <code>BlogPage</code>, and the <code>FieldError</code> that causes; <code>BlogPage.objects.child_of(self)</code> for querying the model you actually mean; <code>get_context</code> for handing extra data to a page's template; and pagination, with why <code>get_page()</code> beats <code>page()</code>.</p>
-      <p>Every rule and query in the video was checked against the running site.</p>
+      <p>Only titles are searched. Adding fields changes nothing until you rebuild the index. Text that comes from snippets is visible on the page but can't be found. And the view Wagtail generates shows the titles of password-protected pages to anyone.</p>
+
+      <h2>What you'll learn</h2>
+      <ul>
+        <li>What Wagtail indexes by default: the title, and nothing else you wrote</li>
+        <li><code>search_fields</code>: <code>SearchField</code> and <code>FilterField</code></li>
+        <li>Why adding <code>search_fields</code> changes nothing, and <code>update_index</code></li>
+        <li><code>get_searchable_content</code>: indexing text that lives in snippets</li>
+        <li>The private-page leak in the generated view, and .<code>public()</code></li>
+        <li>.<code>specific()</code> so results can show their intro</li>
+        <li>A search results template with a count, page types and pagination</li>
+        <li>Putting search in the menu</li>
+      </ul>
 
       <h2>Chapters</h2>
       <ol class="chapters">
-        <li><b>0:00</b> A studio that never says anything</li>
-        <li><b>0:20</b> A second app</li>
-        <li><b>0:38</b> Why a separate app</li>
-        <li><b>0:59</b> Two models</li>
-        <li><b>1:23</b> With no rules, anything goes anywhere</li>
-        <li><b>1:45</b> Two lists fix it</li>
-        <li><b>2:03</b> Checked, and no migration needed</li>
-        <li><b>2:25</b> The query everybody writes first</li>
-        <li><b>2:39</b> FieldError, and Page objects</li>
-        <li><b>2:52</b> Why get_children() lies to you</li>
-        <li><b>3:16</b> get_context</li>
-        <li><b>3:36</b> page() vs get_page()</li>
-        <li><b>3:54</b> The index template</li>
-        <li><b>4:09</b> The counter that jumped sideways</li>
-        <li><b>4:26</b> The journal</li>
-        <li><b>4:34</b> Page 3, and page 999</li>
-        <li><b>4:49</b> A post</li>
-        <li><b>5:00</b> Commit and tag</li>
-        <li><b>5:03</b> Next episode</li>
+        <li><b>0:00</b> The app we unboxed in episode 2</li>
+        <li><b>0:21</b> Only titles are searched</li>
+        <li><b>0:33</b> search_fields</li>
+        <li><b>0:50</b> Still nothing</li>
+        <li><b>0:56</b> update_index</li>
+        <li><b>1:16</b> Visible, but not searchable</li>
+        <li><b>1:39</b> get_searchable_content</li>
+        <li><b>2:07</b> Password-protect a page, then search</li>
+        <li><b>2:20</b> The generated view leaks private pages</li>
+        <li><b>2:43</b> The view, rewritten</li>
+        <li><b>2:57</b> The results template</li>
+        <li><b>3:11</b> Search in the menu</li>
+        <li><b>3:20</b> A name from a snippet</li>
+        <li><b>3:27</b> Commit and tag</li>
+        <li><b>3:30</b> Next: Act 3</li>
       </ol>
 
       <h2>Versions on screen</h2>
@@ -194,11 +199,11 @@
   <section class="sec">
     <div class="cta" data-reveal data-perch>
       <div>
-        <p class="cta__h">Next: episode 08, Snippets and reusable content</p>
+        <p class="cta__h">Next: episode 12, Editor experience polish</p>
         <p class="cta__p">Carry on from here.</p>
       </div>
       <div>
-        <a class="btn" href="08-snippets-and-reusable-content.html"><span>Episode 08</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="btn" href="12-editor-experience-polish.html"><span>Episode 12</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
         <a class="cta__alt" href="index.html">or see all episodes</a>
       </div>
     </div>
@@ -206,7 +211,7 @@
 
   <section class="sec">
     <div class="prose" data-reveal>
-      <p><a class="btn" href="https://www.youtube.com/watch?v=lvWFyLOHSBo"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep07-end">the code at the end of this episode (<code>ep07-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep07/commands.md">every command, for Windows, macOS and Linux</a></p>
+      <p><a class="btn" href="https://www.youtube.com/watch?v=MQMYgCZIenI"><span>Watch on YouTube</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/releases/tag/ep11-end">the code at the end of this episode (<code>ep11-end</code>)</a> · <a class="cta__alt" href="https://github.com/apequaltowork/wagtail-unbox/blob/main/youtube/ep11/commands.md">every command, for Windows, macOS and Linux</a></p>
     </div>
   </section>
 
