@@ -20,7 +20,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from journal_pages import (ARROW, BACK, FOOT, RULE, SITE, embed, esc, head, ld,  # noqa: E402
+from journal_pages import (ARROW, BACK, FOOT, ROOT, RULE, SITE, embed, esc, head, ld,  # noqa: E402
                            thumbnail, upload_date, write, youtube_thumb)
 
 # one line to change if the folder moves; FIXES_DIR overrides it for a dry run
@@ -38,86 +38,178 @@ FIELDS = ("title", "topic", "date", "updated", "video", "source", "service", "su
 # ── reading a fix ──────────────────────────────────────────────
 
 def parse(text):
-    """The fields between the --- lines, then the sections after them."""
+    """The fields between the --- lines, and everything after them as the body.
+    A field can run onto indented lines below it; `video` can list several."""
     m = re.search(r"^---\s*$(.*?)^---\s*$(.*)", text, re.S | re.M)
     if not m:
         raise SystemExit("no --- field block found")
-    fields, body = {}, m.group(2)
-    key = None
+    fields, key = {}, None
     for line in m.group(1).splitlines():
         if not line.strip() or line.strip().startswith("#"):
             continue
         head_m = re.match(r"^([a-z_]+):\s*(.*)$", line)
         if head_m:
             key = head_m.group(1)
-            fields[key] = head_m.group(2).split("#")[0].strip()
+            fields[key] = head_m.group(2).split(" #")[0].strip()
         elif key:                                  # a wrapped value
             fields[key] = (fields[key] + " " + line.strip()).strip()
-    sections = []
-    for sm in re.finditer(r"^## +(.+?)\s*$(.*?)(?=^## |\Z)", body, re.S | re.M):
-        sections.append((sm.group(1).strip(), sm.group(2).strip()))
-    return fields, sections
+    return fields, m.group(2).strip()
 
 
-def md(text):
-    """The small part of Markdown these notes use: fenced code, ordered and
-    unordered lists, paragraphs, links, `code` and **bold**."""
-    out, i = [], 0
-    # a fence may be indented, because steps often carry their own code
-    blocks = re.split(r"^[ \t]*```[a-zA-Z0-9+-]*[ \t]*$", text, flags=re.M)
-    for i, block in enumerate(blocks):
-        if i % 2:                                    # inside a fence
-            lines = [l for l in block.strip("\n").splitlines()]
-            pad = min((len(l) - len(l.lstrip()) for l in lines if l.strip()), default=0)
-            out.append("<pre><code>" + esc("\n".join(l[pad:] for l in lines)) + "</code></pre>")
+# ── Markdown, the part these write-ups use ─────────────────────
+# Headings, paragraphs, lists, fenced code, tables, rules, images, links,
+# `code`, **bold** and *italic*. Relative links and images are resolved
+# against the original document, so nothing points at a file that is not here.
+
+def slug_id(text):
+    return re.sub(r"[^a-z0-9]+", "-", re.sub(r"<[^>]+>", "", text).lower()).strip("-")[:60]
+
+
+def spans(s):
+    """`code`, **bold** and *italic*. Code is set aside first, so bold may hold
+    code (**deleted by `migrate`**) and nothing inside code is ever touched."""
+    codes = []
+
+    def keep(m):
+        codes.append("<code>" + esc(m.group(1)) + "</code>")
+        return "\x00" + str(len(codes) - 1) + "\x00"
+    t = esc(re.sub(r"`([^`]+)`", keep, s))
+    t = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t)
+    t = re.sub(r"(?<![\w*])\*([^*\n]+?)\*(?![\w*])", r"<i>\1</i>", t)
+    return re.sub(r"\x00(\d+)\x00", lambda m: codes[int(m.group(1))], t)
+
+
+def inline(s, link=lambda u: u):
+    # Links are set aside first: their text may be `code` ([`notes/X.md`](...)),
+    # and bold may wrap a whole link (**[the repo](...)**).
+    links = []
+
+    def keep(m):
+        links.append('<a href="' + esc(link(m.group(2))) + '">' + spans(m.group(1)) + "</a>")
+        return "\x01" + str(len(links) - 1) + "\x01"
+    t = spans(re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", keep, s))
+    return re.sub(r"\x01(\d+)\x01", lambda m: links[int(m.group(1))], t)
+
+
+def table(rows, link):
+    cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows]
+    th = "".join("<th>" + inline(c, link) + "</th>" for c in cells[0])
+    trs = "".join("<tr>" + "".join("<td>" + inline(c, link) + "</td>" for c in r) + "</tr>"
+                  for r in cells[2:])
+    return ('<div class="prose__table"><table><thead><tr>' + th + "</tr></thead><tbody>" +
+            trs + "</tbody></table></div>")
+
+
+LIST = re.compile(r"^(\s*)([-*]|\d+\.)\s+(.*)$")
+
+
+def md(text, link=lambda u: u, image=lambda src, alt: None):
+    lines, out, para, i = text.splitlines(), [], [], 0
+
+    def flush():
+        if para:
+            out.append("<p>" + inline(" ".join(para), link) + "</p>")
+            del para[:]
+
+    while i < len(lines):
+        line, s = lines[i], lines[i].strip()
+        if re.match(r"^\s*```[\w+-]*\s*$", line):            # a fenced block
+            flush()
+            buf, i = [], i + 1
+            while i < len(lines) and not re.match(r"^\s*```\s*$", lines[i]):
+                buf.append(lines[i])
+                i += 1
+            i += 1
+            pad = min((len(l) - len(l.lstrip()) for l in buf if l.strip()), default=0)
+            out.append("<pre><code>" + esc("\n".join(l[pad:] for l in buf)) + "</code></pre>")
             continue
-        for para in re.split(r"\n\s*\n", block):
-            para = para.strip()
-            if not para:
-                continue
-            lines = para.splitlines()
-            if all(re.match(r"^\d+\.\s", l.strip()) for l in lines):
-                items = [re.sub(r"^\d+\.\s", "", l.strip()) for l in lines]
-                # steps carry on across the code blocks between them, so the
-                # list starts at the number actually written
-                first = int(re.match(r"^\s*(\d+)\.", lines[0]).group(1))
-                start = ' start="' + str(first) + '"' if first != 1 else ""
-                out.append("<ol" + start + ">" +
-                           "".join("<li>" + inline(x) + "</li>" for x in items) + "</ol>")
-            elif all(l.strip().startswith(("- ", "* ")) for l in lines):
-                items = [l.strip()[2:] for l in lines]
-                out.append("<ul>" + "".join("<li>" + inline(x) + "</li>" for x in items) + "</ul>")
-            else:
-                out.append("<p>" + inline(" ".join(l.strip() for l in lines)) + "</p>")
+        if not s:
+            flush()
+            i += 1
+            continue
+        h = re.match(r"^(#{1,4})\s+(.*)$", s)
+        if h:                                                 # the page has its own h1
+            flush()
+            tag = "h2" if len(h.group(1)) <= 2 else "h" + str(len(h.group(1)))
+            txt = inline(h.group(2), link)
+            out.append("<" + tag + ' id="' + slug_id(txt) + '">' + txt + "</" + tag + ">")
+            i += 1
+            continue
+        if re.match(r"^(-{3,}|\*{3,})$", s):
+            flush()
+            out.append("<hr>")
+            i += 1
+            continue
+        img = re.match(r"^!\[([^\]]*)\]\(([^)\s]+)\)$", s)
+        if img:
+            flush()
+            got = image(img.group(2), img.group(1))
+            if got:                                           # never a broken picture
+                src, w, hh = got
+                out.append('<figure class="prose__fig"><img src="' + esc(src) + '" width="' +
+                           str(w) + '" height="' + str(hh) + '" loading="lazy" alt="' +
+                           esc(img.group(1)) + '"><figcaption>' + inline(img.group(1), link) +
+                           "</figcaption></figure>")
+            i += 1
+            continue
+        if s.startswith("|") and i + 1 < len(lines) and re.match(r"^\s*\|?\s*:?-{2,}", lines[i + 1]):
+            flush()
+            rows = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                rows.append(lines[i])
+                i += 1
+            out.append(table(rows, link))
+            continue
+        lm = LIST.match(line)
+        if lm:
+            flush()
+            ordered = lm.group(2)[0].isdigit()
+            items = []
+            while i < len(lines):
+                mm = LIST.match(lines[i])
+                if mm and mm.group(2)[0].isdigit() == ordered:
+                    items.append(mm.group(3))
+                elif (lines[i].strip() and lines[i][:1] in " \t" and items
+                      and not re.match(r"^\s*```", lines[i])):
+                    items[-1] += " " + lines[i].strip()       # a wrapped item
+                else:
+                    break
+                i += 1
+            first = int(lm.group(2)[:-1]) if ordered else 1
+            tag = "ol" if ordered else "ul"
+            start = ' start="' + str(first) + '"' if ordered and first != 1 else ""
+            out.append("<" + tag + start + ">" +
+                       "".join("<li>" + inline(x, link) + "</li>" for x in items) +
+                       "</" + tag + ">")
+            continue
+        para.append(s)
+        i += 1
+    flush()
     return "\n      ".join(out)
 
 
-def inline(s):
-    s = esc(s)
-    s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
-    s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
-    return re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", s)
+def raw_url(url):
+    """github.com/<u>/<r>/blob/<ref>/<path> -> raw.githubusercontent.com/<u>/<r>/<ref>/<path>"""
+    m = re.match(r"https://github\.com/([^/]+)/([^/]+)/blob/(.+)$", url or "")
+    return "https://raw.githubusercontent.com/%s/%s/%s" % m.groups() if m else url
 
 
 def load():
     """Every fix folder, newest date first."""
-    if not os.path.isdir(SOURCE):
-        raise SystemExit("no fix folders yet: " + SOURCE)
     fixes = []
     for name in sorted(os.listdir(SOURCE)):
         folder = os.path.join(SOURCE, name)
         readme = os.path.join(folder, "README.md")
         if name.startswith("_") or not os.path.exists(readme):
             continue
-        fields, sections = parse(io.open(readme, encoding="utf-8").read())
+        fields, body = parse(io.open(readme, encoding="utf-8").read())
         if not fields.get("title") or not fields.get("date"):
             print("skipped " + name + ": it needs at least a title and a date")
             continue
-        video = fields.get("video") or ""
-        vid = re.search(r"(?:v=|youtu\.be/|embed/)([\w-]{11})", video)
+        videos = re.findall(r"(?:v=|youtu\.be/|embed/)([\w-]{11})", fields.get("video") or "")
         fixes.append({
-            "slug": name, "fields": fields, "sections": sections,
-            "video": vid.group(1) if vid else "",
+            "slug": name, "fields": fields, "body": body, "folder": folder,
+            "videos": videos, "video": videos[0] if videos else "",
             "thumb": os.path.join(folder, "thumb.png"),
         })
     fixes.sort(key=lambda f: f["fields"]["date"], reverse=True)
@@ -157,12 +249,62 @@ def row(fix, has_video):
             "      </li>")
 
 
+def oembed_title(video):
+    import json
+    import urllib.request
+    try:
+        return json.loads(urllib.request.urlopen(
+            "https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=" + video +
+            "&format=json", timeout=20).read())["title"]
+    except Exception:
+        return ""
+
+
 def fix_page(fix, has_thumb):
+    import urllib.parse
     f, slug = fix["fields"], fix["slug"]
     title = f.get("search_title") or f["title"]
-    prose = []
-    for heading, body in fix["sections"]:
-        prose.append("      <h2>" + esc(heading) + "</h2>\n      " + md(body))
+    origin = f.get("origin") or ""
+
+    def link(u):
+        if re.match(r"^(https?:|mailto:|#)", u) or not origin:
+            return u
+        return urllib.parse.urljoin(origin, u)
+
+    def image(src, alt):
+        """A picture in the write-up: the copy in the fix folder if there is one,
+        otherwise fetched from beside the original, and stored on this site."""
+        import io as _io
+        import urllib.request
+        from PIL import Image
+        name = re.sub(r"[^a-z0-9]+", "-", os.path.splitext(os.path.basename(src))[0].lower())
+        out_dir = os.path.join(ROOT, "assets", "fixes", slug)
+        local = os.path.join(fix["folder"], src)
+        try:
+            if os.path.exists(local):
+                img = Image.open(local)
+            else:
+                data = urllib.request.urlopen(urllib.parse.urljoin(raw_url(origin), src),
+                                              timeout=30).read()
+                img = Image.open(_io.BytesIO(data))
+        except Exception as e:
+            print("  picture skipped, could not read " + src + ": " + str(e))
+            return None
+        img = img.convert("RGB")
+        if img.width > 1400:
+            img = img.resize((1400, int(1400 * img.height / img.width)), Image.LANCZOS)
+        os.makedirs(out_dir, exist_ok=True)
+        img.save(os.path.join(out_dir, name + ".webp"), "WEBP", quality=82, method=6)
+        return "../assets/fixes/" + slug + "/" + name + ".webp", img.width, img.height
+
+    prose = md(fix["body"], link, image)
+
+    # every video after the first sits at the end, under its own YouTube title
+    later = ""
+    for v in fix["videos"][1:]:
+        later += ('\n    <div class="prose" data-reveal>\n      <h2>On video: ' +
+                  esc(fix["titles"].get(v) or "the other video") + "</h2>\n    </div>\n" +
+                  embed(v, fix["titles"].get(v) or title))
 
     meta = [esc(f.get("topic", "Fix")), nice_date(f["date"])]
     if f.get("updated"):
@@ -172,8 +314,14 @@ def fix_page(fix, has_thumb):
     links = []
     if f.get("source"):
         links.append('<a href="' + esc(f["source"]) + '">the discussion this came from</a>')
-    if f.get("video"):
-        links.append('<a href="' + esc(f["video"]) + '">watch it on YouTube</a>')
+    if f.get("code"):
+        links.append('<a href="' + esc(f["code"]) + '">the code, with every step</a>')
+    if origin:
+        links.append('<a href="' + esc(origin) + '">this write-up on GitHub</a>')
+    for v in fix["videos"]:
+        links.append('<a href="https://www.youtube.com/watch?v=' + v + '">' +
+                     ("watch it on YouTube" if len(fix["videos"]) == 1 else
+                      esc(fix["titles"].get(v) or "the video") + " — on YouTube") + "</a>")
     if f.get("service"):
         links.append('<a href="../' + esc(f["service"]) + '">the work I do on this</a>')
 
@@ -185,8 +333,9 @@ def fix_page(fix, has_thumb):
             ('      <p class="hero__lede" data-reveal style="--d:.3s">' + esc(f["summary"]) + "</p>\n"
              if f.get("summary") else "") +
             "    </header>\n\n" +
-            (embed(fix["video"], title) + "\n" if fix["video"] else "") +
-            '    <div class="prose" data-reveal>\n' + "\n\n".join(prose) + "\n    </div>\n"
+            (embed(fix["video"], fix["titles"].get(fix["video"]) or title) + "\n"
+             if fix["video"] else "") +
+            '    <div class="prose" data-reveal>\n      ' + prose + "\n    </div>\n" + later +
             "  </article>\n\n" +
             ('  <section class="sec">\n    <div class="prose" data-reveal>\n      <p>' +
              " · ".join(links) + "</p>\n    </div>\n  </section>\n\n" if links else "") +
@@ -223,18 +372,18 @@ def fix_page(fix, has_thumb):
              "item": SITE + OUT + "/" + slug + ".html"},
         ],
     })
-    if fix["video"]:
+    for v in fix["videos"]:
         video = {
             "@context": "https://schema.org", "@type": "VideoObject",
-            "name": title, "description": f.get("summary") or f["title"],
-            "thumbnailUrl": "https://i.ytimg.com/vi/" + fix["video"] + "/maxresdefault.jpg",
-            "embedUrl": "https://www.youtube.com/embed/" + fix["video"],
-            "contentUrl": "https://www.youtube.com/watch?v=" + fix["video"],
+            "name": fix["titles"].get(v) or title,
+            "description": f.get("summary") or f["title"],
+            "thumbnailUrl": "https://i.ytimg.com/vi/" + v + "/maxresdefault.jpg",
+            "embedUrl": "https://www.youtube.com/embed/" + v,
+            "contentUrl": "https://www.youtube.com/watch?v=" + v,
             "author": {"@type": "Person", "name": "Ashish Pitroda", "url": SITE},
         }
-        when = fix.get("uploaded")
-        if when:
-            video["uploadDate"] = when
+        if fix["uploaded"].get(v):
+            video["uploadDate"] = fix["uploaded"][v]
         schema += ld(video)
 
     desc = (f.get("summary") or f["title"]).replace('"', "&quot;")[:155]
@@ -340,8 +489,8 @@ def main():
             got = youtube_thumb(fx["video"], "assets/fixes", fx["slug"])
         if got:
             thumbs.add(fx["slug"])
-        if fx["video"]:
-            fx["uploaded"] = upload_date(fx["video"])
+        fx["titles"] = {v: oembed_title(v) for v in fx["videos"]}
+        fx["uploaded"] = {v: upload_date(v) for v in fx["videos"]}
     write(OUT + "/index.html", index_page(fixes, thumbs))
     for fx in fixes:
         write(OUT + "/" + fx["slug"] + ".html", fix_page(fx, fx["slug"] in thumbs))

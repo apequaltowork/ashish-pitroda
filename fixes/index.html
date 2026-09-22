@@ -4,22 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fixes — errors solved and written up, by Ashish Pitroda</title>
-<meta name="description" content="Solved problems, written up: the symptom, the actual cause, and the fix. The first one is being written.">
+<meta name="description" content="Solved problems, written up: the symptom, the actual cause, and the fix. Wagtail, Django, Python and whatever else broke.">
 <!-- @chrome seo -->
 <link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/fixes/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ashish Pitroda">
 <meta property="og:title" content="Fixes — errors solved and written up, by Ashish Pitroda">
-<meta property="og:description" content="Solved problems, written up: the symptom, the actual cause, and the fix. The first one is being written.">
+<meta property="og:description" content="Solved problems, written up: the symptom, the actual cause, and the fix. Wagtail, Django, Python and whatever else broke.">
 <meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/fixes/">
 <meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/share-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Fixes — errors solved and written up, by Ashish Pitroda">
-<meta name="twitter:description" content="Solved problems, written up: the symptom, the actual cause, and the fix. The first one is being written.">
+<meta name="twitter:description" content="Solved problems, written up: the symptom, the actual cause, and the fix. Wagtail, Django, Python and whatever else broke.">
 <meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/share-card.png">
 <!-- @end seo -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Fixes", "description": "Problems I have run into, or watched other people get stuck on, solved and written down: the symptom, the actual cause, and the fix.", "url": "https://apequaltowork.github.io/ashish-pitroda/fixes/", "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}, "mainEntity": {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "I upgraded Wagtail 2.7 \u2192 7.4 \u2014 everything that broke", "url": "https://apequaltowork.github.io/ashish-pitroda/fixes/0001-wagtail-2-7-to-7-4-upgrade.html"}]}}</script>
 <!-- @chrome head -->
 <script>document.documentElement.className += " js";
 /* Theme, before anything paints: light is Sepia archive, dark is Night journal.
@@ -29,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..500&family=Young+Serif&display=swap">
-<link rel="stylesheet" href="../journal.css?v=f7730504">
+<link rel="stylesheet" href="../journal.css?v=ed019096">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1EADB'/%3E%3Cg fill='%2326221E' transform='translate(0 8)'%3E%3Cellipse cx='30' cy='26' rx='13' ry='7.5'/%3E%3Ccircle cx='43' cy='17' r='6'/%3E%3Cpath d='M42 15.5 L52 17 L42 18.6Z'/%3E%3Cpath d='M19 24 L2 21 L2 26 L19 29Z'/%3E%3C/g%3E%3C/svg%3E">
 <!-- @end head -->
 </head>
@@ -146,23 +147,34 @@
     <h1 class="phead__h" data-reveal style="--d:.08s">Fixes</h1>
     <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
     <p class="hero__lede" data-reveal style="--d:.3s">Problems I have run into, or watched other people get stuck on, solved and written down: the symptom, the actual cause, and the fix.</p>
-    <p class="hand" data-reveal style="--d:.55s">— the first one is being written</p>
   </section>
 
-  <section class="sec">
-    <div class="prose" data-reveal>
-      <h2>What will be here</h2>
-      <p>Errors that people are genuinely stuck on, taken apart properly: what you see, why it actually happens, and the fix — with the commands and the code. Some will come with a video walking through it.</p>
-      <p>Nothing is posted here until it is real and it works, so the page is empty rather than padded.</p>
-      <p>In the meantime, <a href="../learn/index.html">Wagtail Unboxed</a> is a video series that builds a Wagtail site from an empty folder and explains every file on the way.</p>
-    </div>
+  <section class="sec sec--eps" id="list">
+    <form class="qfind" role="search" data-reveal>
+      <label for="q">Search the fixes</label>
+      <input id="q" type="search" name="q" data-fix-search autocomplete="off"
+        placeholder="an error, a word from it, or a topic">
+      <span class="qfind__n" data-fix-count>1 fix</span>
+    </form>
+
+    <ul class="qlist" data-fixes data-per="10" data-reveal>
+      <li class="qrow" data-fix="i upgraded wagtail 2.7 → 7.4 — everything that broke a 2019 wagtail school site, upgraded through 2.15 lts to 7.4 lts. 22 breakages, two silent data problems, and how every page was proved to survive. wagtail 22 september 2026">
+        <p class="qrow__meta"><span class="qrow__tag">Wagtail</span><time datetime="2026-09-22">22 September 2026</time><span class="qrow__film" title="This one has a video">with video</span></p>
+        <h2 class="qrow__h"><a href="0001-wagtail-2-7-to-7-4-upgrade.html">I upgraded Wagtail 2.7 → 7.4 — everything that broke</a></h2>
+        <p class="qrow__p">A 2019 Wagtail school site, upgraded through 2.15 LTS to 7.4 LTS. 22 breakages, two silent data problems, and how every page was proved to survive.</p>
+        <p class="qrow__more"><a href="0001-wagtail-2-7-to-7-4-upgrade.html">read the fix<svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a></p>
+      </li>
+    </ul>
+
+    <p class="qfind__none" data-fix-empty hidden>Nothing here matches that. Try fewer words, or the error text itself.</p>
+    <nav class="qpager" data-fix-pager aria-label="More fixes" hidden></nav>
   </section>
 
   <section class="sec">
     <div class="cta" data-reveal data-perch>
       <div>
         <p class="cta__h">Stuck on something?</p>
-        <p class="cta__p">If you are staring at an error nobody seems to have written up, tell me about it. It may well end up here.</p>
+        <p class="cta__p">If you are staring at an error that nobody seems to have written up, tell me about it.</p>
       </div>
       <div>
         <a class="btn" href="../contact.html"><span>Write to me</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
@@ -180,6 +192,7 @@
 
 </main>
 
+<script src="../fixes.js"></script>
 <script src="../journal.js"></script>
 <script src="../bird.js"></script>
 </body>

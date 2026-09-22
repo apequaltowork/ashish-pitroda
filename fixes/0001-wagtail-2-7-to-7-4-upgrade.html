@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Upgrade Wagtail 2.7 to 7.4: Breaking Changes and Fixes — Fixes</title>
+<meta name="description" content="A 2019 Wagtail school site, upgraded through 2.15 LTS to 7.4 LTS. 22 breakages, two silent data problems, and how every page was proved to survive.">
+<!-- @chrome seo -->
+<link rel="canonical" href="https://apequaltowork.github.io/ashish-pitroda/fixes/0001-wagtail-2-7-to-7-4-upgrade.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ashish Pitroda">
+<meta property="og:title" content="How to Upgrade Wagtail 2.7 to 7.4: Breaking Changes and Fixes — Fixes">
+<meta property="og:description" content="A 2019 Wagtail school site, upgraded through 2.15 LTS to 7.4 LTS. 22 breakages, two silent data problems, and how every page was proved to survive.">
+<meta property="og:url" content="https://apequaltowork.github.io/ashish-pitroda/fixes/0001-wagtail-2-7-to-7-4-upgrade.html">
+<meta property="og:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/fixes/0001-wagtail-2-7-to-7-4-upgrade.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Upgrade Wagtail 2.7 to 7.4: Breaking Changes and Fixes — Fixes">
+<meta name="twitter:description" content="A 2019 Wagtail school site, upgraded through 2.15 LTS to 7.4 LTS. 22 breakages, two silent data problems, and how every page was proved to survive.">
+<meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/fixes/0001-wagtail-2-7-to-7-4-upgrade.jpg">
+<!-- @end seo -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "How to Upgrade Wagtail 2.7 to 7.4: Breaking Changes and Fixes", "datePublished": "2026-09-22", "dateModified": "2026-09-22", "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}, "publisher": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}, "mainEntityOfPage": "https://apequaltowork.github.io/ashish-pitroda/fixes/0001-wagtail-2-7-to-7-4-upgrade.html", "about": "Wagtail", "description": "A 2019 Wagtail school site, upgraded through 2.15 LTS to 7.4 LTS. 22 breakages, two silent data problems, and how every page was proved to survive.", "image": "https://apequaltowork.github.io/ashish-pitroda/assets/fixes/0001-wagtail-2-7-to-7-4-upgrade.jpg"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://apequaltowork.github.io/ashish-pitroda/"}, {"@type": "ListItem", "position": 2, "name": "Fixes", "item": "https://apequaltowork.github.io/ashish-pitroda/fixes/"}, {"@type": "ListItem", "position": 3, "name": "I upgraded Wagtail 2.7 \u2192 7.4 \u2014 everything that broke", "item": "https://apequaltowork.github.io/ashish-pitroda/fixes/0001-wagtail-2-7-to-7-4-upgrade.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "How to Upgrade Wagtail 2.7 to 7.4: Breaking Changes & Fixes", "description": "A 2019 Wagtail school site, upgraded through 2.15 LTS to 7.4 LTS. 22 breakages, two silent data problems, and how every page was proved to survive.", "thumbnailUrl": "https://i.ytimg.com/vi/w4jUp5atKN8/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/w4jUp5atKN8", "contentUrl": "https://www.youtube.com/watch?v=w4jUp5atKN8", "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}, "uploadDate": "2026-09-22T01:01:20-07:00"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "How I Prompted an AI to Upgrade a Wagtail Site (2.7 \u2192 7.4)", "description": "A 2019 Wagtail school site, upgraded through 2.15 LTS to 7.4 LTS. 22 breakages, two silent data problems, and how every page was proved to survive.", "thumbnailUrl": "https://i.ytimg.com/vi/XNZ6rjaHYKM/maxresdefault.jpg", "embedUrl": "https://www.youtube.com/embed/XNZ6rjaHYKM", "contentUrl": "https://www.youtube.com/watch?v=XNZ6rjaHYKM", "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}, "uploadDate": "2026-09-22T01:04:20-07:00"}</script>
+<!-- @chrome head -->
+<script>document.documentElement.className += " js";
+/* Theme, before anything paints: light is Sepia archive, dark is Night journal.
+   The visitor's own choice (theme.js) wins, then their system setting. The other
+   palettes are kept but hidden: ?palette=name previews one, ?palettes shows the bar. */
+(function (h) { var p = "sepia"; try { var q = new URLSearchParams(location.search), t = localStorage.getItem("fj-theme"); if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; p = t === "dark" ? "night" : "sepia"; if (/^(field|indigo|botanical|seaside|sepia|night)$/.test(q.get("palette") || "")) p = q.get("palette"); if (q.has("palettes")) h.setAttribute("data-palettes", ""); } catch (e) {} if (p !== "field") h.setAttribute("data-palette", p); })(document.documentElement);</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..500&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="../journal.css?v=ed019096">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1EADB'/%3E%3Cg fill='%2326221E' transform='translate(0 8)'%3E%3Cellipse cx='30' cy='26' rx='13' ry='7.5'/%3E%3Ccircle cx='43' cy='17' r='6'/%3E%3Cpath d='M42 15.5 L52 17 L42 18.6Z'/%3E%3Cpath d='M19 24 L2 21 L2 26 L19 29Z'/%3E%3C/g%3E%3C/svg%3E">
+<!-- @end head -->
+</head>
+<body class="learn">
+
+<!-- @chrome top -->
+<!-- The wagtail lives on this canvas. It never takes the pointer: it lands on
+     lines marked [data-perch] and watches the cursor from there. bird.js. -->
+<canvas class="bird" data-bird aria-hidden="true"></canvas>
+
+<!-- version-02: the wagtail's cage. Stacked above the bird's canvas so the
+     bars sit in front of it. bird.js reads points on it in these viewBox
+     units (110 × 180): the ring at 55,0, the perch rod at y 128, the door
+     centred at 46,121. Change the drawing and those numbers together. -->
+<button class="cage" type="button" data-cage aria-label="Call the wagtail back to its cage">
+  <svg viewBox="0 0 110 180" aria-hidden="true">
+    <path class="cage__wire" d="M55 0 V13"/>
+    <circle class="cage__wire" cx="55" cy="19" r="5.5"/>
+    <path class="cage__wire" d="M16 75 C16 47 34 31 55 31 C76 31 94 47 94 75"/>
+    <path class="cage__wire" d="M30 75 C31 53 42 37 55 31 M43 75 C44 55 49 41 55 31 M55 75 V31 M67 75 C66 55 61 41 55 31 M80 75 C79 53 68 37 55 31"/>
+    <path class="cage__band" d="M12 75 H98"/>
+    <path class="cage__wire" d="M16 75 V152 M26 75 V152 M36 75 V98 M36 144 V152 M46 75 V98 M46 144 V152 M56 75 V98 M56 144 V152 M66 75 V152 M76 75 V152 M86 75 V152 M94 75 V152"/>
+    <path class="cage__band" d="M12 152 H98"/>
+    <path class="cage__rod" d="M24 128 H86"/>
+    <path class="cage__cup" d="M70 142 H86 L84 151 H72 Z"/>
+    <rect class="cage__base" x="8" y="152" width="94" height="12" rx="3"/>
+    <path class="cage__wire" d="M20 164 L16 176 M90 164 L94 176"/>
+    <g class="cage__door">
+      <rect class="cage__wire" x="31" y="98" width="30" height="46" rx="2"/>
+      <path class="cage__wire" d="M38.5 98 V144 M46 98 V144 M53.5 98 V144"/>
+      <circle class="cage__wire" cx="58.5" cy="121" r="1.8"/>
+    </g>
+  </svg>
+  <span class="cage__tip" data-cage-tip>call it home</span>
+</button>
+
+<!-- A packet of seeds taped under the cage. Clicking it throws four to six
+     seeds onto a line near the bird, and it goes and eats them. bird.js. -->
+<button class="feed" type="button" data-feed aria-label="Scatter seeds for the wagtail">
+  <svg viewBox="0 0 64 84" aria-hidden="true">
+    <path class="feed__paper" d="M9 16 H55 L53 80 Q32 83 11 80 Z"/>
+    <path class="feed__crimp" d="M8 18 V9 L12 6 L16 9 L20 6 L24 9 L28 6 L32 9 L36 6 L40 9 L44 6 L48 9 L52 6 L56 9 V18 Z"/>
+    <path class="feed__rule" d="M16 30 H48 M16 58 H48"/>
+    <text class="feed__word" x="32" y="50" text-anchor="middle">seeds</text>
+    <ellipse class="feed__seed" cx="23" cy="69" rx="3.4" ry="2.1" transform="rotate(-20 23 69)"/>
+    <ellipse class="feed__seed" cx="32" cy="72" rx="3.4" ry="2.1" transform="rotate(10 32 72)"/>
+    <ellipse class="feed__seed" cx="41" cy="68" rx="3.4" ry="2.1" transform="rotate(35 41 68)"/>
+    <rect class="feed__tape" x="20" y="-3" width="24" height="10" transform="rotate(-5 32 2)"/>
+  </svg>
+  <span class="feed__tip" data-feed-tip>scatter seeds</span>
+</button>
+
+<!-- Whether its song is heard out loud. Sound only ever starts after a click;
+     "off" is remembered on this device. bird.js. -->
+<button class="song" type="button" data-song aria-pressed="true" aria-label="The wagtail's song, out loud">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 12.5V3.2l7-1.7v9.6"/><circle cx="4.2" cy="12.6" r="1.9"/><circle cx="11.2" cy="11.1" r="1.9"/></svg>
+  <span data-song-label>song on</span>
+</button>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Palette preview, HIDDEN. The site uses Sepia archive (light) and Night
+     journal (dark) through the theme switch in the header; the other palettes
+     are kept. Add ?palettes to an address to show this bar again. palette.js. -->
+<div class="pbar" data-pbar hidden>
+  <span class="pbar__k">Palette <em>preview · temporary</em></span>
+  <div class="pbar__opts" role="radiogroup" aria-label="Colour palette">
+    <button type="button" role="radio" aria-checked="true" data-palette-choice="field"><i style="--a:#F1EADB;--b:#A2432B"></i>Field notebook</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="indigo"><i style="--a:#F2F1EC;--b:#2B55A0"></i>Indigo ink</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="botanical"><i style="--a:#ECEEE3;--b:#3E6B35"></i>Botanical</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="seaside"><i style="--a:#F2EEE6;--b:#1F6F6B"></i>Seaside</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="sepia"><i style="--a:#E8DAC0;--b:#7A2A28"></i>Sepia archive</button>
+    <button type="button" role="radio" aria-checked="false" data-palette-choice="night"><i style="--a:#1C1F22;--b:#E3A23B"></i>Night journal</button>
+  </div>
+</div>
+<script src="../palette.js" defer></script>
+<script src="../theme.js" defer></script>
+
+<header class="top" data-top>
+  <div class="top__in">
+    <a class="mark" href="../index.html" aria-label="Ashish Pitroda — home">
+      <svg viewBox="0 0 64 40" aria-hidden="true"><ellipse cx="30" cy="23" rx="12.5" ry="7"/><circle cx="42.5" cy="15.5" r="5.6"/><path d="M42 14.2 L51 15.6 L42 17 Z"/><path d="M19 21.5 L3 19.5 L3 23.5 L19 26 Z"/><path d="M27 29 L26 36 M33 29 L33.5 36" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <b>Ashish Pitroda</b><i>field notes</i>
+    </a>
+    <!-- On narrow screens the list becomes a panel and this opens it. journal.js -->
+    <button class="burger" type="button" data-menu aria-expanded="false" aria-controls="pages" aria-label="Menu">
+      <svg viewBox="0 0 22 16" aria-hidden="true"><path d="M1 2.2 H21 M1 8 H21 M1 13.8 H21"/></svg>
+    </button>
+    <nav id="pages" aria-label="Pages">
+      <ul class="nav">
+        <li><a href="../services/index.html">Field guide</a></li>
+        <li><a href="../work/index.html">Projects</a></li>
+        <li class="nav__has"><a href="../learn/index.html">Learn</a>
+          <ul class="nav__sub"><li><a href="../learn/wagtail-unboxed/index.html">Wagtail Unboxed</a></li></ul>
+        </li>
+        <li><a class="is-active" href="../fixes/index.html" aria-current="page">Fixes</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li class="nav__keep"><a class="nav__cta" href="../contact.html">Write to me</a></li>
+      </ul>
+    </nav>
+    <!-- light (Sepia archive) / dark (Night journal). theme.js -->
+    <button class="theme" type="button" data-theme-toggle aria-pressed="false" aria-label="Dark theme">
+      <svg class="theme__moon" viewBox="0 0 20 20" aria-hidden="true"><path d="M15.6 12.7A6.6 6.6 0 0 1 7.3 4.4a6.6 6.6 0 1 0 8.3 8.3z"/></svg>
+      <svg class="theme__sun" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.4"/><path d="M10 1.8v2.3M10 15.9v2.3M1.8 10h2.3M15.9 10h2.3M4.2 4.2l1.6 1.6M14.2 14.2l1.6 1.6M4.2 15.8l1.6-1.6M14.2 5.8l1.6-1.6"/></svg>
+    </button>
+  </div>
+</header>
+<!-- @end top -->
+
+<main class="page">
+
+  <article>
+    <header class="phead" id="top">
+      <a class="back" href="index.html"><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M21 6H1M6 1 1 6l5 5"/></svg>All fixes</a>
+      <p class="hero__kicker" data-reveal>Wagtail <span aria-hidden="true">·</span> 22 September 2026</p>
+      <h1 class="phead__h" data-reveal style="--d:.08s">I upgraded Wagtail 2.7 → 7.4 — everything that broke</h1>
+      <svg class="hero__line ink" data-reveal data-perch="mid" data-perch-first style="--d:.2s" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10 C 110 4, 220 13, 330 8 S 540 5, 637 9"/></svg>
+      <p class="hero__lede" data-reveal style="--d:.3s">A 2019 Wagtail school site, upgraded through 2.15 LTS to 7.4 LTS. 22 breakages, two silent data problems, and how every page was proved to survive.</p>
+    </header>
+
+    <figure class="tube" data-reveal data-perch>
+      <div><iframe src="https://www.youtube-nocookie.com/embed/w4jUp5atKN8" title="How to Upgrade Wagtail 2.7 to 7.4: Breaking Changes &amp; Fixes" loading="lazy" allowfullscreen
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+    </figure>
+
+    <div class="prose" data-reveal>
+      <p>Most Wagtail upgrade posts cover one feature release. This one covers seven years.</p>
+      <p>I built a school website on <b>Wagtail 2.7 and Django 2.2</b>, written exactly the way a 2019 project was written, filled it with realistic content, and then upgraded it to <b>Wagtail 7.4 LTS on Django 5.2</b>. I logged every command, captured every error before fixing it, and checked the result against the original byte for byte and pixel for pixel.</p>
+      <p>The code, the logs and every screenshot are public: <b><a href="https://github.com/apequaltowork/wagtail-school">github.com/apequaltowork/wagtail-school</a></b>. The history is one commit per step, so you can follow the whole upgrade in order, or jump straight to a stage with the tags <code>v2.7-baseline</code>, <code>v2.15</code> and <code>v7.4</code>.</p>
+      <p><b>Summary:</b> 22 things broke. Most were loud ImportErrors that take a minute each to fix. Four were silent, and those are the ones this post is really about:</p>
+      <ul><li><b>The 2.10 form-builder change</b> made every enquiry form lose its data, and running Django's system checks was the only thing that could bring it back.</li><li><b>StreamField columns stayed <code>text</code></b> after the jump. Pages worked, and JSON queries failed.</li><li><b>Logged search queries were deleted by <code>migrate</code></b>, because the migration meant to copy them has been a no-op since Wagtail 6.0.</li><li><b>Static-file hashing silently switched off</b> because Django 5.1 ignores the old setting.</li></ul>
+      <hr>
+      <h2 id="the-site-kestrel-ridge-college-fictional">The site: Kestrel Ridge College (fictional)</h2>
+      <p>A realistic independent K–12 school site, so the upgrade meets the kind of code real projects have:</p>
+      <ul><li>A home page with hero, quick links and upcoming events, plus 11 standard pages built from a <b>StreamField</b> with headings, rich text, images, quotes, calls to action, documents and <b>TableBlock</b>.</li><li><b>Events</b> (a <code>RoutablePageMixin</code> index with a <code>/past/</code> route and a category filter) and <b>Staff</b> (grouped by department), both with snippets.</li><li>Two form-builder pages, <b>Enrolment Enquiry</b> and <b>Contact</b>, with <b>40 real submissions</b>. The enquiry form's labels deliberately include apostrophes, a slash, a question mark and accented characters: <i>&quot;Parent/Guardian's full name&quot;</i>, <i>&quot;Languages spoken at home (e.g. Français, Español)&quot;</i>. Keep an eye on those.</li><li><code>wagtail.contrib.modeladmin</code> for the Events and Staff menus, <code>BaseSetting</code> for the school's contact details, <code>SiteMiddleware</code> and <code>request.site</code>, <code>url()</code> routes and <code>ugettext_lazy</code>: everything a 2019 project used.</li></ul>
+      <figure class="prose__fig"><img src="../assets/fixes/0001-wagtail-2-7-to-7-4-upgrade/home-2-7-vs-7-4.webp" width="1400" height="585" loading="lazy" alt="The home page on 2.7 and on 7.4, pixel-identical"><figcaption>The home page on 2.7 and on 7.4, pixel-identical</figcaption></figure>
+      <h2 id="how-i-proved-nothing-was-lost">How I proved nothing was lost</h2>
+      <p>Before touching anything, I recorded a <b>baseline</b> from the running 2.7 site:</p>
+      <ul><li>every live URL and its HTTP status (55 URLs)</li><li>the normalised visible text of every page (51 pages): the proof that StreamField content survives</li><li>counts: pages per type, images, documents, snippets, submissions per form</li><li><b>each form's submissions, exported with Wagtail's own admin CSV export</b></li><li>for every form field, the key its data is stored under</li><li>full-page screenshots of 13 front-end pages and 16 admin screens</li><li>a <code>pg_dump</code> and a zip of <code>media/</code></li></ul>
+      <p>Every stage got its own folder, virtualenv and database, restored from the previous stage's dump, and was checked against the same baseline.</p>
+      <h2 id="the-route-2-7-2-15-lts-7-4-lts">The route: 2.7 → 2.15 LTS → 7.4 LTS</h2>
+      <p>Wagtail recommends upgrading one feature release at a time. I didn't: I did two hops.</p>
+      <p><b>Why stop at 2.15:</b> it's the LTS release that contains the 2.10 form-builder change, and it's one of the few releases (2.10–2.16) that can still repair old form data (you'll see why). Wagtail 3.0's release notes say so directly: projects older than 2.10 must pass through 2.10–2.16 before 3.0.</p>
+      <p><b>Why jump from 2.15 straight to 7.4:</b> because that's how I actually upgrade client sites, and I wanted to know what it costs. The answer is two pieces of silent damage, covered below.</p>
+      <hr>
+      <h2 id="hop-1-2-7-2-15">Hop 1: 2.7 → 2.15</h2>
+      <p>Django 2.2 → 3.2, Python 3.8 → 3.10. Six breakages.</p>
+      <h3 id="b01-the-first-wall-is-the-database-driver">B01 — The first wall is the database driver</h3>
+      <pre><code>error: Microsoft Visual C++ 14.0 or greater is required.
+ERROR: Failed building wheel for psycopg2-binary</code></pre>
+      <p>Wagtail 2.15 is the first release to support Python 3.10, and psycopg2-binary 2.8 has no Python 3.10 wheels, so pip tries to compile it from source. The fix is <code>psycopg2-binary&gt;=2.9,&lt;2.10</code>. The old line stays in <code>requirements.txt</code>, commented out with the reason.</p>
+      <h3 id="b02-models-w042-6">B02 — <code>models.W042</code> × 6</h3>
+      <p>Django 3.2's &quot;Auto-created primary key&quot; warning. One line, <code>DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'</code>, keeps the existing integer IDs with no migrations.</p>
+      <h3 id="b03-quot-system-check-identified-no-issues-quot-then-every-p">B03 — &quot;System check identified no issues&quot;, then every page crashes</h3>
+      <pre><code>ModuleNotFoundError: No module named 'wagtail.core.middleware'</code></pre>
+      <p><code>manage.py check</code> is green, because middleware only loads on the first request. <code>SiteMiddleware</code> and <code>request.site</code> were deprecated in 2.9 and moved in 2.11. I replaced them with <code>Site.find_for_request(request)</code> in the menu tag. (The smaller alternative is the legacy middleware path.)</p>
+      <h3 id="b04-every-enquiry-form-loses-its-data">B04 — Every enquiry form loses its data</h3>
+      <p>This is the one to understand before upgrading any site that uses Wagtail's form builder.</p>
+      <p>In Wagtail 2.7, a submission's data is keyed by a name <b>computed from the label every time</b>: <code>slugify(unidecode(label))</code>. So <i>&quot;Parent/Guardian's full name&quot;</i> is stored as <code>parentguardians-full-name</code>.</p>
+      <p>Wagtail 2.10 made that key a <b>stored database field</b>, <code>clean_name</code>, generated a different way (<code>parentguardians_full_name</code>, underscores). <code>makemigrations</code> adds it like this:</p>
+      <pre><code>migrations.AddField(model_name='formfield', name='clean_name',
+    field=models.CharField(blank=True, default='', ...))</code></pre>
+      <p>No data migration. After <code>migrate</code>, <b>all 14 form fields had an empty <code>clean_name</code></b>. Here's what a production server, which never runs Django's system checks, then served:</p>
+      <ul><li>the 10-field enrolment form rendered as <b>a single field named <code>&quot;&quot;</code></b></li><li>the admin submissions list showed <b>none</b> of the stored values</li><li>the CSV export had ten columns, <b>all headed &quot;Subscribe to our newsletter&quot;</b>, with every value <code>None</code></li></ul>
+      <pre><code>Submission date,Subscribe to our newsletter,Subscribe to our newsletter,Subscribe to our newsletter,…
+2026-03-27 21:06:16.451089+00:00,None,None,None,None,None,None,None,None,None,None</code></pre>
+      <p>The data was still in the database. Nothing could read it.</p>
+      <p>Wagtail does repair this, but inside a <b>system check</b>, not a migration. <code>AbstractFormField.check()</code> fills blank <code>clean_name</code>s with the legacy hyphenated key. So I ran <code>manage.py check</code>:</p>
+      <pre><code>Exception: You have form submission data that was created on an older version of Wagtail
+and requires the unidecode library to retrieve it correctly. Please install the unidecode package.</code></pre>
+      <p>Wagtail 2.7 depended on Unidecode, and 2.15 doesn't, so the repair needs a package the upgrade removed. After <code>pip install Unidecode</code> and one more <code>check</code>:</p>
+      <pre><code>forms.FormField: Added `clean_name` on 10 form field(s)
+forms.ContactFormField: Added `clean_name` on 4 form field(s)</code></pre>
+      <p>All 14 keys matched the stored data again, and all 30 enquiries came back in the form, the admin and the CSV.</p>
+      <p><b>Lessons:</b></p>
+      <ul><li>Add <code>Unidecode</code> to your requirements before this upgrade.</li><li>Run <code>manage.py check</code> on the server after deploying. Until something runs system checks, your live forms are broken.</li><li>Fields added <i>after</i> the upgrade get snake_case keys, so one form can end up with two naming styles for good.</li></ul>
+      <h3 id="b05-the-csv-export-button-that-isn-t">B05 — The CSV export button that isn't</h3>
+      <p><code>?action=CSV</code> quietly returns the HTML listing on 2.15. It's <code>?export=csv</code> now (the submissions list uses <code>SpreadsheetExportMixin</code>). I couldn't find this in the release notes, and it breaks any script or bookmark that downloads exports.</p>
+      <h3 id="b06-get-document-model-moved">B06 — <code>get_document_model</code> moved</h3>
+      <p><code>wagtail.documents.models</code> → <code>wagtail.documents</code> (2.8). This only showed up when I seeded a fresh database, which is exactly why a fresh-database check belongs in every upgrade.</p>
+      <p><b>Result of hop 1:</b> the crawl matched the 2.7 baseline <b>byte for byte</b>, including both CSV exports, and all 12 non-404 front-end pages were <b>pixel-identical</b>.</p>
+      <hr>
+      <h2 id="hop-2-2-15-7-4">Hop 2: 2.15 → 7.4</h2>
+      <p>Django 3.2 → 5.2 LTS, Python 3.10 → 3.12. Sixteen breakages, and the install was the easy part: <code>pip install</code> of Wagtail 7.4.3 and Django 5.2.17 worked first time.</p>
+      <h2 id="the-import-wall-b07-b14">The import wall (B07–B14)</h2>
+      <p>Then <code>python -Wa manage.py check</code> failed <b>eight times in a row</b>, one missing import at a time:</p>
+      <div class="prose__table"><table><thead><tr><th>#</th><th>Error</th><th>Removed in</th><th>Fix</th></tr></thead><tbody><tr><td>B07</td><td><code>No module named 'wagtail.contrib.modeladmin'</code></td><td>Wagtail 6.0</td><td><code>PageListingViewSet</code> (below)</td></tr><tr><td>B08</td><td><code>No module named 'wagtail.core'</code></td><td>3.0 / 5.0</td><td><code>wagtail updatemodulepaths .</code></td></tr><tr><td>B09</td><td><code>cannot import name 'ugettext_lazy'</code></td><td>Django 4.0</td><td><code>gettext_lazy</code></td></tr><tr><td>B10</td><td><code>cannot import name 'StreamFieldPanel'</code></td><td>3.0 / 5.0</td><td><code>FieldPanel</code></td></tr><tr><td>B11</td><td><code>cannot import name 'BaseSetting'</code></td><td>4.0 / 5.0</td><td><code>BaseSiteSetting</code></td></tr><tr><td>B12</td><td><code>cannot import name 'url' from 'django.conf.urls'</code></td><td>Django 4.0</td><td><code>re_path</code></td></tr><tr><td>B13</td><td><code>cannot import name 'Query' from 'wagtail.search.models'</code></td><td>5.0 / 6.0</td><td><code>wagtail.contrib.search_promotions</code></td></tr><tr><td>B14</td><td><code>wagtailadmin.W003 WAGTAILADMIN_BASE_URL is not defined</code></td><td>3.0 / 5.0</td><td>rename <code>BASE_URL</code></td></tr></tbody></table></div>
+      <p>What surprised me: <b>none of these printed a deprecation warning on 2.15.</b> The <code>wagtail.core</code> → <code>wagtail</code> rename, the panel changes and ModelAdmin's removal all happened after 2.x, so a clean <code>-Wa</code> run on 2.15 tells you nothing about them.</p>
+      <p>The biggest diff of the whole upgrade was a single command. <code>wagtail updatemodulepaths .</code> rewrote 19 files, including old migrations. It doesn't replace the removed panel classes, though, and it leaves <code>wagtail.images.edit_handlers</code> alone. (Its help text still says <i>&quot;Update a Wagtail project tree to use Wagtail 2.x module paths&quot;</i>.)</p>
+      <h3 id="modeladmin-pagelistingviewset">ModelAdmin → PageListingViewSet</h3>
+      <p>Both ModelAdmins listed <b>Page</b> models (events and staff), which snippet viewsets can't register. Core Wagtail's <code>PageListingViewSet</code> is the replacement:</p>
+      <pre><code>class EventPageListingViewSet(PageListingViewSet):
+    index_view_class = EventPageListingIndexView   # default_ordering = 'start_date'
+    model = EventPage
+    menu_label = 'Events'
+    icon = 'date'
+    add_to_admin_menu = True
+    list_display = ['title', 'start_date', 'category', 'live']
+    list_filter = ['category', 'live']</code></pre>
+      <p>Watch out: the listing comes out in tree order until you set <code>default_ordering</code> on the index view, which replaces ModelAdmin's <code>ordering</code>.</p>
+      <figure class="prose__fig"><img src="../assets/fixes/0001-wagtail-2-7-to-7-4-upgrade/events-menu-modeladmin-vs-pagelistingviewset.webp" width="1400" height="485" loading="lazy" alt="Events menu: ModelAdmin on 2.7, PageListingViewSet on 7.4"><figcaption>Events menu: ModelAdmin on 2.7, PageListingViewSet on 7.4</figcaption></figure>
+      <h2 id="b15-the-migration-that-never-came">B15 — The migration that never came</h2>
+      <p>After the import fixes, <code>makemigrations</code> produced <b>no StreamField changes</b>, and <code>migrate</code> ran 64 migrations cleanly. Pages returned 200. Then:</p>
+      <pre><code>EventPage.objects.filter(body__contains=[{'type': 'call_to_action'}])</code></pre>
+      <pre><code>ProgrammingError: operator does not exist: text @&gt; jsonb</code></pre>
+      <p>Wagtail 3.0 moved StreamField storage from text to JSON: you added <code>use_json_field=True</code>, and <code>makemigrations</code> generated an <code>AlterField</code> that converted the column. Wagtail 5.0 made it mandatory. <b>From 6.0, <code>use_json_field</code> is ignored and no longer appears in migrations</b>, so Django sees no difference between a 2019 migration and a 7.4 model. If you skip 3.0–5.x, that conversion migration <b>is never generated</b>.</p>
+      <p>Wagtail's own tables were converted (revisions, log entries, <code>form_data</code> are all <code>jsonb</code>). My three <code>body</code> columns stayed <code>text</code>. A fresh 7.4 database gets <code>jsonb</code>, this upgraded one kept <code>text</code>, and no tool reported the difference.</p>
+      <p>The fix is a hand-written migration per app:</p>
+      <pre><code>migrations.RunSQL(
+    sql='ALTER TABLE events_eventpage ALTER COLUMN body TYPE jsonb USING body::jsonb',
+    reverse_sql='ALTER TABLE events_eventpage ALTER COLUMN body TYPE text USING body::text',
+)</code></pre>
+      <p>It's a no-op on fresh databases and leaves model state unchanged. Afterwards the query returns the two Open Day events that have a call to action.</p>
+      <h2 id="b16-data-lost-by-design">B16 — Data lost by design</h2>
+      <p>The restored database held two logged search queries. After <code>migrate</code>:</p>
+      <pre><code>after migrate: queries = 0 , daily hits = 0</code></pre>
+      <p>The migration log shows why. <code>wagtailsearch.0008_remove_query_and_querydailyhits_models</code> dropped the old tables, and <code>wagtailsearchpromotions.0004_copy_queries</code> ran &quot;OK&quot; without copying anything. Here's its source:</p>
+      <pre><code># Changed to a no-op in Wagtail 6.0.
+# ... any project that needs this data migration would have already applied
+# the real version of this migration while they were running Wagtail 5.
+operations = []</code></pre>
+      <p>Skip Wagtail 5 and this data is gone. I recovered it from the pre-upgrade dump (<code>pg_restore --data-only -t wagtailsearch_query …</code>, then recreated the rows through the new models).</p>
+      <p><b>This is the strongest argument I found for upgrading one LTS at a time.</b> If you jump anyway: take the dump before <code>migrate</code>, and check every table you care about afterwards.</p>
+      <h2 id="b19-static-file-hashing-silently-switched-off">B19 — Static-file hashing silently switched off</h2>
+      <p>The 2019 settings still said:</p>
+      <pre><code>STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'</code></pre>
+      <p>Django 5.1 removed that setting in favour of <code>STORAGES</code>, and <b>Django ignores settings it doesn't know</b>. There's no error and no warning: production just stops getting hashed filenames, and browsers keep serving old CSS after each deploy. The 2.7 project template's own comment warns about stale assets <i>&quot;after a Wagtail upgrade&quot;</i>. Moving it to <code>STORAGES</code> fixed it.</p>
+      <h2 id="b21-bold-radio-buttons">B21 — Bold radio buttons</h2>
+      <p>The only visible break on the front end, and pixel diffing found it:</p>
+      <figure class="prose__fig"><img src="../assets/fixes/0001-wagtail-2-7-to-7-4-upgrade/radio-buttons-2-7-vs-7-4-before-fix.webp" width="1380" height="500" loading="lazy" alt="Radio and checkbox options on 2.7 (left) and 7.4 before the fix (right)"><figcaption>Radio and checkbox options on 2.7 (left) and 7.4 before the fix (right)</figcaption></figure>
+      <p>Django 4.0 changed <code>RadioSelect</code> and <code>CheckboxSelectMultiple</code> from <code>&lt;ul&gt;&lt;li&gt;</code> to <code>&lt;div&gt;&lt;div&gt;</code>. The 2019 CSS targeted <code>fieldset ul label</code>, so it stopped matching. I retargeted it at <code>fieldset &gt; div …</code> and restored the 1rem margin the <code>&lt;ul&gt;</code> used to give, and the form was back to <b>zero pixels different</b>.</p>
+      <h2 id="b22-w-block">B22 — <code>w-block-*</code></h2>
+      <p>Wagtail 7.4 renders StreamField blocks as:</p>
+      <pre><code>&lt;div class=&quot;w-block-heading block-heading&quot;&gt;</code></pre>
+      <p>The old <code>block-heading</code> class stays for now but <i>&quot;will be removed in a future release&quot;</i>. I moved all 15 selectors to <code>.w-block-…</code>, and the pages are still pixel-identical.</p>
+      <h2 id="the-rest">The rest</h2>
+      <ul><li><b>B17</b> — <code>FormSubmission.form_data</code> is a JSONField since 3.0. Code that <code>json.loads()</code> it gets a dict and crashes (here, my baseline tool). Reports and CRM syncs break the same way.</li><li><b>B18</b> — Search got <i>better</i>: the 2.15-era <code>db</code> backend matched titles only, and 7.4's <code>database</code> backend indexes content, so &quot;music&quot; finds 7 results instead of 1. It's the only text difference across all 51 pages. I accepted it as the expected new behaviour.</li><li><b>B20</b> — My own seed command imports <code>unidecode</code>. It had always come in with Wagtail, so I dropped it from requirements, wrongly. Declare what you import.</li><li>Also run <b><code>update_index</code></b> (new search backend) and <b><code>rebuild_references_index</code></b> (4.1) after upgrading.</li></ul>
+      <hr>
+      <h2 id="the-result">The result</h2>
+      <div class="prose__table"><table><thead><tr><th>Check</th><th>2.7 → 7.4</th></tr></thead><tbody><tr><td>URL statuses (55)</td><td>identical</td></tr><tr><td>Page text (51 pages)</td><td><b>49 identical</b>; 2 search pages return more results (B18)</td></tr><tr><td>Counts (pages, images, documents, snippets, submissions)</td><td>identical</td></tr><tr><td>Form CSV exports (30 + 10 submissions)</td><td><b>byte-for-byte identical</b></td></tr><tr><td>Front-end screenshots (13)</td><td><b>11 pixel-identical</b>; search (B18) and Django's debug 404 differ</td></tr><tr><td><code>python -Wa manage.py check</code></td><td><b>0 warnings</b></td></tr><tr><td><code>makemigrations --check</code></td><td>no changes</td></tr><tr><td>Fresh database migrate + seed</td><td>same counts as 2019</td></tr></tbody></table></div>
+      <figure class="prose__fig"><img src="../assets/fixes/0001-wagtail-2-7-to-7-4-upgrade/editor-2-7-vs-7-4.webp" width="1400" height="728" loading="lazy" alt="The page editor on 2.7 and on 7.4"><figcaption>The page editor on 2.7 and on 7.4</figcaption></figure>
+      <h2 id="if-you-re-about-to-do-this-a-checklist">If you're about to do this: a checklist</h2>
+      <ol><li><b>Record a baseline first.</b> URLs, page text, counts, form exports, screenshots and a DB dump. Without it, &quot;it looks fine&quot; is all you have.</li><li><b>Stop at 2.15 (or any 2.10–2.16) if you use the form builder.</b> Add <code>Unidecode</code>, deploy, and <b>run <code>manage.py check</code></b> so the <code>clean_name</code> backfill happens.</li><li><b>Pass through Wagtail 5.x if you can.</b> It generates the StreamField JSON migration and copies the search query log. If you jump, check column types (<code>body</code> should be <code>jsonb</code>) and write the conversion yourself.</li><li><b>Take a dump right before <code>migrate</code>.</b> B16 was only recoverable because of it.</li><li><b>Grep your settings for names Django no longer reads:</b> <code>STATICFILES_STORAGE</code>, <code>DEFAULT_FILE_STORAGE</code>, <code>USE_L10N</code>, <code>BASE_URL</code>.</li><li><b>Run <code>wagtail updatemodulepaths</code></b>, then fix what it doesn't cover: panels, <code>edit_handlers</code>, <code>BaseSetting</code>, ModelAdmin.</li><li><b>Pixel-diff your front end.</b> The only visual break (Django's widget markup) wasn't in any Wagtail release note.</li><li><b>Seed or migrate a fresh database too.</b> It finds the imports your live site never touches.</li><li><b>After deploying:</b> <code>update_index</code>, <code>rebuild_references_index</code>, <code>check</code>.</li></ol>
+      <h2 id="every-breakage">Every breakage</h2>
+      <div class="prose__table"><table><thead><tr><th>ID</th><th>Hop</th><th>Symptom</th><th>Cause</th><th>Impact</th></tr></thead><tbody><tr><td>B01</td><td>2.15</td><td>psycopg2 needs a C compiler</td><td>no Python 3.10 wheel for 2.8</td><td>Medium</td></tr><tr><td>B02</td><td>2.15</td><td><code>models.W042</code> × 6</td><td>Django 3.2 <code>DEFAULT_AUTO_FIELD</code></td><td>Low</td></tr><tr><td>B03</td><td>2.15</td><td>check green, every page 500s</td><td>SiteMiddleware moved (2.9/2.11)</td><td>High</td></tr><tr><td>B04</td><td>2.15</td><td>forms collapse, submissions unreadable</td><td>2.10 <code>clean_name</code>; backfill needs unidecode</td><td><b>High</b></td></tr><tr><td>B05</td><td>2.15</td><td><code>?action=CSV</code> returns HTML</td><td>SpreadsheetExportMixin (<code>?export=csv</code>)</td><td>Medium</td></tr><tr><td>B06</td><td>2.15</td><td><code>get_document_model</code> ImportError</td><td>moved in 2.8</td><td>Low</td></tr><tr><td>B07</td><td>7.4</td><td>no <code>wagtail.contrib.modeladmin</code></td><td>removed in 6.0</td><td>High</td></tr><tr><td>B08</td><td>7.4</td><td>no <code>wagtail.core</code></td><td>3.0 rename</td><td>High</td></tr><tr><td>B09</td><td>7.4</td><td>no <code>ugettext_lazy</code></td><td>Django 4.0</td><td>Low</td></tr><tr><td>B10</td><td>7.4</td><td>no <code>StreamFieldPanel</code></td><td>3.0 → FieldPanel</td><td>Medium</td></tr><tr><td>B11</td><td>7.4</td><td>no <code>BaseSetting</code></td><td>4.0 → BaseSiteSetting</td><td>Low</td></tr><tr><td>B12</td><td>7.4</td><td>no <code>url()</code></td><td>Django 4.0</td><td>Low</td></tr><tr><td>B13</td><td>7.4</td><td>no <code>wagtail.search.models.Query</code></td><td>moved to search_promotions</td><td>Medium</td></tr><tr><td>B14</td><td>7.4</td><td><code>W003</code> base URL</td><td><code>BASE_URL</code> renamed (3.0)</td><td>Low</td></tr><tr><td>B15</td><td>7.4</td><td>StreamField columns still <code>text</code></td><td>3.0–5.x JSON migration never generated</td><td><b>High</b></td></tr><tr><td>B16</td><td>7.4</td><td>search query log deleted</td><td>copy migration a no-op since 6.0</td><td><b>High</b></td></tr><tr><td>B17</td><td>7.4</td><td><code>json.loads(form_data)</code> crashes</td><td>form_data is a JSONField (3.0)</td><td>Medium</td></tr><tr><td>B18</td><td>7.4</td><td>more search results</td><td><code>database</code> backend</td><td>Medium</td></tr><tr><td>B19</td><td>7.4</td><td>no hashed static files</td><td><code>STATICFILES_STORAGE</code> removed (Django 5.1)</td><td>High</td></tr><tr><td>B20</td><td>7.4</td><td>seed: no <code>unidecode</code></td><td>undeclared transitive dependency</td><td>Medium</td></tr><tr><td>B21</td><td>7.4</td><td>bold radio/checkbox options</td><td>Django 4.0 widget markup</td><td>High</td></tr><tr><td>B22</td><td>7.4</td><td><code>block-*</code> classes going away</td><td>7.4 <code>w-block-*</code></td><td>Medium</td></tr></tbody></table></div>
+      <p>Full details for each (the exact error, the log file, the fix commit, and the versioned docs link) are in <a href="https://github.com/apequaltowork/wagtail-school/blob/main/notes/UPGRADE_LOG.md"><code>notes/UPGRADE_LOG.md</code></a>. The reasoning behind each choice is in <a href="https://github.com/apequaltowork/wagtail-school/blob/main/notes/DECISIONS.md"><code>notes/DECISIONS.md</code></a>.</p>
+      <hr>
+      <p><i>Kestrel Ridge College is fictional: every person, phone number and image in the demo was made up for this project.</i></p>
+    </div>
+
+    <div class="prose" data-reveal>
+      <h2>On video: How I Prompted an AI to Upgrade a Wagtail Site (2.7 → 7.4)</h2>
+    </div>
+    <figure class="tube" data-reveal data-perch>
+      <div><iframe src="https://www.youtube-nocookie.com/embed/XNZ6rjaHYKM" title="How I Prompted an AI to Upgrade a Wagtail Site (2.7 → 7.4)" loading="lazy" allowfullscreen
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+    </figure>
+  </article>
+
+  <section class="sec">
+    <div class="prose" data-reveal>
+      <p><a href="https://github.com/apequaltowork/wagtail-school">the code, with every step</a> · <a href="https://github.com/apequaltowork/wagtail-school/blob/main/blog/wagtail-2.7-to-7.4-everything-that-broke.md">this write-up on GitHub</a> · <a href="https://www.youtube.com/watch?v=w4jUp5atKN8">How to Upgrade Wagtail 2.7 to 7.4: Breaking Changes &amp; Fixes — on YouTube</a> · <a href="https://www.youtube.com/watch?v=XNZ6rjaHYKM">How I Prompted an AI to Upgrade a Wagtail Site (2.7 → 7.4) — on YouTube</a> · <a href="../services/wagtail-cms.html">the work I do on this</a></p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="cta" data-reveal data-perch>
+      <div>
+        <p class="cta__h">Stuck on something like this?</p>
+        <p class="cta__p">Tell me what you have and what it is doing instead. I will tell you honestly whether I am the right person for it.</p>
+      </div>
+      <div>
+        <a class="btn" href="../contact.html"><span>Write to me</span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a>
+        <a class="cta__alt" href="index.html">or read the other fixes</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- @chrome foot -->
+  <footer class="foot">
+    <span><b>&copy; 2026 Ashish Pitroda</b></span>
+    <nav class="foot__links" aria-label="All pages"><a href="../index.html">Home</a><a href="../services/index.html">Field guide</a><a href="../work/index.html">Projects</a><a href="../learn/index.html">Learn</a><a href="../fixes/index.html">Fixes</a><a href="../about.html">About</a><a href="../contact.html">Write to me</a><a href="../colophon.html">Colophon</a></nav>
+    <span class="foot__wags">Tail wags this visit: <span data-wags>0</span></span>
+  </footer>
+  <!-- @end foot -->
+
+</main>
+
+<script src="../journal.js"></script>
+<script src="../bird.js"></script>
+</body>
+</html>
