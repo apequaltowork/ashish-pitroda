@@ -14,16 +14,27 @@ window.JOURNAL = (function () {
   function show(el) { el.classList.add("is-in"); }
   function revealAll() { items.forEach(show); }
 
+  // A block taller than the screen can never be mostly in view, so waiting
+  // for it to be is how a long article stays invisible. It is shown at once;
+  // the fade is for things that fit.
+  items = items.filter(function (el) {
+    if (el.offsetHeight > innerHeight) { show(el); return false; }
+    return true;
+  });
+
   if (reduced || !("IntersectionObserver" in window)) {
     revealAll();
   } else {
+    // In view means 6% of the element, or, for one taller than the screen can
+    // ever show 6% of (a long article), a quarter of the screen's height.
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
+        if (e.intersectionRatio < 0.06 && e.intersectionRect.height < innerHeight * 0.25) return;
         show(e.target);
         io.unobserve(e.target);
       });
-    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.06 });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: [0, 0.01, 0.03, 0.06] });
     items.forEach(function (el) { io.observe(el); });
   }
 
