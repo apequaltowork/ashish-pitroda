@@ -635,14 +635,9 @@ section[id] { scroll-margin-top: 76px; }
 .foot__wags { margin-left: auto; }
 .foot [data-wags] { color: var(--red); font-variant-numeric: tabular-nums; }
 
-/* ── smaller screens ───────────────────────────────────────── */
-
-@media (max-width: 980px) {
-  .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-  .label { max-width: 480px; }
-  .guide, .drawer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 720px) {
+/* The menu folds into the button below 960px: the full bar (name, six
+   links, the theme switch) needs about 912px plus a scrollbar. */
+@media (max-width: 960px) {
   /* the pages move into a panel under the bar, opened by .burger —
      which sits last, at the right edge, after the theme switch */
   .burger { display: inline-flex; order: 2; margin-left: 2px; }
@@ -673,6 +668,16 @@ section[id] { scroll-margin-top: 76px; }
     padding: 9px 20px;
   }
   .nav__keep { border-top: 0; }
+}
+
+/* ── smaller screens ───────────────────────────────────────── */
+
+@media (max-width: 980px) {
+  .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .label { max-width: 480px; }
+  .guide, .drawer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
   .mark i { display: none; }
   .page { padding-left: 34px; }
   .page::before { left: 16px; }
@@ -2432,7 +2437,7 @@ html.is-viewing { overflow: hidden; }
   background-image: none;
 }
 .nav__sub a:hover { color: var(--ink); background-color: var(--paper-3); }
-@media (max-width: 720px) {
+@media (max-width: 960px) {
   .nav__has { position: static; }
   .nav__sub {
     position: static;
@@ -2496,3 +2501,36 @@ html.is-viewing { overflow: hidden; }
 .prose__fig figcaption { margin-top: 8px; font-size: .9rem; font-style: italic; color: var(--ink-3); }
 /* an article-length fix reads wider than a short note */
 .learn .prose:has(.prose__table) { max-width: 72ch; }
+
+/* ── elsewhere: the social links ───────────────────────────────
+   Small ink rings in the footer; a labelled list on the Contact page. */
+.foot__soc { display: flex; gap: 8px; align-items: center; }
+.foot__soc a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  color: var(--ink-3);
+  transition: color .25s var(--ease), border-color .25s var(--ease);
+}
+.foot__soc a:hover, .foot__soc a:focus-visible { color: var(--red); border-color: var(--red); }
+.foot__soc svg { width: 15px; height: 15px; fill: currentColor; }
+
+.elsewhere { list-style: none; margin: 4px 0 0; padding: 0; }
+.elsewhere li + li { border-top: 1px solid var(--rule); }
+.elsewhere a {
+  display: grid;
+  grid-template-columns: 18px 72px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  text-decoration: none;
+  color: var(--ink-2);
+}
+.elsewhere a:hover b { color: var(--red); }
+.elsewhere__i { width: 16px; height: 16px; fill: var(--ink-3); }
+.elsewhere b { font-weight: 500; color: var(--ink); }
+.elsewhere span { font-size: .92rem; color: var(--ink-3); }

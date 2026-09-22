@@ -82,6 +82,39 @@ const NAV = [
   { key: "write",     label: "Write to me", href: "contact.html", cta: true }
 ].filter((n) => !n.held);
 
+// Where else to find me. One list for the footer icons, the Contact page and
+// the Person schema's sameAs, so the three can never disagree.
+const ICON = {
+  youtube: '<path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8zM9.8 15.1V8.9l5.4 3.1z"/>',
+  linkedin: '<path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.2c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4z"/>',
+  x: '<path d="M17.8 3h3.3l-7.2 8.2L22.3 21h-6.6l-5.2-6.8L4.6 21H1.3l7.7-8.8L1 3h6.8l4.7 6.2zm-1.2 16h1.8L7.5 4.9H5.6z"/>',
+  github: '<path d="M12 .8a11.2 11.2 0 0 0-3.5 21.8c.6.1.8-.2.8-.5v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 1.7 2.6 1.2 3.3.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-3 0 0 .9-.3 3.1 1.1a10.7 10.7 0 0 1 5.6 0c2.1-1.4 3.1-1.1 3.1-1.1.6 1.5.2 2.7.1 3 .7.8 1.1 1.8 1.1 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2v3c0 .3.2.6.8.5A11.2 11.2 0 0 0 12 .8z"/>'
+};
+const SOCIAL = [
+  { key: "youtube",  label: "YouTube",  href: "https://www.youtube.com/@apequaltowork",
+    note: "Wagtail Unboxed and the upgrade videos" },
+  { key: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/ashish-pitroda/",
+    note: "work history and articles" },
+  { key: "x",        label: "X",        href: "https://x.com/apequaltowork",
+    note: "@apequaltowork" },
+  { key: "github",   label: "GitHub",   href: "https://github.com/apequaltowork",
+    note: "the code behind every episode and post" }
+];
+const svg = (key, cls) => '<svg class="' + cls + '" viewBox="0 0 24 24" aria-hidden="true">' + ICON[key] + "</svg>";
+
+function socialIcons() {
+  return '<nav class="foot__soc" aria-label="Elsewhere">' + SOCIAL.map((s) =>
+    '<a href="' + s.href + '" rel="me noopener" aria-label="' + s.label + '" title="' + s.label + '">' +
+    svg(s.key, "") + "</a>").join("") + "</nav>";
+}
+
+function socialList() {
+  return ['<p class="k">Elsewhere</p>', '<ul class="elsewhere">',
+    SOCIAL.map((s) => '  <li><a href="' + s.href + '" rel="me noopener">' + svg(s.key, "elsewhere__i") +
+      "<b>" + s.label + "</b><span>" + s.note + "</span></a></li>").join("\n"),
+    "</ul>"].join("\n");
+}
+
 const FOOT = [
   ["Home", "index.html"],
   ["Field guide", "services/index.html"],
@@ -154,7 +187,7 @@ function footFor(page) {
   const links = FOOT.filter(([, href]) => href !== page.file)
     .map(([label, href]) => '<a href="' + href + '">' + label + "</a>")
     .join("");
-  return read("partials/foot.html").replace("@links", () => links);
+  return read("partials/foot.html").replace("@links", () => links).replace("@social", () => socialIcons());
 }
 
 // the colophon's numbers, measured on every build rather than typed in
@@ -296,6 +329,7 @@ for (const page of PAGES) {
   html = setRegion(html, "top", reroot(read("partials/top.html").replace("@nav", () => navFor(page)), page));
   html = setRegion(html, "foot", reroot(footFor(page), page));
   html = setRegion(html, "stats", stats());
+  html = setRegion(html, "social", socialList());
   html = setRegion(html, "seo", seoFor(page, html));
   html = setRegion(html, "projects", projectsHtml().html);
   if (html === before) continue;
