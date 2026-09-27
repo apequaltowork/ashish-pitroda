@@ -2534,3 +2534,7 @@ html.is-viewing { overflow: hidden; }
 .elsewhere__i { width: 16px; height: 16px; fill: var(--ink-3); }
 .elsewhere b { font-weight: 500; color: var(--ink); }
 .elsewhere span { font-size: .92rem; color: var(--ink-3); }
+
+/* A long headline — a full article title rather than a few words — is set
+   smaller so it stays a heading rather than becoming the whole screen. */
+.phead__h--long { font-size: clamp(1.9rem, 3.9vw, 3.1rem); line-height: 1.08; }

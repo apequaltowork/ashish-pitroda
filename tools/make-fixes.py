@@ -337,7 +337,8 @@ def fix_page(fix, has_thumb):
     body = ('\n<main class="page">\n\n  <article>\n    <header class="phead" id="top">\n'
             '      <a class="back" href="index.html">' + BACK + "All fixes</a>\n"
             '      <p class="hero__kicker" data-reveal>' + kicker + "</p>\n"
-            '      <h1 class="phead__h" data-reveal style="--d:.08s">' + esc(f["title"]) + "</h1>\n"
+            '      <h1 class="phead__h' + (" phead__h--long" if len(f["title"]) > 62 else "") +
+            '" data-reveal style="--d:.08s">' + esc(f["title"]) + "</h1>\n"
             "      " + RULE + "\n" +
             ('      <p class="hero__lede" data-reveal style="--d:.3s">' + esc(f["summary"]) + "</p>\n"
              if f.get("summary") else "") +
