@@ -2538,3 +2538,31 @@ html.is-viewing { overflow: hidden; }
 /* A long headline — a full article title rather than a few words — is set
    smaller so it stays a heading rather than becoming the whole screen. */
 .phead__h--long { font-size: clamp(1.9rem, 3.9vw, 3.1rem); line-height: 1.08; }
+
+/* ── back to the top ───────────────────────────────────────────
+   Bottom of the right-hand gutter, below the cage, the seeds and the
+   song switch. Only ever shown by journal.js, on a long page. */
+.totop {
+  position: fixed;
+  right: 18px;
+  bottom: 22px;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--ink-2);
+  background: rgba(var(--paper-rgb), .86);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color .25s var(--ease), border-color .25s var(--ease), translate .25s var(--ease);
+}
+.totop[hidden] { display: none; }
+.totop:hover, .totop:focus-visible { color: var(--red); border-color: var(--red); translate: 0 -2px; }
+.totop svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 720px) { .totop { right: 12px; bottom: 14px; width: 38px; height: 38px; } }

@@ -95,6 +95,27 @@ window.JOURNAL = (function () {
     setInterval(paintLog, 250);
   }
 
+  /* ── back to the top ────────────────────────────────────────
+     Appears once the page has been scrolled a screen or so, and only
+     for pages long enough to need it. */
+  (function () {
+    var btn = document.querySelector("[data-totop]");
+    if (!btn) return;
+    var show = function () {
+      var far = window.scrollY > innerHeight * 0.9;
+      var worth = document.documentElement.scrollHeight > innerHeight * 2;
+      btn.hidden = !(far && worth);
+    };
+    addEventListener("scroll", show, { passive: true });
+    addEventListener("resize", show);
+    show();
+    btn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+      var first = document.querySelector("main a, main h1");
+      if (first && first.focus) first.focus({ preventScroll: true });
+    });
+  })();
+
   /* ── copy an address ───────────────────────────────────────── */
 
   // Not everyone has a mail app set up, so an address can be copied instead.
