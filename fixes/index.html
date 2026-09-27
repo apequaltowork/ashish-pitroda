@@ -20,7 +20,7 @@
 <meta name="twitter:description" content="Solved problems, written up: the symptom, the actual cause, and the fix. Wagtail, Django, Python and whatever else broke.">
 <meta name="twitter:image" content="https://apequaltowork.github.io/ashish-pitroda/assets/share-card.png">
 <!-- @end seo -->
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Fixes", "description": "Problems I have run into, or watched other people get stuck on, solved and written down: the symptom, the actual cause, and the fix.", "url": "https://apequaltowork.github.io/ashish-pitroda/fixes/", "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}, "mainEntity": {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "I upgraded Wagtail 2.7 \u2192 7.4 \u2014 everything that broke", "url": "https://apequaltowork.github.io/ashish-pitroda/fixes/0001-wagtail-2-7-to-7-4-upgrade.html"}]}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Fixes", "description": "Problems I have run into, or watched other people get stuck on, solved and written down: the symptom, the actual cause, and the fix.", "url": "https://apequaltowork.github.io/ashish-pitroda/fixes/", "author": {"@type": "Person", "name": "Ashish Pitroda", "url": "https://apequaltowork.github.io/ashish-pitroda/"}, "mainEntity": {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Four bugs that passed every test I ran", "url": "https://apequaltowork.github.io/ashish-pitroda/fixes/0002-blocks-defined-in-the-admin.html"}, {"@type": "ListItem", "position": 2, "name": "I upgraded Wagtail 2.7 \u2192 7.4 \u2014 everything that broke", "url": "https://apequaltowork.github.io/ashish-pitroda/fixes/0001-wagtail-2-7-to-7-4-upgrade.html"}]}}</script>
 <!-- @chrome head -->
 <script>document.documentElement.className += " js";
 /* Theme, before anything paints: light is Sepia archive, dark is Night journal.
@@ -154,10 +154,16 @@
       <label for="q">Search the fixes</label>
       <input id="q" type="search" name="q" data-fix-search autocomplete="off"
         placeholder="an error, a word from it, or a topic">
-      <span class="qfind__n" data-fix-count>1 fix</span>
+      <span class="qfind__n" data-fix-count>2 fixes</span>
     </form>
 
     <ul class="qlist" data-fixes data-per="10" data-reveal>
+      <li class="qrow" data-fix="four bugs that passed every test i ran a visual block builder for wagtail, where block definitions live in database rows rather than code — and the five bugs that came with it, every one of which passed the test i would naturally have run. wagtail 27 september 2026">
+        <p class="qrow__meta"><span class="qrow__tag">Wagtail</span><time datetime="2026-09-27">27 September 2026</time><span class="qrow__film" title="This one has a video">with video</span></p>
+        <h2 class="qrow__h"><a href="0002-blocks-defined-in-the-admin.html">Four bugs that passed every test I ran</a></h2>
+        <p class="qrow__p">A visual block builder for Wagtail, where block definitions live in database rows rather than code — and the five bugs that came with it, every one of which passed the test I would naturally have run.</p>
+        <p class="qrow__more"><a href="0002-blocks-defined-in-the-admin.html">read the fix<svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6 H16 M11 1 L16 6 L11 11"/></svg></a></p>
+      </li>
       <li class="qrow" data-fix="i upgraded wagtail 2.7 → 7.4 — everything that broke a 2019 wagtail school site, upgraded through 2.15 lts to 7.4 lts. 22 breakages, two silent data problems, and how every page was proved to survive. wagtail 22 september 2026">
         <p class="qrow__meta"><span class="qrow__tag">Wagtail</span><time datetime="2026-09-22">22 September 2026</time><span class="qrow__film" title="This one has a video">with video</span></p>
         <h2 class="qrow__h"><a href="0001-wagtail-2-7-to-7-4-upgrade.html">I upgraded Wagtail 2.7 → 7.4 — everything that broke</a></h2>

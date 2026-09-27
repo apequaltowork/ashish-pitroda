@@ -74,6 +74,9 @@ def spans(s):
         codes.append("<code>" + esc(m.group(1)) + "</code>")
         return "\x00" + str(len(codes) - 1) + "\x00"
     t = esc(re.sub(r"`([^`]+)`", keep, s))
+    # a URL written on its own, rather than as [text](url), is still a link
+    t = re.sub(r"(?<![\"=>])\bhttps?://[^\s<]+[^\s<.,;:)]",
+               lambda m: '<a href="' + m.group(0) + '">' + m.group(0) + "</a>", t)
     t = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t)
     t = re.sub(r"(?<![\w*])\*([^*\n]+?)\*(?![\w*])", r"<i>\1</i>", t)
     return re.sub(r"\x00(\d+)\x00", lambda m: codes[int(m.group(1))], t)
@@ -105,6 +108,11 @@ LIST = re.compile(r"^(\s*)([-*]|\d+\.)\s+(.*)$")
 
 def md(text, link=lambda u: u, image=lambda src, alt: None):
     lines, out, para, i = text.splitlines(), [], [], 0
+    # A write-up whose own sections are ### — because its h1 and h2 belonged to
+    # the document it came from — is lifted so its top level reads as h2 here.
+    levels = [m.group(1) for m in
+              (re.match(r"^(#{1,4})\s+\S", l.strip()) for l in lines) if m]
+    lift = max(0, (min(len(x) for x in levels) if levels else 2) - 2)
 
     def flush():
         if para:
@@ -130,7 +138,8 @@ def md(text, link=lambda u: u, image=lambda src, alt: None):
         h = re.match(r"^(#{1,4})\s+(.*)$", s)
         if h:                                                 # the page has its own h1
             flush()
-            tag = "h2" if len(h.group(1)) <= 2 else "h" + str(len(h.group(1)))
+            level = max(2, len(h.group(1)) - lift)
+            tag = "h2" if level <= 2 else "h" + str(min(level, 4))
             txt = inline(h.group(2), link)
             out.append("<" + tag + ' id="' + slug_id(txt) + '">' + txt + "</" + tag + ">")
             i += 1
